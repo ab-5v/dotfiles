@@ -1,0 +1,1690 @@
+yandaex-mail-daria-www (1.36.3) stable; urgency=low
+
+  * 
+
+ -- artjock <artjock@yandex-team.ru>  Wed, 27 Oct 2010 18:12:11 +0400
+
+yandaex-mail-daria-www (1.36.2) stable; urgency=low
+
+  * Собираю 1.36.2 из мастера
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 26 Oct 2010 17:42:49 +0400
+
+yandaex-mail-daria-www (1.36.0) stable; urgency=low
+
+  * DARIA-2626 - Ускорить саджест
+  * DARIA-1869 - отображение meet:sip:
+  * DARIA-1721 - From должен зависеть от To, на который пришло письмо
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 22 Oct 2010 21:16:10 +0400
+
+yandaex-mail-daria-www (1.35.0) stable; urgency=low
+
+  * DARIA-1532 - Поддержать настройку расположения подписи при ответе
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 21 Oct 2010 16:21:16 +0400
+
+yandaex-mail-daria-www (1.34.5) stable; urgency=low
+
+  * Собираем 1.34.5 из ветки wmi-15
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 20 Oct 2010 16:46:32 +0400
+
+yandaex-mail-daria-www (1.34.4) stable; urgency=low
+
+  * Собираем 1.34.4
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 18 Oct 2010 18:57:20 +0400
+
+yandaex-mail-daria-www (1.34.3) stable; urgency=low
+
+  * Собираем 1.34.3
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 18 Oct 2010 17:04:19 +0400
+
+yandaex-mail-daria-www (1.34.2) stable; urgency=low
+
+  * Собираем 1.34.2
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 18 Oct 2010 15:49:37 +0400
+
+yandaex-mail-daria-www (1.34.1) stable; urgency=low
+
+  * Собираем 1.34.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 18 Oct 2010 14:14:49 +0400
+
+yandaex-mail-daria-www (1.34.0) stable; urgency=low
+
+  * Собираем 1.34.0
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 18 Oct 2010 12:02:27 +0400
+
+yandaex-mail-daria-www (1.33.0) stable; urgency=low
+
+  * DARIA-2495 После отправки открытки в тему нового письма автоматически подставляется тема открытки, отправленной ранее.
+  * DARIA-1776 Создать белую «классическую» схему.
+  * DARIA-2524 Вложенные папки: При любых действиях с письмами сворачиваются папки
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Tue, 12 Oct 2010 17:41:45 +0400
+
+yandaex-mail-daria-www (1.32.0) stable; urgency=low
+
+  * Собираем 1.32.0
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Thu, 07 Oct 2010 17:56:07 +0400
+
+yandaex-mail-daria-www (1.31.1) stable; urgency=low
+
+  * Скрыл внезапно вылезшую папку Исходящие
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 04 Oct 2010 19:13:42 +0400
+
+yandaex-mail-daria-www (1.31.0) stable; urgency=low
+
+  * DARIA-2432 - FF: подчеркивание от ссылки налезает на картинку "плей"
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 04 Oct 2010 14:15:48 +0400
+
+yandaex-mail-daria-www (1.30.0) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-2390 - IE, Opera: js ошибки при показе попапа с "народным" пользовательским соглашением
+
+  [ shirokoff ]
+  * DARIA-2047 Интерфейс вложенных папок
+  * DARIA-2122 Прикрутить страницу для неподдерживаемых браузеров.
+  * DARIA-2123 Прикрутить страницу для браузеров в которых Дарья работает нестабильно
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Fri, 01 Oct 2010 15:51:16 +0400
+
+yandaex-mail-daria-www (1.29.0) stable; urgency=low
+
+  * DARIA-592 - Сделать вывод ссылок на видеоролики
+  * DARIA-2224 - Сделать ограничение на кол-во символов посылаемых в запросе за саджестом
+  * DARIA-2269 - "Чекалка на наличие аттачей" ложно срабатывает при пересылке писем
+  * DARIA-2211 - Невозможно отправить письмо с аттачем на народе, в котором была отменена загрузка файла на народ
+  * DARIA-2334 - Не загружается аттач в случае перехода к обычной кнопке загрузки в процессе загрузки
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 28 Sep 2010 17:03:43 +0400
+
+yandaex-mail-daria-www (1.28.3) stable; urgency=low
+
+  * DARIA-2326 - Множественные Re: в title в просмотре письма
+  * Собираем хотфикс 1.28.3
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 24 Sep 2010 19:52:54 +0400
+
+yandaex-mail-daria-www (1.28.2) stable; urgency=low
+
+  * DARIA-2338 - Пропадает "Прикрепить файл" после перемещения письма в папку из просмотра письма
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 24 Sep 2010 16:27:04 +0400
+
+yandaex-mail-daria-www (1.28.1) stable; urgency=low
+
+  * DARIA-1312 - Просмотр вложений-писем
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 21 Sep 2010 21:40:59 +0400
+
+yandaex-mail-daria-www (1.28.0) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-2270 - "Чекалка на наличие аттачей" не срабатывает, если аттачи при написании письма удалить
+  * DARIA-1549 - Сафари, Опера9.64: Не появляется окно подтверждения загрузки на народ
+
+  [ shirokoff ]
+  * DARIA-409 - spellchecker в wisywig'е
+  * DARIA-2305: Еще несколько заглушек
+
+  [ Stepan Reznikov ]
+  * Включаем автообновление на корпе
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 21 Sep 2010 17:00:51 +0400
+
+yandaex-mail-daria-www (1.27.1) stable; urgency=low
+
+  * Поправил ссылку на картинку
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 17 Sep 2010 13:46:43 +0400
+
+yandaex-mail-daria-www (1.27.0) stable; urgency=low
+
+  [ shirokoff ]
+  * DARIA-2122 Прикрутить страницу для неподдерживаемых браузеров.
+  * DARIA-2123 Прикрутить страницу для браузеров в которых Дарья работает нестабильно
+
+  [ Stepan Reznikov ]
+  * DARIA-2138 - Если поиск закончился неудачей, то кнопка "Найти" остается задизейбленной
+  *
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 16 Sep 2010 21:25:24 +0400
+
+yandaex-mail-daria-www (1.26.0) stable; urgency=low
+
+  * DARIA-2182 - Отправлять в inbox при попытке найти с пустым поисковым запросом
+  * DARIA-1983 - IE: редирект во входящие по клику на неактивную кнопку "Пред."
+  * DARIA-2038 - Ссылка на обычную форму прикрепления файла
+  * DARIA-2107 - В Хроме и Сафари при просмотре писем появляются лишние переводы строк
+  * DARIA-2093 - Просмотр аттачей работает не через https
+  * DARIA-1835 - Напротив Отправленных показываются непрочитанные
+  * DARIA-2066 - Показывать "No subject" или "Без темы" для пересланных писем без темы
+  * DARIA-1948 - При сохранении в черновик письма с txt-аттачем, текст из файла вставляется в письмо
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 14 Sep 2010 15:24:25 +0400
+
+yandaex-mail-daria-www (1.25.0) stable; urgency=low
+
+  * DARIA-439 - аттачи: обрабатывать прерывание загрузки файлов
+  * DARIA-1102 - Учитывать аттачи при определении изменённости письма
+  * DARIA-2181 - Логировать "ой, все сломалось" и таймауты handler'ов
+  * DARIA-1870 - Не отключается автосохранение в Черновики
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 10 Sep 2010 19:05:37 +0400
+
+yandaex-mail-daria-www (1.24.0) stable; urgency=low
+
+  * DARIA-2137 - Открыть чат наружу
+  * DARIA-2114 - Переименовать Я.Онлайн в Чат на странице Настроек
+
+ -- artjock <artjock@yandex-team.ru>  Tue, 07 Sep 2010 18:37:39 +0400
+
+yandaex-mail-daria-www (1.23.1) stable; urgency=low
+
+  * Собираем 1.23. Удаление пустых папок.
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Mon, 06 Sep 2010 13:23:29 +0400
+
+yandaex-mail-daria-www (1.23.0) stable; urgency=low
+
+  * Собираем 1.23
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Fri, 03 Sep 2010 16:40:00 +0400
+
+yandaex-mail-daria-www (1.22.4) stable; urgency=low
+
+  * EML-10856: Не работает предпросмотр документов в neo2
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Thu, 02 Sep 2010 17:20:34 +0400
+
+yandaex-mail-daria-www (1.22.3) stable; urgency=low
+
+  * DARIA-2100 Поддержать изменение урла для показа архивов и pdf'ов
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Thu, 02 Sep 2010 14:07:09 +0400
+
+yandaex-mail-daria-www (1.22.2-1) stable; urgency=low
+
+  * DARIA-2081 IE: js-ошибка после обновления списка писем. Редирект с pass.yandex.ru нельзя делать на mailstatic.yandex.net
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Wed, 01 Sep 2010 17:56:41 +0400
+
+yandaex-mail-daria-www (1.22.2) stable; urgency=low
+
+  * DARIA-2081 IE: js-ошибка после обновления списка писем
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Wed, 01 Sep 2010 16:37:41 +0400
+
+yandaex-mail-daria-www (1.22.1) stable; urgency=low
+
+  * DARIA-1942 - При смене страниц выделение списка остается, но кнопки управления письмами неактивны
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Wed, 01 Sep 2010 14:33:26 +0400
+
+yandaex-mail-daria-www (1.22.0-1) stable; urgency=low
+
+  * DARIA-2064 - Показывать вебчат пользователям с настройкой show_chat = on и
+    проставленным сидом 666
+
+ -- artjock <artjock@yandex-team.ru>  Tue, 31 Aug 2010 15:30:07 +0400
+
+yandex-mail-daria-www (1.22.0) stable; urgency=low
+
+  [ shirokoff ]
+  * DARIA-2029 Прикручиваем тему ДетскийСад
+  * DARIA-834 drag&drop: "снять выделение" не снимает выделение со всех писем
+  * DARIA-1207 "Пометить непрочитанными" для нескольких писем
+
+  [ Sergei Nikitin ]
+  * Собираем 1.22.0
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 31 Aug 2010 12:56:19 +0400
+
+yandex-mail-daria-www (1.21.1) stable; urgency=low
+
+  * DARIA-2022 Более подробные логи по отправке и автосохранению письма
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Thu, 26 Aug 2010 12:57:23 +0400
+
+yandex-mail-daria-www (1.21.0) stable; urgency=low
+
+  * Собираем 1.21.0
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Wed, 25 Aug 2010 16:31:47 +0400
+
+yandex-mail-daria-www (1.21) stable; urgency=low
+
+  * DARIA-1127 drag&drop: Не перетаскивается письмо из треда в текущую папку
+  * DARIA-1824 Темы со сменными подложками
+  * DARIA-1688 Подсказки к кнопкам в визивиге на английском языке
+
+ -- shirokoff <shirokoff@yandex-team.ru>  Tue, 24 Aug 2010 17:49:44 +0400
+
+yandex-mail-daria-www (1.20.2) stable; urgency=low
+
+  * Собираем хотфикс 1.20.2
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 20 Aug 2010 18:30:06 +0400
+
+yandex-mail-daria-www (1.20.1) stable; urgency=low
+
+  [ shirokoff ]
+  * DARIA-1956 При очистке папки в настройках в сайдбаре появляется список папок
+
+  [ Stepan Reznikov ]
+  * Собираем хотфикс 1.20.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 20 Aug 2010 13:22:01 +0400
+
+yandex-mail-daria-www (1.20.0) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-1443: Поиск по АК: должен работать так же как и саджест в compose
+  * DARIA-635 - Opera: Кнопка аттача в не прорисовывается
+
+  [ shirokoff ]
+  * DARIA-574 - У музыкальных аттачей нет ссылки Прослушать
+  * DARIA-1935 - Повторяется предыдущее действие при драг-энд-дропе
+  * DARIA-1929 - js-ошибка при удалении аватара
+
+  [ Stepan Reznikov ]
+  * DARIA-1212 - Opera 10.54: после прикрепления группы файлов кнопка "Прикрепить файлы" не кликабельна
+
+  [ shirokoff ]
+  * DARIA-1892 Названия системных папок и меток зарезервированы, сообщать об этом пользователю
+  * DARIA-1957 drag&drop: копировать метку при перетаскивании с письма на письмо (сейчас перемещается)
+
+  [ Stepan Reznikov ]
+  * DARIA-1922 - Оторвать кнопку "Найти" в тулбаре в форме поиске контактов
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 19 Aug 2010 14:53:13 +0400
+
+yandex-mail-daria-www (1.19.3) stable; urgency=low
+
+  * DARIA-1889: Очищать поисковый инпут при переходе на другую "страницу"
+  * DARIA-1900: Suggest по умолчанию выделяет первый результат в списке
+  * Включаем автообновление всем
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 13 Aug 2010 18:01:37 +0400
+
+yandex-mail-daria-www (1.19.2) stable; urgency=low
+
+  * DARIA-1562 - Пока работает поиск дизейблить кнопку Найти
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 12 Aug 2010 21:36:27 +0400
+
+yandex-mail-daria-www (1.19.1) stable; urgency=low
+
+  * Собираем 1.19.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 12 Aug 2010 20:19:02 +0400
+
+yandex-mail-daria-www (1.19) stable; urgency=low
+
+  [ shirokoff ]
+  * DARIA-1087 Перенести в визивиг Дарьи все инструмены из вивизига Нео
+
+  [ Stepan Reznikov ]
+  * DARIA-1852 - письмо отправляется по Enter из поля "Тема"
+
+  [ shirokoff ]
+  * DARIA-1654 Некорректно работает "mailto" в neo2
+  * DARIA-1874 - Opera: При включенном визивиге после отправки письма не редиректит во входящие
+  * DARIA-1324 Фильтры создаются несколько раз
+
+  [ Sergei Nikitin ]
+  * Тест для rpmcommit.
+
+  [ Stepan Reznikov ]
+  * DARIA-1839 - Не исчезает открытый дропдаун по клику на "Снять выделение" в инфолайне
+  * DARIA-1811 - Заголовки и тайтлы для социальных меток
+  * DARIA-1743 - Не работает просмотр аттача, имеющего в имени спецсимволы
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 11 Aug 2010 20:50:03 +0400
+
+yandex-mail-daria-www (1.18.2) stable; urgency=low
+
+  * Собираем 1.18.2
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 09 Aug 2010 16:03:13 +0400
+
+yandex-mail-daria-www (1.18.1) stable; urgency=low
+
+  * Собираем 1.18.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 09 Aug 2010 14:51:48 +0400
+
+yandex-mail-daria-www (1.18.0) stable; urgency=low
+
+  * DARIA-1779 - Выделять папку "Черновики" для письма, сохранённого в черновики
+  * DARIA-1778 - По клику на аватар сервиса вести на список писем от этого сервиса
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 04 Aug 2010 20:33:33 +0400
+
+yandex-mail-daria-www (1.17.2) stable; urgency=low
+
+  * Собираем 1.17.2
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 04 Aug 2010 13:22:18 +0400
+
+yandex-mail-daria-www (1.17.1) stable; urgency=low
+
+  * Собираем 1.17.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 03 Aug 2010 20:02:40 +0400
+
+yandex-mail-daria-www (1.17.0) stable; urgency=low
+
+  [ shirokoff ]
+  * DARIA-1121 IE: В режиме визивиг не появляется алерт о потере несохраненного письма с телом
+  * DARIA-1645: Фильтры: добавить действие "пометить прочитанным" (убрать пункт "Прочтённое" из действия "Поставить метку")
+  * DARIA-1341 Не работают функции рассказать о странице/ссылке/картинке и пробрасывание адреса для mailto при установленном яндекс.баре
+
+  [ Stepan Reznikov ]
+  * DARIA-1521 - В ИЕ некорректный размер поп-апа при попытке "очистить" или "удалить" папку с длинным именем
+  * DARIA-1477 - Не обновляется список контактов после отправления на новый адрес
+  * DARIA-1678 - Сбрасывать выделенные контакты после отправки письма
+  * DARIA-1696 - Небезопасная работа с данными на стороне браузера, ограниченная XSS при составлении письма
+  * DARIA-1704 - Поле "Адреса электронной почты" недоступно по табу
+
+  [ shirokoff ]
+  * DARIA-1356 Фильтры: при выборе метки в имени которой есть % перекидывает во входящие
+
+  [ Stepan Reznikov ]
+  * DARIA-1731 - При попытке просмотра письма в виде html редиректит во входящие
+  * DARIA-1683 - Не работает печать письма
+  * DARIA-1624 - Положить под марку лого NDA
+
+  [ shirokoff ]
+  * DARIA-1324 - Фильтры создаются несколько раз
+
+  [ Stepan Reznikov ]
+  * DARIA-782 - Отправка письма ctrl+enter'ом
+  * DARIA-1272 - Статуслайн, уведомляющий о прихождении нового письма не должен пропадать
+  * DARIA-1515 - Cбрасывать кеш саджеста при добавлении/редактировании/удалении контактов
+  * DARIA-580 - В быстром ответе курсор встает в цитируемый текст
+  * DARIA-1528 - По дефолту не искать в папке Спам
+
+  [ shirokoff ]
+  * DARIA-1752 - Не сохраняются настройки фильтра проставления метки
+
+  [ Stepan Reznikov ]
+  * DARIA-1763 - Показывать сообщение о превышении размера аттача
+  * DARIA-694 - Очистка Удаленных или Спама во время написания письма в композе приводит к потере письма
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 03 Aug 2010 19:49:03 +0400
+
+yandex-mail-daria-www (1.16.2) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-1477 - Не обновляется список контактов после отправления на новый адрес
+  * DARIA-1118 - IE: Прокрутка в списке контактов подтупливает
+  * DARIA-16 - Увеличение полей адресов по вертикали
+
+  [ shirokoff ]
+  * DARIA-1645 Фильтры: добавить действие "пометить прочитанным"
+
+  [ Stepan Reznikov ]
+  * DARIA-1658 - Некорректная работа автоподстановки контакта в написании письма
+  * DARIA-1655 - ИЕ6: Не видны задизейбленные иконки визивига
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 27 Jul 2010 18:27:13 +0400
+
+yandex-mail-daria-www (1.16.1) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-902 - Поменять тексты ошибко загрузки файла
+  * DARIA-1594 - daria-problems@yandex-team.ru в bcc
+
+  [ Ivan ]
+  * DARIA-1545 Не вижу курсора в поле для ответа на письмо
+  * DARIA-1633 Не устанавливается тема почты
+
+  [ Stepan Reznikov ]
+  * DARIA-1510 - Вернуть ссылку "Все письма от контакта"
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 26 Jul 2010 18:44:10 +0400
+
+yandex-mail-daria-www (1.16.0) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-1513 - Опера 9.64: JS error при обновлении страницы
+  * DARIA-1521 - В ИЕ некорректный размер поп-апа при попытке "очистить" или "удалить" папку с длинным именем
+
+  [ Ivan ]
+  * DARIA-1269 Слишком большой тултип при перетаскивании метки с письма
+  * DARIA-870 drag&drop: Не подсвечивается блок меток при снятии метки
+
+  [ Stepan Reznikov ]
+  * DARIA-1458 - Сообщение о перемещении в спам
+  * DARIA-1515 - Cбрасывать кеш саджеста при добавлении/редактировании/удалении контактов
+  * DARIA-1533 - АК: при удалении единственного контакта на конкретную букву перекидывать на весь список
+  * DARIA-1016 - После пометки письма как непрочитанное возвращать пользователя на ту страницу, на которой был
+
+  [ Ivan ]
+  * DARIA-1603 IE 8 удаляет системные метки
+  * DARIA-1523 Дизейблится кнопка "очистить" при отмене/закрытии поп-ап окна "очистить папку"
+
+  [ Stepan Reznikov ]
+  * DARIA-1616 - вынести кнопку удалить в АК на уровень выше
+
+  [ Ivan ]
+  * DARIA-445 Ошибки при переходе в св-ва письма
+
+ -- Ivan <shirokoff@yandex.ru>  Fri, 23 Jul 2010 18:01:06 +0400
+
+yandex-mail-daria-www (1.15.0) stable; urgency=low
+
+  [ Ivan ]
+  * DARIA-1283 FF: иногда в wysiwyg'е пропадает курсор
+
+  [ Stepan Reznikov ]
+  * DARIA-1564 - Убрать тизер
+
+  [ Ivan ]
+  * DARIA-1563 ИЕ: иконки визивига
+
+  [ Stepan Reznikov ]
+  * DARIA-1572 - ИЕ: нажатие кнопки из тулбара визивига вызывает алерт "вы уверены, что хотите уйти..."
+
+  [ Ivan ]
+  * DARIA-1327 Нет тултипов для темы и значимой строки в списке писем
+  * DARIA-1329 Нет тултипа для иконок "отвечено" и "переслано"
+  * DARIA-1297 Фильтры: при удалении правила спрашивать подтверждение удаления
+
+  [ Stepan Reznikov ]
+  * DARIA-1099 - Многострочное поле "Кому" и зелёный человечек
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Tue, 20 Jul 2010 19:24:05 +0400
+
+yandex-mail-daria-www (1.14.0) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-1257 - Блок Следующее / Предыдущее
+  * DARIA-1062 - К строке поиска прикрутить саджест из compose
+  * DARIA-1495 - Иконки 16х16 для квикреплая и списка писем (ответ, переслать и т.п.)
+
+  [ Ivan ]
+  * Поменяли загрузку tinyMCE для IE
+
+ -- Ivan <shirokoff@yandex.ru>  Mon, 19 Jul 2010 11:59:15 +0400
+
+yandex-mail-daria-www (1.13.0) stable; urgency=low
+
+  * DARIA-1464 - Опера: в написании при клике в тело письма возникает JS ошибка
+  * DARIA-1516 - Окно подтверждения загрузки на народ-диск
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Thu, 15 Jul 2010 14:28:52 +0400
+
+yandex-mail-daria-www (1.12.1) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * 1.12.1
+
+  [ Ivan ]
+  * DARIA-712 Опера 10 и 10.5: После захода в композ с включенным визивигом Дарья перестает работать
+
+ -- Ivan <shirokoff@yandex.ru>  Tue, 13 Jul 2010 15:32:19 +0400
+
+yandex-mail-daria-www (1.12.0) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-1260 - Не меняется цифра в тайтле страницы при смене прочитанности у записей в списке писем
+
+  [ Stepan Reznikov ]
+  * DARIA-1450 - Обозвать поле фамилия
+  * DARIA-1438 - Плывет верстка в просмотре письма, если пришло письмо с темой "Re:" или "Fwd:"
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 12 Jul 2010 17:53:40 +0400
+
+yandex-mail-daria-www (1.11.1) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-1316 - Исправить тултип "со вложением"
+  * DARIA-1307 - Добавить ссылку "Все" в алфавит - в начало или конец.
+  * DARIA-1373 - Пустое письмо после отправки во время сохранения
+  * Заменил preserve-line-breaks на x:nl2br
+
+  [ Ivan ]
+  * DARIA-712 Опера 10 и 10.5: После захода в композ с включенным визивигом Дарья перестает работать
+
+  [ Stepan Reznikov ]
+  * Сбрасываю кеш у папки после ответа или пересылки письма из этой папки
+  * DARIA-1075 - Добавление контакта
+
+  [ Sergei Nikitin ]
+  * DARIA-1397 - Включить новости в левую колонку
+  * DARIA-805 - Сообщать юзеру о требованиях дарьи (JS, версии браузеров)
+  * DARIA-928 - В тредаъ неправильно указан отправитель писем
+
+  [ Stepan Reznikov ]
+  * DARIA-1428 - Доверстать окно просмотра контакта
+  * DARIA-1114 - Переверстать блок тредов
+  * DARIA-1100 - АК: удаление контакта
+  * DARIA-884 - Тулбар: починить кнопку "Отменить"
+  * 1.11.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 09 Jul 2010 19:56:21 +0400
+
+yandex-mail-daria-www (1.10.0) stable; urgency=low
+
+  * DARIA-585 - Прикрутить капчу для спамеров
+  * DARIA-1321 - АК: добавление ящика в карточке контакта
+  * DARIA-1322 - АК: удаление ящика в карточке контакта
+  * DARIA-1172 - Сделать прозрачный фон у флеш-загрузчика файлов
+  * DARIA-1359 - Надо убрать из тулбара compose кнопки Отправить, Отменить, Сохранить
+  * DARIA-1344 - Невозможно отправить письмо, которое в этот момент сохраняется в черновики
+  * DARIA-349 - Не снимается чекбокс для пустой папки
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Mon, 05 Jul 2010 19:35:18 +0400
+
+yandex-mail-daria-www (1.9.0) stable; urgency=low
+
+  * DARIA-576 - Концептуальная проблема в работе саджеста
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 30 Jun 2010 21:05:19 +0400
+
+yandex-mail-daria-www (1.8.0) stable; urgency=low
+
+  * DARIA-1078 - АК: объединить выдачу для и-й и е-ё
+  * DARIA-1277 - АК: оторвать importContacts
+  * DARIA-1278 - АК: в searchContacts и getFirstChars передавать suid и maildb
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 30 Jun 2010 18:55:48 +0400
+
+yandex-mail-daria-www (1.7.2) stable; urgency=low
+
+  * 1.7.2
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Wed, 30 Jun 2010 17:50:21 +0400
+
+yandex-mail-daria-www (1.7.1) stable; urgency=low
+
+  * DARIA-1171 - reply-all оставляет меня в адресатах
+  * DARIA-585 - Прикрутить капчу для спамеров
+  * 1.7.1
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Wed, 30 Jun 2010 13:48:55 +0400
+
+yandex-mail-daria-www (1.6.6) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * 1.6.2
+
+  [ Stepan Reznikov ]
+  * DARIA-1185 - Не цитируется письмо при переходе в полный ответ из квик-реплая
+  * 1.6.3
+  * 1.6.4
+  * 1.6.5
+  * 1.6.6
+
+ -- Stepan Reznikov <stepan@yandex-team.ru>  Fri, 25 Jun 2010 19:34:15 +0400
+
+yandex-mail-daria-www (1.6.1) stable; urgency=low
+
+  * 1.6.1
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 22 Jun 2010 16:27:53 +0400
+
+yandex-mail-daria-www (1.6.0) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-1113 - Группировать по обсуждениям -> Группировать по теме
+  * DARIA-1156 - Потеряли проверку у открытых тредов в списке писем
+
+  [ Stepan Reznikov ]
+  * DARIA-1171 - reply-all оставляет меня в адресатах
+
+  [ Sergei Nikitin ]
+  * Собираем 1.6.0
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Mon, 21 Jun 2010 19:23:36 +0400
+
+yandex-mail-daria-www (1.5.6) stable; urgency=low
+
+  * 1.5.6
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Fri, 18 Jun 2010 20:54:47 +0400
+
+yandex-mail-daria-www (1.5.5) stable; urgency=low
+
+  * Дополнительные пакеты с конфигами
+
+ -- Alexey Ten (Lynn) <lynn@yandex-team.ru>  Fri, 18 Jun 2010 15:20:42 +0400
+
+yandex-mail-daria-www (1.5.4) stable; urgency=low
+
+  * 1.5.4
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Thu, 17 Jun 2010 15:17:22 +0400
+
+yandex-mail-daria-www (1.5.3) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.5.2
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-844 Настройки: папки и метки
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-585 - Прикрутить капчу для спамеров
+  * DARIA-1067 - Просмотр контакта
+  * DARIA-1079 - АК: имя в списке контактов должно быть ссылкой
+
+  [ Sergei Nikitin ]
+  * Собираю 1.5.3
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Thu, 17 Jun 2010 14:07:02 +0400
+
+yandex-mail-daria-www (1.5.1) stable; urgency=low
+
+  * bugfix for same host href
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 11 Jun 2010 21:02:09 +0400
+
+yandex-mail-daria-www (1.5.0) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-762 - Клик на "Почта"/"Проверить" и какие-то действия с письмом приводят к переинициализации ростера
+  * DARIA-1095 - Баг при очистке папки
+  * DARIA-1043 - Зелень: не видно скрепки в списке меток
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-658 - Выводить подтверждение при покидании композа
+
+  [ Sergei Nikitin ]
+  * DARIA-282 - Внедрить версию лего со счётчиками метрики
+  * DARIA-450 - В папке Спам не должно быть возможности помечать письма метками
+  * DARIA-284 - Не проверяется авторизованность пользователя
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1033 - Нужен колорпикер для создания метки
+  * DARIA-1094 - У нефлешового загрузчика убрать надпись
+  * DARIA-1092 - Пора убрать алерты с табов
+  * Собираю 1.5.0
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 11 Jun 2010 20:36:35 +0400
+
+yandex-mail-daria-www (1.4.0) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-880 - Курсор встает на вторую строку
+
+  [ Sergei Nikitin ]
+  * DARIA-1041 - Переключение табов "Письма - Контакты - Календарь - Подписки"
+  * DARIA-1071 - В Настройках сбрасывать выбранность таба "Письма"
+  * DARIA-441 - Показывается счетчик непрочитанных для папки Черновики
+  * DARIA-1074 - Выводить "Загружается..." при загрузке страницы
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1025 - Кривой скроллинг саджеста
+  * DARIA-585 - Прикрутить капчу для спамеров
+
+  [ Sergei Nikitin ]
+  * DARIA-514 - Сбрасывать параметр page_number при переходе от простого списка к тредам и наоборот
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.4.0
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Wed, 09 Jun 2010 20:17:33 +0400
+
+yandex-mail-daria-www (1.3.1) stable; urgency=low
+
+  * Сборка пакета 1.3.1
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Tue, 08 Jun 2010 13:18:35 +0400
+
+yandex-mail-daria-www (1.3.0) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-277 - Не подсвечиваются адреса в Кому при наведении на них мышкой
+  * DARIA-528 - Из заголовка треда надо убрать суммарный размер аттачей
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-1032 Пропали иконки в последних трех пунктах
+  * DARIA-839 Подписки
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1037 - IE: плохие зеленые человечки в квикреплае в полях копия и
+    скрытая
+  * DARIA-1039 - "Показать все NNN контактов" вместо "Показать все контакты"
+  * DARIA-1052 - Немного переделать верстку чекбоксов емейлов в АК и в попапе
+    АК
+
+  [ Sergei Nikitin ]
+  * DARIA-1061 - Поменять крестик, сворачивающий тему
+  * DARIA-953 - Более контрастные флажки
+  * DARIA-1068 - Подключить настройку размера шрифта
+  * DARIA-1063 - Добавить настройку, в которую будем сохранять собранность/раскрытость шапки в дарье
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1066 - Ссылки --> не ссылки в АК
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 07 Jun 2010 19:32:33 +0400
+
+yandex-mail-daria-www (1.2.2) stable; urgency=low
+
+  * Поправил Makefile, чтобы в config.js вставилась правильная версия релиза
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 31 May 2010 19:20:31 +0400
+
+yandex-mail-daria-www (1.2.1) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-917 - Адресная книга -> Контакты
+  * DARIA-913 - Сделать "пред. - след." аналогично пейджеру
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-792 - Пустая строка после аттачей с длинным именем файла
+
+  [ Sergei Nikitin ]
+  * DARIA-450 - В папке Спам не должно быть возможности помечать письма
+    метками (временное решение)
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1030 - Добавить ссылку "Показать все N контактов" в АК
+
+  [ Sergei Nikitin ]
+  * DARIA-148 - Не появляется горизонтальный скрол при уменьшении окна браузера
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-1027 - Закрывать попап, если нажали back/forward в браузере
+  * DARIA-1000 - Возвращать фокус в поле To при закрытии попапа АК
+  * DARIA-686 - Закрытие Daria.Dialog.Confirm крестиком не вызывает хэндлер cancelHandler
+
+  [ Sergei Nikitin ]
+  * DARIA-1014 - Все ссылки-дропдауны сделать с пунктирным подчёркиванием
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.2.1
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 31 May 2010 18:59:33 +0400
+
+yandex-mail-daria-www (1.2.0) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-968 - Рефакторинг вёрстки списка папок
+
+  [ Stepan Reznikov (stepan) ]
+  * Перенес все что связано с аттачами в attachments.xsl
+  * DARIA-965 - В быстром ответе около кнопки "Прикрепить файлы" нет текста о
+    загрузке на Народ
+  * DARIA-1001 - Не снимать чекбокс с адресатов, если изменили строчку поиска
+    в попапе АК
+  * DARIA-910 - Рядом с "Сообщить о проблеме" выводить дату релиза
+  * DARIA-1029 - Включать чекбокс папки по клику на её название
+  * Вернул плагин Вегеда jquery.hashhistory.js
+  * DARIA-1028 - Удалять из истории http://mail.yandex.ru/neo2/
+  * DARIA-1031 - Добавить зеленых человечков в квикреплае
+  * DARIA-968 - Рефакторинг вёрстки списка папок
+  * Сборка пакета 1.2.0
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 28 May 2010 21:13:55 +0400
+
+yandex-mail-daria-www (1.1.4) stable; urgency=low
+
+  * Собираем 1.1.4
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 24 May 2010 21:05:34 +0400
+
+yandex-mail-daria-www (1.1.3) stable; urgency=low
+
+  * Собираем 1.1.3
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 24 May 2010 20:34:21 +0400
+
+yandex-mail-daria-www (1.1.2) stable; urgency=low
+
+  * Собираем 1.1.2
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 24 May 2010 20:14:56 +0400
+
+yandex-mail-daria-www (1.1.1) stable; urgency=low
+
+  * Собираем 1.1.1
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 24 May 2010 18:56:29 +0400
+
+yandex-mail-daria-www (1.1.0) stable; urgency=low
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-510 drag&drop: фон списка писем остается подсвеченным, если во время перетаскивания метки браузер потерял фокус
+  * DARIA-226 drag&drop: желтенькая всплывающая подсказка не исчезает, если окно браузера потеряло фокус
+  * DARIA-308 drag&drop: письму из Спама можно проставлять метки
+
+  [ Sergei Nikitin ]
+  * DARIA-887 - Добавить title плюсику в шапке
+  * DARIA-797 - Поменять цвета меток
+  * DARIA-763 - Уязвимость Cross-Site Request Forgery (CSRF) в /neo2/handlers/handlers.xml
+  * DARIA-370 - В списке непрочтенных писем в папке в списке меток выделяется "непрочтенные"
+
+  [ Roman Komarov ]
+  * DARIA-863 - Статуслайн при свернутой шапке
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-898 - Некорректный адрес email
+  * DARIA-900 - Переверстка полей в compose
+  * DARIA-880 - Курсор встает на вторую строку
+
+  [ Roman Komarov ]
+  * DARIA-561 - "Скачать файлы одним архивом" легло на название файла
+  * DARIA-326 - drag&drop: горизонтальный скроллбар в IE при перетаскивании
+    писем
+  * DARIA-947 - FF: drag&drop: полоска под тулбаром при подсветке
+  * DARIA-909 - Шапка: hover плюса/минуса под темы
+  * DARIA-878 - Свернутый режим: пропадают метелки очистки спама и удаленных
+
+  [ Sergei Nikitin ]
+  * DARIA-860 - Кнопка увеличения/уменьшения шрифтов
+  * DARIA-693 - Баг с тулбаром и метками
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-435 - Попап адресной книги
+  * Сборка пакета 1.1.0
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 24 May 2010 18:14:37 +0400
+
+yandex-mail-daria-www (1.0.37) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-765 - Небезопасная работа с данными на стороне браузера при работе с
+    метками, вероятная XSS
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-308 drag&drop: письму из Спама можно проставлять метки
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-833 - Съехала дата в списке писем под сообщением
+  * DARIA-807 - Отличать настоящую цитату (квотирование) от просто тега
+    blockquote в html-письме рассылки
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-494 drag&drop: удалять метку при драге в блок меток
+  * DARIA-493 drag&drop: удалять метку при драге с письма в тулбар на кнопку «Удалить»
+  * DARIA-854 drag&drop: отрубить возможность драга правой кнопкой мыши
+  * DARIA-326 drag&drop: горизонтальный скроллбар в IE при перетаскивании писем
+  * DARIA-510 drag&drop: фон списка писем остается подсвеченным, если во время перетаскивания метки браузер потерял фокус
+  * DARIA-226 drag&drop: желтенькая всплывающая подсказка не исчезает, если окно браузера потеряло фокус
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-789 - Отвалилось Ctrl → в листалке
+  * DARIA-67 - Свёрнутая шапка
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 07 May 2010 19:08:12 +0400
+
+yandex-mail-daria-www (1.0.36) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-807 - Отличать настоящую цитату (квотирование) от просто тега
+    blockquote в html-письме рассылки
+
+  [ Sergei Nikitin ]
+  * DARIA-688 - Вернуть сообщения в инфолайне
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-645 - "По отправителю" вместо "По адресату" в дропдауне в
+    отправленных
+
+  [ Roman Komarov ]
+  * DARIA-808 - Метка и письмо на двух строках
+  * DARIA-769 - IE7: далеко отстоит скобка "Скачать файлы одним архивом"
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-494 drag&drop: удалять метку при драге в блок меток
+  * DARIA-493 drag&drop: удалять метку при драге с письма в тулбар на кнопку «Удалить»
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-659 - Курсор переходит в самый конец письма по клику на tab в
+    предыдущем поле
+
+  [ Roman Komarov ]
+  * DARIA-621 - "Отцентровать" дарью в которой отключена реклама
+  * DARIA-771 - Заменить апельсин
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-770 IE: js-ошибка при перетаскивании метки "с вложениями"
+  * DARIA-786 Не подсвечивается кнопка "Не прочитано"
+  * DARIA-773 Подсвечивается не та область в просмотре письма при перетаскивании метки
+  * DARIA-567 XSS в тултипе драг-н-дропа
+  * DARIA-809 Не метится первое письмо в списке
+  * DARIA-787 Не выключается подсветка списка писем после перетаскивания метки с письма
+  * DARIA-800 Снятие метки при перетаскивании
+
+  [ Roman Komarov ]
+  * DARIA-823 - В ИЕ в просмотре письма пропадают переносы строк
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-231 drag&drop: при перетаскивании письма на "Снять выделение" не выводится соответствующая подсказка
+  * DARIA-512 drag&drop: при перетаскивании на метку писем из списка под открытым письмом, метится открытое письмо
+
+  [ Stepan Reznikov (stepan) ]
+  * Собираю 1.0.36
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Wed, 05 May 2010 20:09:04 +0400
+
+yandex-mail-daria-www (1.0.35) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-778 - Изначально сворачивать цитаты
+
+  [ Sergei Nikitin ]
+  * DARIA-760 - Переверстать строчку грида на абсолютное позиционирование
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-742 - Opera: не вводятся символы ! & ( " в поля to, cc, bcc
+  * DARIA-756 - В виде HTML - пустое окно
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Wed, 28 Apr 2010 20:14:46 +0400
+
+yandex-mail-daria-www (1.0.34) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-256 - Показывать аватарки в просмотре письма
+
+  [ Roman Komarov ]
+  * DARIA-727 - Обновить маленькие иконки сервисов
+
+  [ Stepan Reznikov (stepan) ]
+  * Добавил название темы в репорт о проблеме
+  * Скрываем аватар в композе если аватара нет
+  * DARIA-734 - Метки: удаление вместо перехода к списку помеченных
+  * DARIA-631 - Дропдаун "Дополнительно" под блоком "Обсуждение темы"
+
+  [ Roman Komarov ]
+  * DARIA-728 - Увеличить расстояние между цифрами в листалке ~ в два раза
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-723 - Добавить иконку для аттачей, которые не удалось загрузить
+
+  [ Roman Komarov ]
+  * DARIA-738 - IE8: отключение ClearType
+
+  [ Stepan Reznikov (stepan) ]
+  * Новый текст в попапе об уходе из Дарьи
+  * DARIA-711 - Вынуть кнопку аттача файлов из текстарии в квикреплае
+
+  [ Sergei Nikitin ]
+  * DARIA-679 - Прибиваем подвал
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-751 - В поле To окружать имя кавычками
+
+  [ Roman Komarov ]
+  * DARIA-736 - Черная тема: красный квадррат вместо скрепки
+  * DARIA-749 - Меняем иконку аттачей в просмотре письма
+
+  [ Stepan Reznikov (stepan) ]
+  * Оторвал b-foot_loading
+  * DARIA-748 - При ответе на своё же письмо в поле "Кому" подставлять
+    адресата из письма, на которое отвечаешь
+  * DARIA-759 - Ошибка синтаксического анализа XML при пересылке письма
+    вложением
+  * DARIA-735 - FF 3.0: некорректное проставление чекбоксов
+  * DARIA-410 - Неправильный tab-order на странице написания письма
+  * DARIA-768 - Активная уязвимость вида XSS на странице составления письма
+  * DARIA-765 - Небезопасная работа с данными на стороне браузера при работе с
+    метками, вероятная XSS
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Wed, 28 Apr 2010 13:45:20 +0400
+
+yandex-mail-daria-www (1.0.33) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-684 - использовать в саджест <param type="UID"/>
+
+  [ Roman Komarov ]
+  * DARIA-705 - Доработки по теме
+  * DARIA-706 - Доработки по теме
+  * DARIA-707 - Доработки по теме
+  * DARIA-708 - Доработки по теме
+  * DARIA-716 - В композе внизу все кнопки должны быть одинакового размера
+  * DARIA-678 - Рамка у картинок-ссылок
+
+  [ Sergei Nikitin ]
+  * 1.0.33
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Thu, 22 Apr 2010 13:38:34 +0400
+
+yandex-mail-daria-www (1.0.32) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-304 - Чекбокс "Добавить письмо в виде вложения" для пересылаемых
+    писем
+  * DARIA-709 - Заменить «Версия для печати» на «Распечатать...»
+
+  [ Sergei Nikitin ]
+  * Собираем 1.0.32.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 20 Apr 2010 19:57:01 +0400
+
+yandex-mail-daria-www (1.0.31) stable; urgency=low
+
+  * Собираем 1.0.31.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 20 Apr 2010 14:55:36 +0400
+
+yandex-mail-daria-www (1.0.30) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * Пофиксил баг, что при ответе на письмо в визивиге не показывались
+    инлайновые картинки
+  * DARIA-304 - Чекбокс "Добавить письмо в виде вложения" для пересылаемых
+    писем
+  * Сделали повторную загрузку файлов при неудаче
+
+  [ Roman Komarov ]
+  * DARIA-692 - При увеличении шрифта у выбранной папки внизу проявляется
+    неправильный цвет
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-365 - При переключении в plain-text и отправке письма ctrl+enter'ом
+    теряем тело письма
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Tue, 20 Apr 2010 14:32:07 +0400
+
+yandex-mail-daria-www (1.0.29) stable; urgency=low
+
+  * Поправил формирование ссылок в теле письма (вложенные сылки, wmi-link,
+    wmi-mailto)
+  * При переходе по ссылке mailto: вставляем в поле Кому не содержимое ссылки,
+    а substring-after(@href, 'mailto:')
+  * Добавил в запрос variate=1 (DARIA-586 - Саджест не учитывает транслит)
+  * DARIA-543 - Просмотр аттачей: проблемы с кодировкой
+  * DARIA-633 - Письмо от Postmaster - разные аттачи в нео и дарье
+  * Поправил баг в пейджере: при нажатии Ctrl+влево на первой странице и
+    Ctrl+вправо на последней возникала ошибка
+  * Добавил шорткаты "вправо-влево" для открывания/закрывания тредов
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 16 Apr 2010 20:07:31 +0400
+
+yandex-mail-daria-www (1.0.28) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * Пофиксил появляющийся прогрессбар у аттачей в просмотре письма
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-675 В designMode Internet Explorer'a невозможно увести каретку с элементов, у которых есть свойство hasLayout
+
+ -- Ivan Shirokoff (shirokoff) <shirokoff@yandex-team.ru>  Fri, 16 Apr 2010 12:20:02 +0400
+
+yandex-mail-daria-www (1.0.27) stable; urgency=low
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-363 Не отправляются письма по ctrl+enter в режиме wysiwyg
+
+  [ Roman Komarov ]
+  * DARIA-561 - "Скачать файлы одним архивом" легло на название файла
+  * DARIA-642 - Кнопка "Сохранить как черновик" переносится на другую строку в
+    квикреплае
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-522 - Сообщение в статуслайне о фатальной ошибке
+
+  [ Sergei Nikitin ]
+  * DARIA-276 - Кнопка "Спам" для ненужных папок
+  * DARIA-490 - Дизейблятся ссылки Поставить метку и Переложить в папку после
+    перемещения письма
+  * DARIA-455 - Отключить дропдауны "Поставить метку" и "Переложить в папку" в
+    списке важных писем
+  * DARIA-583 - Не активируется кнопка "пометить прочитанным"
+  * DARIA-646 - Не активируются кнопки в тулбаре при выборе писем
+
+  [ Roman Komarov ]
+  * DARIA-634 - IE: Время налезает на список писем под просмотром письма
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-372 - Обрабатывать ошибки флеш-загрузчика файлов
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Thu, 15 Apr 2010 20:26:36 +0400
+
+yandex-mail-daria-www (1.0.26) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-657 - Ссылка открывается на 3х вкладках
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-407 wysiwyg: разрыв цитирования
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-663 - Поменять текст в попапе
+  * DARIA-667 - Курсор перепрыгивает сразу в тело письма + периодически его
+    вообще не видно
+  * Добавил в форму сообщения об ошибке отладочную инфу
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Wed, 14 Apr 2010 18:41:42 +0400
+
+yandex-mail-daria-www (1.0.25) stable; urgency=low
+
+  * 1.0.25. Отпилил вебчат, ходящий хз на какие хосты, не доступные вне
+    девелоперской сети.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 13 Apr 2010 23:35:12 +0400
+
+yandex-mail-daria-www (1.0.24) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-571 - Не дизейблится кнопка Прикрепить файл при появлении попап об
+    ограничении колич. адресатов
+
+  [ Roman Komarov ]
+  * DARIA-630 - Поправить размеры ссылок в списке папок
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-632 - Отваливается флеш прогресс-бар при отмене загрузки аттача
+
+  [ Ivan Shirokoff (shirokoff) ]
+  * DARIA-327 Textarea тела письма теряет фокус при переключении режима wysiwyg-plain text
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-619 - Ошибка при попытке аттача файла с символом амперсанда в
+    названии файла
+  * DARIA-596 - Если в саджесте нет имени e-mail должен быть черным
+
+  [ Sergei Nikitin ]
+  * DARIA-357 - Поиск не реагирует на Enter
+  * DARIA-362 - В Сафари в результах поиска портится кодировка
+  * DARIA-602 - Если папка пустая "-" не показывать
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-644 - Кнопка аттача плывет при включенном плагине Flashblock в FF
+  * DARIA-626 - Если оборачивать plain/text письма в тэг <pre>, то они будут
+    выглядеть намного красивее
+  * DARIA-624 - Не выводить попап о потере форматирования для пустых писем
+  * DARIA-479 - Поддержка кириллических доменов в дарье
+
+  [ Sergei Nikitin ]
+  * Апдейтить блоки "Обсуждение" (справа) и "Ближайшие письма" (снизу) на
+    странице просмотра письма при операциях mark/unmark/label/unlabel.
+  * Не показываем кнопку "Пометить как ..." в тулбаре при просмотре письма.
+  * После переноса письма в папку дизаблились кнопки в тулбаре.
+  * Не нужно вычислять $(window).width() до ondomready. Из-за этого ломался
+    FF3.7a4.
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.0.24
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Tue, 13 Apr 2010 20:34:40 +0400
+
+yandex-mail-daria-www (1.0.23) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * Падения оперы и проблемы с логинами с точками.
+  * Собираем 1.0.23.
+
+  [ Roman Komarov ]
+  * DARIA-630 - Поправить размеры ссылок в списке папок
+
+ -- Roman Komarov <kizu@yandex-team.ru>  Thu, 08 Apr 2010 19:25:58 +0400
+
+yandex-mail-daria-www (1.0.22) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * Правильно считаем count -- треды учитываем с соответствующим весом, а не с
+    всегда 1.
+  * Не показываем кнопку Спам в композе.
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-140 - Блок аттачей в quickreply'е
+
+  [ Roman Komarov ]
+  * DARIA-608 - Задизейбленые ссылки становятся активны при наведении на них
+    мышкой
+  * DARIA-614 - Подсвечивается стрелка в "Пред. След."
+  * DARIA-610 - Переносится ссылка "Загрузить _размер аттача_" в списке
+    аттачей
+  * DARIA-387 - Артифакты в списке папок
+
+ -- Roman Komarov <kizu@yandex-team.ru>  Thu, 08 Apr 2010 18:06:42 +0400
+
+yandex-mail-daria-www (1.0.21) stable; urgency=low
+
+  * Тема с рыбками переехала в turquoise, а в blue теперь показывается
+    дефолтная тема (classic).
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Tue, 06 Apr 2010 17:24:37 +0400
+
+yandex-mail-daria-www (1.0.20) stable; urgency=low
+
+  * Сборка пакета 1.0.20
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Tue, 06 Apr 2010 14:42:18 +0400
+
+yandex-mail-daria-www (1.0.19) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-424 - Клик на слово "Входящие" не обновляет папку
+  * DARIA-570 - При появлении сообщение об ограничении количества получателей
+    затирается часть кнопки Прикрепить файл
+
+  [ Roman Komarov ]
+  * DARIA-588 - Убрать подчеркивание у неактивных ссылок.
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-414 - Не сохраняется в черновиках кастомный адрес "От кого"
+  * DARIA-470 - Не сохраняется набранный текст при переходе по ссылкам
+    "Ответить", "Ответить всем", "Переслать" в заголовке быстрого ответа
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Mon, 05 Apr 2010 16:35:33 +0400
+
+yandex-mail-daria-www (1.0.18) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-427 - Favicon
+  * DARIA-562 - Показывается только один адресат из рассылки в списке отправленных писем
+  * DARIA-548 - При составлении письма, когда имени нет, остаются пустые скобки
+
+  [ Roman Komarov ]
+  * DARIA-568 - Не показывается часть ссылки "Скачать файлы одним архивом"
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-535 - Неверно показываются адреса в заголовке писем
+
+  [ Roman Komarov ]
+  * DARIA-387 - Артифакты в списке папок
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-302 - При переходе от wysiwyg к простому тексту не выдается
+    предупреждение о том, что форматирование будет утеряно
+
+  [ Roman Komarov ]
+  * DARIA-538 - Заголовок налезает на флажок в FF 3.0.18
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-578 - Подчеркивание у стрелок в b-mail-icon_arrow-up и
+    b-mail-icon_arrow-down
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Thu, 01 Apr 2010 20:16:10 +0400
+
+yandex-mail-daria-www (1.0.17) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-539 - Новые блоки-обертки
+  * DARIA-476 - Выводить сообщение, если в получателей более 25 штук
+  * DARIA-497 - Показывать в списке аттачей текстовые файлы которые мы вывели в <bodies>
+  * DARIA-542 - Открывать ссылки в письме в новом окне
+  * DARIA-556 - Показывать размер в байтах для маленьких аттачей в композе
+
+  [ Roman Komarov ]
+  * DARIA-552 - Вертикальная надпись для Обсуждений
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-546 - При удалении добавленных аттачей отваливается добавление новых
+
+  [ Roman Komarov ]
+  * DARIA-347 - Цвет Апельсин: :hover цвет для ссылок
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-558 - Не получается клавиатурой вернуть скроллинг в топ страницы
+
+  [ Roman Komarov ]
+  * DARIA-561 - "Скачать файлы одним архивом" легло на название файла
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-547 - Добавить padding в квик-реплае
+  * DARIA-545 - Стрелочки для classic
+
+  [ Roman Komarov ]
+  * DARIA-354 - Появился белый фон под тизером в Сафари, уже знаете?
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.0.17
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Tue, 30 Mar 2010 22:40:10 +0400
+
+yandex-mail-daria-www (1.0.16) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-452 - Cсылки без http в теле письма
+
+  [ Roman Komarov ]
+  * DARIA-527 - Оранжевая, Фиолетовая темы. выделенная папка должна быть
+    белого цвета
+  * DARIA-525 - Неправильная реакция на ховер у табов
+  * DARIA-526 - Увеличить прогрессбар у загружаемых аттачей
+  * DARIA-529 - Поменять цвет лего ссылок
+  * DARIA-334 - Цвет Апельсин: выделение табов Письма/АдрКнига/Файлы при
+    наведении
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-453 - Обработать <span class="wmi-mailto">
+  * DARIA-390 - Цвет Апельсин: треды в просмотре письма
+
+  [ Roman Komarov ]
+  * DARIA-474 - В ИЕ при вводе большого количества адресатов поля смещаются
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-399 - Добавить ссылки на просмотр документов, открываемый в новом окне
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 26 Mar 2010 19:37:36 +0300
+
+yandex-mail-daria-www (1.0.15) stable; urgency=low
+
+  * Пофиксил неприятный баг в Сафари и Хроме - при открытии письма из
+    черновиков вставлялся перенос после каждого слова
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Thu, 25 Mar 2010 17:24:06 +0300
+
+yandex-mail-daria-www (1.0.14) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-499 - Не показывать крутяжку в лого при сохранении и показывать при отправке, если она дольше 0.5 секунд
+  * DARIA-486 - Отвалилось цитирование
+  * DARIA-226 - Попап "Очистка папки"
+  * DARIA-483 - Табы-ссылки "Адресная книга", "Календарь" и "Подписки" открывать в новом окне
+  * DARIA-506 - Повесить знак "Альфа" на лого
+  * DARIA-346 - Цвет Апельсин: стрелочка для разворачивания/сворачивания тредов
+
+  [ Roman Komarov ]
+  * DARIA-498 - Съехали треугольники в тредах в списке писем.
+  * DARIA-419 - Слово "байт"
+  * DARIA-507 - Символ "_" прилипает к низу метки в IE
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-469 - Нет ссылки перехода от quick-reply к полному ответу
+
+  [ Roman Komarov ]
+  * DARIA-335 - Цвет Апельсин: выделение кнопок в тулбаре при наведении
+  * DARIA-520 - Стрелка выбранной папки должна заезжать на список писем на 2px
+  * DARIA-427 - Favicon
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-37 - Forward с attach'ами
+  * DARIA-513 - Тизер про альфу
+  * DARIA-521 - Ссылки "Настройка" и "настроить" вести на neo через предупреждение
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Thu, 25 Mar 2010 12:48:15 +0300
+
+yandex-mail-daria-www (1.0.13) stable; urgency=low
+
+  * Новый wmi-host в продакшене
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 19 Mar 2010 15:35:18 +0300
+
+yandex-mail-daria-www (1.0.12) stable; urgency=low
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-299 - Избавиться от .b-foot: margin-top: 90px и .b-layout: margin-bottom: -90px
+
+  [ Roman Komarov ]
+  * DARIA-434 - Блок "пред. след." перекрывает дропдауны
+
+  [ Stepan Reznikov (stepan) ]
+  * DARIA-421 - Не открываются аттачи с символом # в имени
+  * DARIA-426 - За саджестом ходить в продакшен
+  * Переходим на новую выдачу метода daria_message_body - daria2
+  * Открываем Народные аттачи в новом окне (target="_blank")
+  * Добавил ссылку "Скачать файлы одним архивом"
+  * Добавил подпись что файл загружен на Народ
+  * Сделал отчеркивание и правильный вывод народных файлов
+  * Формирую поле narod_att для народных аттачей
+  * DARIA-240 - "Календарь" в лего шапке меняем на "Я.ру"
+  * DARIA-211 - Когда Дарья думает
+  * DARIA-214 - Отскролливать наверх при переходе по страницам
+
+  [ Roman Komarov ]
+  * DARIA-454 - Баг с подписью про Народ у файла
+
+  [ Stepan Reznikov (stepan) ]
+  * Сборка пакета 1.0.12
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Fri, 19 Mar 2010 15:26:00 +0300
+
+yandex-mail-daria-www (1.0.11) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-291 - Не виден блок "Обсуждение темы" для писем с длинной темой
+
+  [ Stepan Reznikov ]
+  * DARIA-164 - Доработки по заголовку письма table.b-message-head
+  * DARIA-385 - Переименовать везде excerpt в firstline
+  * DARIA-294 - По клику на email открывать compose с заполненным полем "Кому"
+
+  [ Roman Komarov ]
+  * DARIA-337 - Цвет Апельсин: строка состояния
+  * DARIA-406 - Съедается дропдаун, если список писем короткий
+  * DARIA-419 - Слово "байт"
+
+  [ Sergei Nikitin ]
+  * DARIA-395 - Некорректная ссылка на подписки
+  * DARIA-207 - В папках "Отправленные" и "Черновики" выводить поле "Кому", а не "От кого"
+  * DARIA-377 - Выходить из группировки по обсуждениям, когда кликаем на счетчик непрочтенных для папки
+  * DARIA-398 - Вернуть ссылку "почта" в логотипе
+  * DARIA-240 - "Календарь" в лего шапке меняем на "Я.ру"
+  * DARIA-270 - Вынести иконки сервисов из b-folders в b-site-icon
+  * DARIA-202 - Пред. След.
+
+  [ Stepan Reznikov (stepan) ]
+  * Собираем 1.0.11.
+
+ -- Stepan Reznikov (stepan) <stepan@yandex-team.ru>  Thu, 11 Mar 2010 17:52:28 +0300
+
+yandex-mail-daria-www (1.0.10) stable; urgency=low
+
+  [ Stepan Reznikov ]
+  * DARIA-365 - При переключении в plain-text и отправке письма ctrl+enter'ом теряем тело письма
+  * DARIA-257 - Не вводится пробел в поле ввода поиска
+
+  [ Roman Komarov ]
+  * DARIA-374 - Горизонтальная полоса прокрутки при 1024
+
+  [ Stepan Reznikov ]
+  * DARIA-287 - Не допускать создание меток с названием только из пробелов
+
+  [ Roman Komarov ]
+  * DARIA-382 - В ИЕ нет паддинга у текстарии в композе
+  * DARIA-286 - Верстка написания письма страдает при ресайзе в опере и ИЕ
+
+  [ Sergei Nikitin ]
+  * DARIA-388 - Реализовать b-toolbar-hr, использовать его для отделения тулбара от контента
+  * DARIA-377 - Выходить из группировки по обсуждениям, когда кликаем на счетчик непрочтенных для папки
+  * DARIA-384 - Ссылка Настроить должна вести в настройки
+  * DARIA-301 - В блоке Новостей контент сделать, как в neo (с картинками)
+
+  [ shabunc ]
+  * DARIA-318 - Фон списка писем остается подсвеченным при перетаскивании
+    метки "Непрочтенные"
+  * DARIA-320 - drag&drop: метку "Непрочтенные" и на неё разрешать
+    перетаскивать
+  * DARIA-348 - Метится первое письмо в списке, если навести метку на название
+    папки
+
+  [ Sergei Nikitin ]
+  * Собираю 1.0.10.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Wed, 03 Mar 2010 19:54:55 +0300
+
+yandex-mail-daria-www (1.0.9) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * Багфикс для логинов, имеющих uppercase буквы
+  * Meta для IE
+  * DARIA-328 - favicon.ico подключается два раза
+
+  [ Roman Komarov ]
+  * DARIA-314 - Изменить выделение письма
+
+  [ Stepan Reznikov ]
+  * Показываю аттачи при открытии письма из черновиков
+
+  [ Sergei Nikitin ]
+  * DARIA-212 - Сообщения вида "В папке <имя папки> нет писем"
+
+  [ Roman Komarov ]
+  * DARIA-330 - При ширине окна 1000px Настройка и Помощь не на одной строке
+
+  [ Stepan Reznikov ]
+  * DARIA-338 - Пропадает textarea с телом письма
+
+  [ Sergei Nikitin ]
+  * DARIA-300 - Реализовать в xsl блоки b-head-decor и b-foot-decor
+  * DARIA-25 - Предупреждение о фишинге в просмотре письма. Все ссылки в фишинговых письмах отправляем через редиректилку.
+  * DARIA-356 - В гриде пропадает поле from
+  * DARIA-296 - Выводить иконку календаря с соответствующей дате цифиркой
+
+  [ shabunc ]
+  * DARIA-317 - Отвалился dragndrop по заголовку письма
+
+  [ Stepan Reznikov ]
+  * DARIA-353 - Кнопка "Сохранить" не дизейблится при сохранении черновика
+
+  [ Roman Komarov ]
+  * DARIA-309 - Блямба событий календаря
+  * DARIA-366 - Флажок на странице чтения письма в сабжекте -- поднимем на два
+    пиксела?
+  * DARIA-367 - Не у всех иконок в тулбаре работает задизейбленное состояние
+
+  [ shabunc ]
+  * DARIA-312 - drag&drop: письма в развернутом треде не метятся, если
+    пометить заголовок треда
+
+ -- shabunc <shabunc@yandex-team.ru>  Mon, 01 Mar 2010 20:51:18 +0300
+
+yandex-mail-daria-www (1.0.8) stable; urgency=low
+
+  [ shabunc ]
+  * DARIA-298 - drag&drop: письмам из спама можно проставлять метки
+
+  [ Roman Komarov ]
+  * DARIA-104 - Выводить title при наведении на иокнку соц.сети
+  * DARIA-306 - В IE не показвается "сохранено в ..." в блоке
+    b-compose-message__actions__helper
+
+  [ Sergei Nikitin ]
+  * Ссылки в табах
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Fri, 26 Feb 2010 20:01:12 +0300
+
+yandex-mail-daria-www (1.0.7) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * На всякий случай выставляем таймауты в 30 секунд.
+
+  [ Stepan Reznikov ]
+  * DARIA-272 - В форму "Сообщить о проблеме" добавить возможность приаттачить картинку
+
+  [ shabunc ]
+  * DARIA-246 - Отмена выделения письма при перетаскивании (Drag&drop)
+
+  [ Sergei Nikitin ]
+  * DARIA-210 - Не выводится сообщение о некорректном имени папки. Правильно квотится одинарная кавычка.
+
+  [ Roman Komarov ]
+  * DARIA-305 - Серая полоска над списком писем
+
+  [ shabunc ]
+  * DARIA-264 - Баги со склонением "письмо/писем/письма"
+
+  [ Sergei Nikitin ]
+  * Собираем пакет 1.0.7.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Fri, 26 Feb 2010 16:44:31 +0300
+
+yandex-mail-daria-www (1.0.6) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-273 - При открытии треда добавить крутяжки (аналогично neo)
+
+  [ Stepan Reznikov ]
+  * DARIA-154 - Сообщение об ошибках при отправке письма
+  * DARIA-249 - В ИЕ по умолчанию показно сообщение о пустом поле Кому/Копия/скрытая
+
+  [ Sergei Nikitin ]
+  * DARIA-284 - Не проверяется авторизованность пользователя
+
+  [ Stepan Reznikov ]
+  * DARIA-238 - Вместо "От кого" выводится заглушка
+
+  [ Sergei Nikitin ]
+  * DARIA-166 - Выделенное состояние меток
+  * DARIA-290 - Неправильно выводится поле "Скрытая копия
+  * DARIA-25 - Предупреждение о фишинге в просмотре письма
+  * DARIA-213 - Фишинговое предупреждение
+  * DARIA-293 - Временно спрятать пункт "Создать правило..." в дропдауне "Дополнительно"
+  * DARIA-274 - Сделать для Safari input type="search"
+  * DARIA-226 - Попап "Очистка папки". Временное решение в виде window.confirm.
+  * DARIA-244 - "Письмо отправлено" прилипло к блоку папок
+
+  [ shabunc ]
+  * DARIA-104: Выводить title при наведении на иокнку соц.сети
+  * DARIA-251: В Опера курсор мыши не превращается в руку
+
+  [ Stepan Reznikov ]
+  * DARIA-275 - Временно оторвать неоживлённые кнопки/ссылки
+
+  [ shabunc ]
+  * DARIA-292 - drag&drop: можно перенести письмо в ту же папку, в которой оно находится
+
+  [ Sergei Nikitin ]
+  * Собираем пакет 1.0.6.
+
+  [ shabunc ]
+  * DARIA-262 - drag&drop: не должно быть перетаскивания по теме письма
+
+ -- shabunc <shabunc@yandex-team.ru>  Fri, 26 Feb 2010 14:10:27 +0300
+
+yandex-mail-daria-www (1.0.5) stable; urgency=low
+
+  [ Sergei Nikitin ]
+  * DARIA-253 - Показаны не все адресаты.
+  * DARIA-259 - Временно спрятать "дополнительно".
+
+  [ Roman Komarov ]
+  * DARIA-261 - Зафиксировать размеры иконок/картинок в css
+  * DARIA-269 - Верстка списка писем плывет при получении письма с длинной
+    темой.
+
+  [ Sergei Nikitin ]
+  * DARIA-234 - Заглушка баннера, тизера и новостей
+
+  [ Roman Komarov ]
+  * DARIA-267 - Ссылки "Выход" и "Помощь" ушли за пределы экрана в IE
+  * DARIA-197 - При наведении ссылки "Просто текст", "Транслит" и т.д. должны
+    менять цвет, а иконки становиться ярче
+
+  [ Stepan Reznikov ]
+  * DARIA-127 - "Сохранить как черновик"
+
+ -- Stepan Reznikov <stepan@daria.yandex.ru>  Fri, 19 Feb 2010 20:01:05 +0300
+
+yandex-mail-daria-www (1.0.4) stable; urgency=low
+
+  * Вечерний релиз. 18 декабря 2010.
+
+ -- Sergei Nikitin <nop@yandex-team.ru>  Thu, 18 Feb 2010 20:02:11 +0300
+
+yandex-mail-daria-www (1.0.3) stable; urgency=low
+
+  * При ответе заполняем поля inreplyto, references
+  * Сделал поддержку полей mark_as и mark_ids
+  * DARIA-224 - При нажатии кнопки "Отправить" следует отключать её, либо придумать другой способ защиты от дурака
+  * DARIA-239 - Вместо портрета выводится заглушка
+
+ -- Stepan Reznikov <stepan@daria.yandex.ru>  Thu, 18 Feb 2010 23:31:41 +0300
+
+yandex-mail-daria-www (1.0.2) stable; urgency=low
+
+  * enable ycssjs
+
+ -- Alexey Ten (Lynn) <lynn@yandex-team.ru>  Wed, 17 Feb 2010 18:44:18 +0300
+
+yandex-mail-daria-www (1.0.1) stable; urgency=low
+
+  * Rebuild
+
+ -- Alexey Ten (Lynn) <lynn@yandex-team.ru>  Wed, 17 Feb 2010 18:30:23 +0300
+
+yandex-mail-daria-www (1.0.0) stable; urgency=low
+
+  * Initial release.
+
+ -- Alexey Ten (Lynn) <lynn@yandex-team.ru>  Wed, 17 Feb 2010 15:06:22 +0300

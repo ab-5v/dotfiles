@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<handler name="setup-menu" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<!--
+Это структура используется для:
+  * построения меню по настройкам в сайдбаре
+  * вывода заголовка настройки в виде хлебных крошек.
+
+@id используется для построения урла и идентификации пункта меню
+@type="menu" указывается у пункта левого меню
+
+Название пункта меню @menu-name и заголовок @title могут отличаться,
+в этом случае надо прописать @title.
+-->
+    <setup-menu>
+        <item title="Настройка"> <!-- id рутового пункта меню не задаём, чтобы не ломать урл -->
+            <item id="interface" type="menu" menu-name="&i18n_Setup_interface_name;" title="&i18n_Setup_interface_title;"/>
+            <item id="sender" type="menu" menu-name="&i18n_Setup_sender_name;"/>
+            <item id="collectors" type="menu" menu-name="&i18n_Setup_collectors_name;" title="&i18n_Setup_collectors_title;">
+                <item id="collector" title="&i18n_Setup_collector_title;"/>
+            </item>
+<<<<<<< Updated upstream
+            <item id="folders" type="menu" menu-name="Папки и метки"/>
+            <item id="filters" type="menu" menu-name="Правила обработки почты" title="Правила обработки входящей почты">
+                <item id="filters-create" title="Создать правило"/>
+                <item id="filters-create-simple" title="Создать правило"/>
+                <item id="filters-edit" title="Изменить правило"/>
+=======
+            <item id="folders" type="menu" menu-name="&i18n_Setup_folders_name;"/>
+            <item id="filters" type="menu" menu-name="&i18n_Setup_filters_name;" title="&i18n_Setup_filters_title;">
+                <item id="filters-create" title="&i18n_Setup_filters-create_title;"/>
+                <item id="filters-create-simple" title="&i18n_Setup_filters-create-simple_title;"/>
+                <item id="filters-edit" title="&i18n_Setup_filters-edit_title;"/>
+>>>>>>> Stashed changes
+            </item> 
+            <separator/>
+            <item id="abook" type="menu" menu-name="&i18n_Setup_abook_name;"/>
+            <item id="lenta" type="menu" menu-name="&i18n_Setup_lenta_name;"/>
+            <!--
+            <item id="calendar" type="menu" menu-name="&i18n_Setup_calendar_name;"/>
+            -->
+
+            <item id="chat" type="menu" menu-name="&i18n_Setup_chat_name;"/>
+            <separator/>
+            <item id="client" type="menu" menu-name="&i18n_Setup_client_name;"/>
+            <item id="other" type="menu" menu-name="&i18n_Setup_other_name;" title="&i18n_Setup_other_title;"/>
+        </item>
+    </setup-menu>
+
+</handler>

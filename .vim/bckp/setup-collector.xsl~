@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "../../blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    >
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="setup-collector" mode="block-content">
+    <xsl:variable name="collector" select="/page/collector"/>
+    <xsl:variable name="id" select="generate-id($collector)"/>
+
+    <xsl:variable name="collector-filters"
+        select="/page/filters/body/action[id = $collector/filter_id]"/>
+
+    <div class="b-layout__inner">
+        <div class="b-setup">
+            <div class="b-setup__inner">
+                <xsl:apply-templates select="/" mode="setup-title-breadcrumbs"/>
+                <form class="daria-form" method="POST" action="collector.edit" params="popid={$collector/popid}">
+                    <input type="hidden" name="popid" value="{$collector/popid}"/>
+                    <!-- FIXME: локализовать, когда будут переменные -->
+                    <input type="hidden" name="filter_name" value="{concat('Письма из ящика ', $collector/email)}"/>
+                    <xsl:apply-templates select="$collector/filter_id" mode="setup-collector-field-hidden">
+                        <xsl:with-param name="name" select="'id'"/>
+                    </xsl:apply-templates>
+
+                    <div class="b-form-layout">
+                        <!-- Правила работы сборщика -->
+                        <div class="b-form-layout__block">
+                            <div class="b-form-layout__line">
+                                <span class="b-form-layout__text">
+                                    <xsl:value-of select="i18n('%Setup_Collector_Правила_работы_сборщика')"/>
+                                </span>
+                            </div>
+
+                            <div class="b-form-layout__line">
+                                <xsl:apply-templates select="." mode="setup-collector-field-option">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'no_delete_msg'"/>
+                                    <xsl:with-param name="checked" select="$collector[no_delete_msg = 'on']"/>
+                                    <!--<xsl:with-param name="disabled" select="/page/is-yandex-user/is_yandex_user/y = 'yes'"/>-->
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_сохранять_оригиналы')"/>
+                                </xsl:apply-templates>
+                            </div>
+                            <div class="b-form-layout__line">
+                                <xsl:apply-templates select="." mode="setup-collector-field-option">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'cliker_label'"/>
+                                    <xsl:with-param name="value" select="'movel'"/>
+                                    <xsl:with-param name="checked" select="$collector-filters[action = 'movel']"/>
+                                    <xsl:with-param name="label-text" select="concat(i18n('%Setup_Collector_присваивать_метку'), ' ')"/>
+                                    <xsl:with-param name="dependence" select="'clicker_label'"/>
+                                </xsl:apply-templates>
+                                <xsl:text>&#160;</xsl:text>
+                                <xsl:apply-templates select="$labels" mode="setup-collector-labels-select">
+                                    <xsl:with-param name="filters" select="$collector-filters"/>
+                                    <xsl:with-param name="dependence" select="'clicker_label'"/>
+                                </xsl:apply-templates>
+                            </div>
+                            <div class="b-form-layout__line">
+                                <xsl:apply-templates select="." mode="setup-collector-field-option">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'cliker_folder'"/>
+                                    <xsl:with-param name="value" select="'move'"/>
+                                    <xsl:with-param name="checked" select="$collector-filters[action = 'move']"/>
+                                    <xsl:with-param name="label-text" select="concat(i18n('%Setup_Collector_помещать_в_папку'), ' ')"/>
+                                    <xsl:with-param name="dependence" select="'clicker_folder'"/>
+                                </xsl:apply-templates>
+                                <xsl:text>&#160;</xsl:text>
+                                <xsl:apply-templates select="$folders" mode="setup-collector-folders-select">
+                                    <xsl:with-param name="filters" select="$collector-filters"/>
+                                    <xsl:with-param name="dependence" select="'clicker_folder'"/>
+                                </xsl:apply-templates>
+                            </div>
+                        </div>
+
+                        <div class="b-form-layout__block">
+                            <div class="b-form-layout__line">
+                                <span class="b-form-layout__text">
+                                    <xsl:value-of select="i18n('%Setup_Collector_однократно')"/>
+                                </span>
+                            </div>
+                            <div class="b-form-layout__line">
+                                <xsl:apply-templates select="." mode="setup-collector-field-option">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'mark_old_as_read'"/>
+                                    <xsl:with-param name="value" select="'yes'"/>
+                                    <xsl:with-param name="checked" select="$collector[mark_old_as_read = 'yes']"/>
+                                    <xsl:with-param name="disabled" select="$collector[last_connect != '']"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_пометить_как_прочитанные')"/>
+                                </xsl:apply-templates>
+                            </div>
+                            <div class="b-form-layout__line">
+                                <xsl:apply-templates select="." mode="setup-collector-field-option">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'abook_sync'"/>
+                                    <xsl:with-param name="value" select="'should'"/>
+                                    <xsl:with-param name="checked" select="not($collector[abook_sync_state = 'not'])"/>
+                                    <xsl:with-param name="disabled" select="$collector[abook_sync_state = 'done' or abook_sync_state = 'progress']"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_скопировать_адреса')"/>
+                                </xsl:apply-templates>
+                            </div>
+                        </div>
+
+
+                        <!-- Настройка соединения с сервером -->
+                        <div class="b-form-layout b-form-layout_collectors">
+                            <div class="b-form-layout__block">
+                                <div class="b-form-layout__line">
+                                    <span class="b-pseudo-link daria-action" action="collector.toggle-server-settings">
+                                        <xsl:value-of select="i18n('%Setup_Collector_Настройка_соединения')"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="b-form-layout__block b-form-layout__block_server-settings g-hidden">
+
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-text">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'email'"/>
+                                    <xsl:with-param name="value" select="$collector/email"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Email')"/>
+                                </xsl:apply-templates>
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-text">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'password'"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Пароль')"/>
+                                </xsl:apply-templates>
+
+                                <div class="b-form-layout__line">
+                                    <div class="b-form-layout__field b-form-layout__field_label"></div>
+                                    <div class="b-form-layout__field">
+                                        <span class="b-form-element">
+                                            <input type="button" value="{i18n('%Setup_Collector_Проверить_соединение')}" id="check"
+                                               class="b-field__input_button daria-action" action="collector.check"/>
+                                        </span>
+                                        <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                            <xsl:with-param name="name" select="'check'"/>
+                                            <xsl:with-param name="type" select="'loading'"/>
+                                            <xsl:with-param name="text" select="i18n('%Setup_Collector_Проверка_соединения')"/>
+                                        </xsl:apply-templates>
+                                        <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                            <xsl:with-param name="name" select="'check'"/>
+                                            <xsl:with-param name="type" select="'success'"/>
+                                            <xsl:with-param name="text" select="i18n('%Setup_Collector_Соединение_установлено')"/>
+                                        </xsl:apply-templates>
+                                        <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                            <xsl:with-param name="name" select="'check'"/>
+                                            <xsl:with-param name="type" select="'fail'"/>
+                                            <xsl:with-param name="text" select="i18n('%Setup_Collector_Сервер_не_существует')"/>
+                                        </xsl:apply-templates>
+                                        <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                            <xsl:with-param name="name" select="'check'"/>
+                                            <xsl:with-param name="type" select="'auth_failed'"/>
+                                            <xsl:with-param name="text" select="i18n('%Setup_Collector_Сервер_не_отвечает')"/>
+                                        </xsl:apply-templates>
+                                    </div>
+                                </div>
+
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-text">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'login'"/>
+                                    <xsl:with-param name="value" select="$collector/login"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Логин')"/>
+                                </xsl:apply-templates>
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-text">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'server'"/>
+                                    <xsl:with-param name="value" select="$collector/server"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Сервер')"/>
+                                </xsl:apply-templates>
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-text">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'port'"/>
+                                    <xsl:with-param name="value" select="$collector/port"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Порт')"/>
+                                </xsl:apply-templates>
+                                <xsl:apply-templates select="." mode="setup-collector-server-field-checkbox">
+                                    <xsl:with-param name="id" select="$id"/>
+                                    <xsl:with-param name="name" select="'use_ssl'"/>
+                                    <xsl:with-param name="checked" select="$collector[use_ssl = 'on']"/>
+                                    <xsl:with-param name="label-text" select="i18n('%Setup_Collector_Использовать_SSL')"/>
+                                </xsl:apply-templates>
+                            </div>
+
+                            <div class="b-form-layout__block b-form-layout__block_submit">
+                                <div class="b-form-layout__line">
+                                    <span class="b-form-element" onclick="">
+                                        <input type="submit" class="b-form-element__button" value="{i18n('%Setup_Collector_Сохранить_изменения')}"/>
+                                    </span>
+                                    <span class="b-form-layout__text">
+                                        <xsl:text>&#160;&#160;&#160;или&#160;&#160;&#160;</xsl:text>
+                                        <a class="b-pop-settings__delete daria-action"
+                                            action="collector.remove" params="popid={$collector/popid}&amp;email={$collector/email}" href="">
+                                            <xsl:value-of select="i18n('%Setup_Collector_удалить_сборщик')"/>
+                                        </a>
+                                    </span>
+                                    <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                        <xsl:with-param name="name" select="'edit'"/>
+                                        <xsl:with-param name="type" select="'loading'"/>
+                                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Проверка_соединения')"/>
+                                    </xsl:apply-templates>
+                                    <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                        <xsl:with-param name="name" select="'edit'"/>
+                                        <xsl:with-param name="type" select="'fail'"/>
+                                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Сервер_не_существует')"/>
+                                    </xsl:apply-templates>
+                                    <xsl:apply-templates select="." mode="setup-collector-action-status">
+                                        <xsl:with-param name="name" select="'edit'"/>
+                                        <xsl:with-param name="type" select="'auth_failed'"/>
+                                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Сервер_не_отвечает')"/>
+                                    </xsl:apply-templates>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<!-- Чекбокс с лейблом -->
+<xsl:template match="setup-collector" mode="setup-collector-field-option">
+    <xsl:param name="id"/>
+    <xsl:param name="name"/>
+    <xsl:param name="value" select="'on'"/>
+    <xsl:param name="checked" select="false()"/>
+    <xsl:param name="disabled"/>
+    <xsl:param name="label-text"/>
+    <xsl:param name="dependence"/>
+
+    <span>
+        <xsl:attribute name="class">
+            <xsl:text>b-form-element</xsl:text>
+            <xsl:if test="$disabled">
+                <xsl:text> b-form-element_disabled</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+        <span class="b-form-element__checkbox b-form-element__checkbox_inline">
+            <label>
+                <input type="checkbox"
+                    id="{$id}-{$name}" name="{$name}" value="{$value}">
+
+                    <xsl:attribute name="class">
+                        <xsl:text>b-form-element__checkbox__input</xsl:text>
+                        <xsl:if test="$dependence">
+                            <xsl:text> daria-dependence-parent</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+
+                    <xsl:if test="$dependence">
+                        <xsl:attribute name="dependence-parent-id">
+                            <xsl:value-of select="$dependence"/>
+                        </xsl:attribute>
+                    </xsl:if>
+
+                    <xsl:if test="$checked">
+                        <xsl:attribute name="checked">checked</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$disabled">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
+                </input>
+                <xsl:value-of select="$label-text"/>
+            </label>
+        </span>
+    </span>
+</xsl:template>
+
+<!-- Вывод хидденов (удобно для нескольких одноимённых) -->
+<xsl:template match="filter_id" mode="setup-collector-field-hidden">
+    <xsl:param name="name"/>
+    <input type="hidden" name="{$name}" value="{.}" />
+</xsl:template>
+
+<!-- Фильтр сборщика: селект с выбором меток -->
+<xsl:template match="labels" mode="setup-collector-labels-select">
+    <xsl:param name="filters"/>
+    <xsl:param name="dependence"/>
+
+    <span>
+        <xsl:attribute name="class">
+            <xsl:text>b-form-element</xsl:text>
+            <xsl:if test="not($filters[action = 'movel'])">
+                <xsl:text> b-form-element_disabled</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+
+        <span class="b-form-element__select">
+            <select name="move_label">
+
+                <xsl:attribute name="class">
+                    <xsl:text>b-form-element__select__select</xsl:text>
+                    <xsl:if test="$dependence">
+                        <xsl:text> daria-dependence-child</xsl:text>
+                    </xsl:if>
+                </xsl:attribute>
+
+                <xsl:if test="$dependence">
+                    <xsl:attribute name="dependence-child-id">
+                        <xsl:value-of select="$dependence"/>
+                    </xsl:attribute>
+                </xsl:if>
+
+                <xsl:if test="not($filters[action = 'movel'])">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                </xsl:if>
+                <!-- Выводятся все пользовательские метки и метка "Важные"-->
+                <xsl:apply-templates select="label[symbol='priority_high']" mode="setup-collector-label">
+                    <xsl:with-param name="filter" select="$filters[action = 'movel']"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="label[user]" mode="setup-collector-label">
+                    <xsl:with-param name="filter" select="$filters[action = 'movel']"/>
+                </xsl:apply-templates>
+                <option class="b-form-element__option" value="{i18n('%Setup_Новая_метка')}">
+                    <xsl:value-of select="i18n('%Setup_Новая_метка')"/>
+                </option>
+            </select>
+        </span>
+    </span>
+</xsl:template>
+
+<!-- Опшены из селекта с лейблами для сборщика -->
+<xsl:template match="label" mode="setup-collector-label">
+    <xsl:param name="filter"/>
+    <xsl:variable name="id" select="@id"/>
+
+    <option class="b-form-element__option">
+        <xsl:attribute name="value">
+            <xsl:choose>
+                <xsl:when test="symbol">
+                    <xsl:value-of select="symbol"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="name"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+        <xsl:apply-templates select="$filter[param = $id]" mode="selected"/>
+        <xsl:value-of select="name"/>
+    </option>
+</xsl:template>
+
+<!-- Фильтр сборщика: селект с выбором папок -->
+<xsl:template match="folders" mode="setup-collector-folders-select">
+    <xsl:param name="filters"/>
+    <xsl:param name="dependence"/>
+
+    <span>
+        <xsl:attribute name="class">
+            <xsl:text>b-form-element</xsl:text>
+            <xsl:if test="not($filters[action = 'move'])">
+                <xsl:text> b-form-element_disabled</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+
+        <span class="b-form-element__select">
+            <select name="move_folder">
+
+                <xsl:attribute name="class">
+                    <xsl:text>b-form-element__select__select</xsl:text>
+                    <xsl:if test="$dependence">
+                        <xsl:text> daria-dependence-child</xsl:text>
+                    </xsl:if>
+                </xsl:attribute>
+
+                <xsl:if test="$dependence">
+                    <xsl:attribute name="dependence-child-id">
+                        <xsl:value-of select="$dependence"/>
+                    </xsl:attribute>
+                </xsl:if>
+
+                <xsl:if test="not($filters[action = 'move'])">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates select="folder" mode="setup-collector-folder">
+                    <xsl:with-param name="filter" select="$filters[action = 'move']"/>
+                </xsl:apply-templates>
+                <option class="b-form-element__option" value="{i18n('%Setup_Новая_папка')}">
+                    <xsl:value-of select="i18n('%Setup_Новая_папка')"/>
+                </option>
+            </select>
+        </span>
+    </span>
+</xsl:template>
+
+<!-- Опшены из селекта с папками для сборщика -->
+<xsl:template match="folder" mode="setup-collector-folder">
+    <xsl:param name="filter"/>
+
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable name="id" select="@id"/>
+
+    <option value="{name}" class="b-form-element__option">
+        <!-- В параметре фильтра указывается имя папки, а при добавлении папки у нас есть только id -->
+        <!-- Поэтому добавлена проверка и на param_id, который мы создадим при добавлении папки -->
+        <xsl:apply-templates select="$filter[param = $name or param_id = $id]" mode="selected"/>
+        <xsl:value-of select="name"/>
+    </option>
+</xsl:template>
+<!-- Не показывать скрытые папки -->
+<xsl:template match="folder[hidden]" mode="setup-collector-folder"/>
+
+<!-- Шаблны для динамического добавления папок и меток -->
+<xsl:template match="/new-collector-labels-select">
+    <xsl:apply-templates select="labels" mode="setup-collector-labels-select">
+        <xsl:with-param name="filters" select="filters"/>
+    </xsl:apply-templates>
+</xsl:template>
+<xsl:template match="/new-collector-folders-select">
+    <xsl:apply-templates select="folders" mode="setup-collector-folders-select">
+        <xsl:with-param name="filters" select="filters"/>
+    </xsl:apply-templates>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<!-- Ячейка с лейблом и полем ввода для настроек сервера -->
+<xsl:template match="setup-collector | setup-collectors" mode="setup-collector-server-field-text">
+    <xsl:param name="id"/>
+    <xsl:param name="name"/>
+    <xsl:param name="value" select="''"/>
+    <xsl:param name="label-text"/>
+    <xsl:param name="errors"/>
+
+    <div class="b-form-layout__line">
+        <div class="b-form-layout__field b-form-layout__field_label">
+            <span class="b-form-layout__text">
+                <label for="{$id}-{$name}">
+                    <xsl:value-of select="$label-text"/>
+                </label>
+            </span>
+        </div>
+        <div class="b-form-layout__field">
+            <span class="b-form-element">
+                <input type="text" value="{$value}" id="{$id}-{$name}" class="b-form-element__input-text" name="{$name}">
+                    <xsl:attribute name="type">
+                        <xsl:choose>
+                            <xsl:when test="$name='password'">
+                                <xsl:text>password</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>text</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </input>
+            </span>
+
+            <xsl:apply-templates select="." mode="setup-collector-server-field-error">
+                <xsl:with-param name="name" select="$name"/>
+            </xsl:apply-templates>
+            <xsl:choose>
+                <xsl:when test="$name = 'email'">
+                    <xsl:apply-templates select="." mode="setup-collector-server-field-error">
+                        <xsl:with-param name="name" select="$name"/>
+                        <xsl:with-param name="type" select="'pattern'"/>
+                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Некорректный_адрес')"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$name = 'server'">
+                    <xsl:apply-templates select="." mode="setup-collector-server-field-error">
+                        <xsl:with-param name="name" select="$name"/>
+                        <xsl:with-param name="type" select="'pattern'"/>
+                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Некорректный_сервер')"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$name = 'port'">
+                    <xsl:apply-templates select="." mode="setup-collector-server-field-error">
+                        <xsl:with-param name="name" select="$name"/>
+                        <xsl:with-param name="type" select="'pattern'"/>
+                        <xsl:with-param name="text" select="i18n('%Setup_Collector_Некорректный_порт')"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+            </xsl:choose>
+        </div>
+    </div>
+
+</xsl:template>
+
+<!-- Ошибка при валидации форм -->
+<xsl:template match="setup-collector | setup-collectors" mode="setup-collector-server-field-error">
+    <xsl:param name="name"/>
+    <xsl:param name="type" select="'required'"/>
+    <xsl:param name="text" select="i18n('%Setup_Collector_Поле_не_заполнено')'"/>
+
+    <span class="b-notification b-notification_error b-notification_error-{$type}_{$name} g-hidden">
+        <span class="b-notification__i">
+            <img  title="" alt="[!]" class="b-mail-icon b-mail-icon_error"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_error.gif'"/></xsl:attribute></img>
+            <xsl:value-of select="$text"/>
+        </span>
+    </span>
+
+</xsl:template>
+
+<!-- Статус при изменении/проверке/добавлении сборщика -->
+<xsl:template match="setup-collector | setup-collectors" mode="setup-collector-action-status">
+    <xsl:param name="name"/>
+    <xsl:param name="type"/>
+    <xsl:param name="text"/>
+
+    <div class="b-form-layout__field b-notification_status-{$type}_{$name} g-hidden">
+        <span class="b-notification ">
+            <span class="b-notification__i">
+                <!-- вывод иконки в зависимости от статуса -->
+                <xsl:choose>
+                    <xsl:when test="$type = 'success'">
+                    </xsl:when>
+                    <xsl:when test="$type= 'loading'">
+                        <span class="b-mail-icon b-mail-icon_ajax-loader" title="" alt="[!]"></span>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <img  title="" alt="[!]" class="b-mail-icon b-mail-icon_error"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_error.gif'"/></xsl:attribute></img>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:value-of select="concat(' ', $text)"/>
+            </span>
+        </span>
+    </div>
+</xsl:template>
+
+<!-- Ячейки с чекбоксами в настройках сервера -->
+<xsl:template match="setup-collector | setup-collectors" mode="setup-collector-server-field-checkbox">
+    <xsl:param name="id"/>
+    <xsl:param name="name"/>
+    <xsl:param name="checked"/>
+    <xsl:param name="label-text"/>
+
+    <div class="b-form-layout__line">
+        <div class="b-form-layout__field b-form-layout__field_label"></div>
+        <div class="b-form-layout__field">
+            <span class="b-form-element" onclick="">
+                <span class="b-form-element__checkbox">
+                    <label>
+                        <input type="checkbox"
+                            class="b-form-element__checkbox__input" name="{$name}">
+                            <xsl:if test="$checked">
+                                <xsl:attribute name="checked">checked</xsl:attribute>
+                            </xsl:if>
+                        </input>
+                        <xsl:value-of select="$label-text"/>
+                    </label>
+                </span>
+            </span>
+        </div>
+    </div>
+
+</xsl:template>
+
+
+
+</xsl:stylesheet>
+

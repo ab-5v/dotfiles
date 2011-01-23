@@ -1,0 +1,406 @@
+/*
+    Daria classes:      Daria.Run
+
+*/
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+function Run(block, params) {
+    this.id       = Run.id++;
+    this.block    = block; // Блок, на котором был создан/запущен Run.
+    this.params   = params || {}; // Параметры запроса.
+    this.handlers = {}; // Хэндлеры, нужные для данного запроса.
+    this.blocks   = []; // Список блоков, которые будут показаны/изменены по этому запросу.
+    this.xml      = ""; // xml-дерево, представляющее иерархию блоков из blocks.
+    this.retries  = 0; // Количество неуспешных попыток получить данные.
+}
+
+Run.id = 1;
+Run.current = null;
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.start = function(callback, options) {
+    Run.stop();
+    Run.current = this;
+
+    this.prepare(this.block, true);
+    // console.log(this);
+    this._do(callback, options);
+
+};
+
+Run.prototype._do = function(callback, options) {
+
+    var that = this;
+    var request = this.request = Daria.Handler.getAll(this.handlers, this.params, function() {
+        if (!(Run.current && (Run.current.id == that.id))) { // Пока ходили за данными, текущий run был отменен, так что ничего делать не нужно.
+            if (options && options.onerror) { options.onerror(); }
+            return;
+        }
+
+        // Пример обработки ошибок в ответах хэндлеров.
+        // TODO: Наверное, надо еще какие-то ошибки ловить.
+        if (request) {
+            var errors = request.errors;
+            if (errors['message'] && errors['message'].code == 5000) {
+                window.location.replace(Page.HOME_HASH); // Чтобы в хистори не попал этот переход.
+                Page.home();
+                // alert('Ошибка. Такого письма не существует.');
+                if (options && options.onerror) { options.onerror(); }
+                return;
+            }
+        }
+
+        if (!that.hasAllData()) {
+            if (that.retries++ < 2) { // Делаем еще две попытки догрузить данные.
+                // Если у нас был дефолтный лоадер (у которого таймаут 500мс, то вместо него мы передаем дефолтный же, но без таймаута.
+                // Чтобы между ретраями лоадер на полсекунды не выключался бы.
+                that._do(callback, (options && options.loader) ? options : { loader: 0 });
+            } else {
+                Daria.ErrorLog.send({errorType: "RetriesFail"});
+                alert('Ошибка. Не удалось загрузить данные, попробуйте еще раз через какое-то время.');
+                if (options && options.onerror) { options.onerror(); }
+            }
+            return;
+        }
+
+        if (that.retries > 0) {
+            Daria.ErrorLog.send({errorType: "RetriesSucces", retries: that.retries + 1});
+        }
+
+        var out;
+        if (that.xml !== "") {
+            var xml = that.buildXML();
+            out = Daria.xsl.transform(xml);
+            if (!out.document) { // Ваще ошибка, никакого документа не получилось.
+                // console.log("Ошибка. Не удалось применить xslt-преобразование.");
+                // return;
+            } else { // parsererror выдает Chrome в некоторых ситуациях. Комбинация каких-то xml-ей приводит к ошибке.
+                if (out.select('//html:parsererror')) {
+                    console.log('Ошибка. Не удалось применить xslt-преобразование.');
+                    if (Daria.yatester) { // Выставлен sid номер 666.
+                        alert('Ошибка. Не удалось применить xslt-преобразование. Подробности в error-консоли.');
+                        console.log('Подробности: http://ml.yandex-team.ru/archive/thread11198607/#message11198607');
+                    }
+                    console.log(out.document);
+                    // console.log(out.toString());
+                }
+            }
+            out = out.export2html(); // Если не делать export2html, то в ФФ не вешаются эвенты на сгенеренный контент.
+        }
+        that.update(out);
+
+        if (callback) { callback(this.params); }
+    }, options);
+
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+// Проверяем, что все нужные хэндлеры имеют валидные кэши.
+Run.prototype.hasAllData = function() {
+    var cached = true;
+    var hName, hKey;
+    var handlers = this.handlers;
+    for (hName in handlers) {
+        hKey = handlers[hName];
+        if (!$H[hName].isCached(hKey)) { return false; }
+    }
+    return true;
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.stop = function() {
+    if (Run.current) {
+        Run.current.stop();
+        Run.current = null;
+    }
+};
+
+Run.prototype.stop = function() {
+    if (this.request) {
+        this.request.stop();
+    }
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.addHandlers = function(handlerList, params) {
+    var handlers = this.handlers;
+    for (var hName in handlerList) {
+        if (!handlers[hName]) {
+            var key = $H[hName].getKey(params);
+            if (key !== null) {
+                handlers[hName] = key;
+            }
+        }
+    }
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+//  Значение параметра toplevel:
+//
+//  Предположим, у нас есть блок A, в нем два подблока B и C, и в C еще подблок D. Варианты:
+//      1. Все блоки невалидны. Тогда A будет toplevel, а B, C и D нет.
+//      2. Блок A валиден, все остальные нет. Тогда B и C будут toplevel, а D нет.
+//      3. A и C валидны, B и D нет. Тогда B и D будут toplevel.
+//  Т.е. флаг toplevel выставляется для максимальных невалидных блоков. Максимальность понимается в смысле включения (A > B, A > C > D).
+//  На практике это значит, что ноды этих блоков нужно двигать в DOM'е на соответствующие места.
+//  При этом подблоки toplevel'ных блоков автоматически окажутся в правильном месте
+//  и им нужно лишь найти и запомнить в своем кэше их ноды (с классом block-{name}).
+//
+Run.prototype.prepare = function(block, toplevel, parent, skip) {
+    var params = this.params;
+
+    var cached = block.isCached();
+    var info = {
+        block: block,
+        toplevel: toplevel,
+        parent: parent,
+        skip: skip, // Этому блоку не нужно апдейтить хтмл, его нужно только спрятать или показать.
+                    // Этот блок является бывшим активным элементом в блоке, он спрячется и все.
+        cached: cached // Если тут true, то блок не нужно перерисовывать целиком, но, возможно, нужно будет как-то отреагировать на смену параметров.
+                       // Если undefined, то это заглушка или блок вообще никогда не существовал до этого.
+                       // Если false, то блок был валиден, у него есть html, который, возможно, нужно почистить.
+    };
+
+    // Определяем видимость блока.
+    var toshow = block.toshow(params); // Собирается ли блок показываться на основании этих параметров?
+    if (!parent) { // Это верхний блок.
+        info.visible = toshow;
+    } else if (parent.block.box) { // Это элемент бокса.
+        info.visible = parent.visible && parent.selected && (parent.selected.key == block.key); // Смотрим, выбрал ли бокс именно этот блок.
+    } else {
+        info.visible = parent.visible && toshow;
+    }
+
+    this.blocks.push(info);
+
+    if (!cached && !skip) {
+        this.addHandlers(block.info.handlers, params);
+        toplevel = false; // Все нижележащие блоки не toplevel.
+        this.xml += '<' + block.name + '>';
+    }
+
+    // NOTE: Блок может быть либо боксом, либо содержать подблоки. Вместе вроде не бывает.
+
+    var blocks = block.blocks;
+    if (blocks) { // Содержит подблоки.
+        for (var i = 0, l = blocks.length; i < l; i++) {
+            this.prepare(blocks[i], toplevel, info);
+        }
+    }
+
+    if (block.box) { // block является боксом.
+        var selected = block.select(params); // Что выберет бокс с такими параметрами?
+        if (selected) {
+            info.selected = selected;
+            this.prepare(selected, toplevel, info);
+        }
+        var active = block.active;
+        if (active) {
+            info.active = active;
+            if ((selected && active.key != selected.key) || !selected) { // В боксе был активный элемент и он не совпадает с выбранным.
+                this.prepare(active, toplevel, info, true);
+            }
+        }
+    }
+
+    if (!cached && !skip) {
+        this.xml += '</' + block.name + '>';
+    }
+
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.update = function(html) {
+    this.updatePrepare(html);
+    this.updateDOM();
+    this.updateTriggers();
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+//  Update. Фаза 1:
+//      * Каждый блок находит и запоминаем свою новую ноду, если у блока был кэш, то сохраняем ссылку и на старую ноду;
+//      * Вызываем onhtmldestroy на блоках, хтмл которых будет заменен;
+//      * Очищаем боксы невалидных блоков;
+//
+Run.prototype.updatePrepare = function(html) {
+
+    var blocks = this.blocks;
+
+    var timestamp = +new Date();
+
+    for (var i = 0, l = blocks.length; i < l; i++) {
+        var info = blocks[i];
+        var block = info.block;
+
+        if (info.cached === false && info.toplevel) { // У блока уже есть какой-то невалидный кэш (cached === undefined для заглушек)
+                                                      // и он toplevel, то есть его нода будет замещена новой.
+                                                      // Поэтому нужно вызвать "деструктор" на блоке и всех его подблоках.
+            block.trigger(true, "onhtmldestroy");
+        }
+
+        if (block.cache) {
+            info.oldNode = block.cache.node; // Запоминаем ноду, которую, возможно, нужно будет заменить на новую.
+        }
+        if (!info.cached && !info.skip) { // Блок должен найти свою ноду и запомнить ее в своем кэше.
+            var node = Daria.byClass("block-" + block.name, html)[0];
+            if (node) { // NOTE: Если xslt вообще отработал, то node всегда найдется.
+
+                info.node = node;
+                block.setCache({ // Кэшируем новую ноду.
+                    node: node,
+                    valid: true,
+                    timestamp: timestamp
+                });
+            }
+            if (block.box) { // Невалидному боксу нужно обнулить box. Метод invalidate этого не делает, чтобы потом onhtmldestroy мог быть вызван на всех элементах блока.
+                block.box = {};
+            }
+        }
+    }
+
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.updateDOM = function() {
+
+    var blocks = this.blocks;
+
+    for (var i = blocks.length; i-- > 0; ) {
+
+        var info = blocks[i];
+        var block = info.block;
+
+        block.toggle(info.visible); // FIXME: Мы скрываем старую ноду, но, если эта нода сейчас заменится на другую, то info.visible == false не учтется. См. костыль ниже.
+        if (info.skip) { continue; }
+
+        var box = block.box;
+        if (box && info.visible) {
+            var selected = info.selected;
+            if (selected) {
+                block.active = box[selected.key] = selected;
+            } else {
+                if (block.active) {
+                    block.active.hide();
+                    block.active = null;
+                }
+            }
+        }
+
+        var inbox = null;
+        if (info.parent && info.parent.block.box) {
+            inbox = info.parent;
+        }
+
+        if (!info.cached && info.toplevel) {
+            var node = info.node;
+            if (!info.visible) { // FIXME: Это нужно делать не так и выше, там, где block.toggle(info.visible).
+                node.style.display = 'none';
+            }
+            var oldNode = info.oldNode;
+            if (inbox && (info.cached === undefined)) {
+                inbox.block.getCache().node.appendChild(node);
+            } else if (oldNode) { // NOTE: Вообще, обычно info.node существует. Пока что есть только одна ситуация, когда нет:
+                                  //       при создании блока thread для разворачивания треда.
+                Daria.replaceNode(oldNode, node);
+            }
+        }
+
+    }
+
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.updateTriggers = function(html) {
+
+    var blocks = this.blocks;
+    var params = this.params;
+
+    for (var i = blocks.length; i-- > 0; ) {
+        var info = blocks[i];
+        var block = info.block;
+
+        if (block.box && info.visible) {
+            var active = info.active;
+            var selected = info.selected;
+            if (selected || active) {
+                block.trigger("onactivate", params, selected && selected.key, active && active.key);
+            }
+        }
+    }
+
+    for (var i = blocks.length; i-- > 0; ) {
+        var info = blocks[i];
+
+        if (info.node && !info.cached) {
+            info.block.trigger("onhtmlinit", info.node, params);
+        }
+    }
+
+    for (var i = blocks.length; i-- > 0; ) {
+        var info = blocks[i];
+        var block = info.block;
+
+        if (info.visible && block.visible !== true) {
+            block.trigger("onshow", params);
+        }
+        if (!info.visible && block.visible !== false) {
+            block.trigger("onhide", params);
+        }
+        block.visible = info.visible;
+    }
+
+    this.block.trigger(false, "onrepaint", params);
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+
+Run.prototype.buildXML = function() {
+    // Daria.Timer.start("buildXML");
+
+    var params = this.params;
+
+    // Делаем аргументы безопасными для XML
+    var _params = {};
+
+    // FIXME: надо как-то эскейпить название параметров тоже. Русские буквы или спецсимволы так же ломают нам всё
+    for(var k in params){
+        _params[k] = Daria.entityify(params[k]);
+    }
+
+    var json = {
+        'page': {
+            'page-type': params._page,
+            'page-blocks': this.xml,
+            'page-params': _params,
+            'config': Daria.Config.XSL
+        }
+    };
+    if (Daria.yatester) {
+        json.page.yatester = null;
+    }
+
+    // FIXME: убрать, когда конфиги сервера починят и появится x-original-uri
+    var mPddDomain = document.location.href.match(/\/for\/([^\/]*)/);
+    if (mPddDomain && mPddDomain[0]) {
+        json.page.config = mPddDomain[0];
+    }
+
+    var xml = Handler.buildXML(Daria.keys(this.handlers), params, json);
+
+    // Daria.Timer.end("buildXML");
+
+    return xml;
+};
+
+// ------------------------------------------------------------------------------------------------------------- //
+

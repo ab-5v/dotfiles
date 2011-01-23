@@ -1,0 +1,160 @@
+Actions.add(
+    new Action(
+        "settings.update",
+        function(e, params, name){
+
+            Daria.Handler.doAll(
+                ["do-settings", "settings"],
+                {updates: $.param(params)}
+            );
+
+        }
+    )
+);
+
+
+Actions.add(
+    new Action(
+        "settings.update-form",
+        function(data){
+            data.event.preventDefault();
+
+            var $form = $(data.event.currentTarget);
+
+            // если у формы есть собственные предпочтения по хэндлерам - импользуются они
+            // иначе используются стандартные
+            var handlers = data.params && data.params.handlers ?
+                data.params.handlers.split(',') : ["do-settings-all", "settings"];
+
+            var params = $form.serializeObject();
+
+            // когда сохраняется список папок для почтового клиента
+            // и не одна папка не выбрана, то параметр fid вообще не нужно передавать в запросеы
+            // DARIA-1398 - Не сохраняются настройки "Почтовых клиентов" после "Снять выделение"
+            if($.inArray('do-folder-update', handlers)){
+                params['fid'] = $.grep($.makeArray(params['fid']), function(a){return a;});
+                if(!params['fid'] || !params['fid'].length){
+                    delete params['fid'];
+                }
+            }
+
+            // DARIA-1420 - Нужно каким-либо образом предупреждать пользователя о том, что длина подписи ограничена
+            if (params.signature && params.signature.length > 3000 && Page.type == 'setup' && Page.params.tab == 'sender') {
+                Daria.Libs("Daria.Dialog", function() {
+                    Daria.Dialog.notice({
+                        body: '<p>К сожалению, подпись не может быть длиннее 3000 символов. Пожалуйста, сократите ее.</p>',
+                        width: 350
+                    });
+                });
+                return;
+            }
+
+            Daria.Handler.doAll(
+                handlers,
+                params,
+                function(){
+                    // DARIA-1217 - Не инвалидируется кеш посещенных страниц при изменении настройки количества писем на страницу
+                    if(params['messages_per_page'] !== undefined && hMessages){
+                        hMessages.clearCache();
+                    }
+                    $form.trigger('onSave', params);
+                    Daria.Statusline.showMsg({name: "setup-updates", body: i18n("%Setup_Настройки_сохранены")});
+                }
+            );
+        }
+    )
+);
+
+
+/**
+ * "Переключиться на нео (2009)" в настройках интерфейса
+ */
+Actions.add(new Action(
+    "settings.reset-to-neo",
+    function(data){
+        data.event.preventDefault();
+
+        Daria.Handler.doAll(
+            [ "do-settings-all" ],
+            {skin_name: 'neo', color_scheme: 'blue'},
+            function(){
+                document.location.href = $(data.event.target).attr('href');
+            }
+        );
+    }
+));
+
+/**
+ * Удаление аватарки
+ */
+Actions.add(new Action(
+    "settings.userpic-remove",
+    function(data){
+        data.event.preventDefault();
+
+        Daria.Libs("Daria.Dialog", function() {
+            Daria.Dialog.confirm({
+                body: '<p>Вы действительно хотите удалить портрет? Портрет удалится и на всех уже отправленных письмах.</p>',
+                width: 350,
+                okValue: 'Удалить',
+                okHandler: function() {
+                    Daria.Libs("jQuery.Form", function(){
+                        // создание временной формы, которую будем сабмитить для удаления аватарки
+                        var $tempForm = $('<form class="g-hidden" method="post" action="post"></form>').appendTo(document.body);
+
+                        $tempForm.ajaxSubmit({
+                            iframe: true,
+                            data: {
+                                service: 'mail',
+                                clear: 'yes'
+                            },
+                            url: '//upics.yandex.ru/upload',
+                            complete: function(){
+                                var $target = $(data.event.target);
+                                // изменение src юзерпика на "Нет фото"
+                                $target.closest('.b-userpic-choose__pic')
+                                    .find('.b-userpic-choose__pic-image__image')
+                                    .attr('src', Daria.STATIC + '/blocks/b-mail-person/userpic/b-mail-person__userpic_none.png');
+                                // скрытие ссылки удалить
+                                $target.closest('.b-userpic-choose__pic-delete').addClass('g-hidden');
+                                // удаление временной формы
+                                $tempForm.remove();
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    }
+));
+
+Actions.add(new Action(
+    "settings.userpic-make",
+    function(){
+
+        var cameraSrc = Daria.STATIC + '/blocks/b-camera/b-camera.swf?service=mail&callback=Daria.Block.blocks[\'setup-sender\'].onUserpicMake&url=//upics.yandex.ru/upload';
+
+        Daria.Libs("Daria.Dialog", function() { Daria.Dialog.notice({
+            // object-у нужно добавить id-шник иначе ie падает при вызове колбэка
+            body: '<div class="b-camera" id="camera">\
+                    <object id="id_b-camera_' + (new Date-0) + '" data="' + cameraSrc + '" type="application/x-shockwave-flash" width="320" height="320">\
+                        <param name="allowScriptAccess" value="always" />\
+                        <param name="allowFullScreen" value="false" />\
+                        <param name="src" value="' + cameraSrc + '" />\
+                        <param name="movie" value="' + cameraSrc + '" />\
+                        <param name="quality" value="high" />\
+                        <param name="wmode" value="window" />\
+                        <span class="b-notification b-notification_error">\
+                            <span class="b-notification__i">\
+                                <img class="b-mail-icon b-mail-icon_error" alt="" title="" src="' + Daria.STATIC + '/blocks/b-mail-icon/_type/b-mail-icon_error.gif"/>\
+                                    У вас не установлен или выключен Flash-плагин.<br>\
+                                    Для того, чтобы сфотографироваться нужно <a target="_blank" href="http://get.adobe.com/flashplayer/">установить</a> или включить его.\
+                            </span>\
+                        </span>\
+                    </object>\
+                </div>',
+            width: 370
+        })});
+
+    }
+));

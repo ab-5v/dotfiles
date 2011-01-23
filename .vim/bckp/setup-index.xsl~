@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "../../blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    >
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="setup-index" mode="block-content">
+<div class="b-layout__inner">
+    <div class="b-setup">
+        <div class="b-setup__inner">
+            <h2 class="b-setup-title">Настройка почты</h2>
+            <table class="b-setup__inner__table">
+            <tr>
+                <!--
+                <td class="b-setup__col">
+                    <a class="b-setup-fivemin" href="#setup-wizard">
+                    <span class="b-setup-fivemin__title">Настроить почту</span>
+                    <span class="b-setup-fivemin__title b-setup-fivemin__title_secondary">Всего за 5 минут</span>
+                    <i class="b-setup-fivemin__left"></i><i class="b-setup-fivemin__right"></i></a>
+                </td>
+                -->
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'interface'"/>
+                    <xsl:with-param name="item-description" select="'Темы оформления почты и язык интерфейса.'"/>
+                </xsl:apply-templates>
+
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'sender'"/>
+                    <xsl:with-param name="item-description" select="'Ваше имя, адрес, подпись и портрет.'"/>
+                </xsl:apply-templates>
+            </tr>
+            <tr>
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'collectors'"/>
+                    <xsl:with-param name="item-description" select="'Перенос почты с любых почтовых сервисов.'"/>
+                </xsl:apply-templates>
+
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'folders'"/>
+                    <xsl:with-param name="item-description" select="'Создание, редактирование и удаление папок и меток.'"/>
+                </xsl:apply-templates>
+            </tr>
+            <tr>
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'filters'"/>
+                    <xsl:with-param name="item-description" select="'Черный и белый списки. Правила сортировки писем. Уведомления и автоответчик. Переадресация.'"/>
+                </xsl:apply-templates>
+
+                <td></td>
+            </tr>
+            <tr class="b-setup__line b-setup__line_separator">
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'abook'"/>
+                    <xsl:with-param name="item-description" select="'Автоматическое сохранение контактов.'"/>
+                </xsl:apply-templates>
+
+                <xsl:apply-templates select="." mode="block-content-item">
+                    <xsl:with-param name="item-id" select="'lenta'"/>
+                    <xsl:with-param name="item-description" select="'Количество сообщений на странице. Информер новых сообщений.'"/>
+                </xsl:apply-templates>
+            </tr>
+
+
+            <tr>
+                <xsl:choose>
+                    <xsl:when test="not(/page/config/pdd-domain)">
+                        <xsl:apply-templates select="." mode="block-content-item">
+                            <xsl:with-param name="item-id" select="'chat'"/>
+                            <xsl:with-param name="item-description" select="'Включение Я.Онлайна на страницах Почты. Управление хранением истории.'"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <td></td>
+                    </xsl:otherwise>
+                </xsl:choose>
+
+                <td></td>
+                <!--
+                <td class="b-setup__col">
+                    <div class="b-setup-item">
+                        <div class="b-setup-item__title-wrapper">
+                            <a class="b-setup-item__title b-setup-item__title_calendar daria-action" action="common.external-link" href="setup"><i class="b-setup-item__title-icon"></i><span class="b-setup-item__title-text">Календарь</span><span class="b-setup-item__title-hint"></span></a>
+                        </div>
+                        <p class="b-setup-item__description">Настройка уведомлений. Выбор часового пояса. Приём приглашений и отображение занятости.</p>
+                    </div>
+                </td>
+                -->
+            </tr>
+
+
+
+            <tr>
+                <td class="b-setup__col">
+                    <a class="b-setup-item b-setup-item_noicon" href="#setup/client">
+                        <span class="b-setup-item__title b-setup-item__title_hint" href="#setup/client"><span class="b-setup-item__title-text">Подключение почтовых программ</span><span class="b-setup-item__title-hint">POP3, IMAP</span></span>
+                    </a>
+                </td>
+                <td class="b-setup__col">
+                    <a class="b-setup-item b-setup-item_noicon" href="#setup/other">
+                        <span class="b-setup-item__title b-setup-item__title_hint" href="#setup/other"><i class="b-setup-item__title-icon"></i><span class="b-setup-item__title-text">Прочие параметры</span><span class="b-setup-item__title-hint"></span></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="b-setup__col" colspan="2">
+                    <div class="b-setup__notify">
+                    	<img  class="b-ico b-ico_info"><xsl:attribute name="src"><xsl:value-of select="'&static;/lego/blocks/b-ico/b-ico.gif'"/></xsl:attribute></img>
+                        <div class="b-setup__notify-text">
+                      	    <xsl:text>В целях безопасности рекомендуем регулярно </xsl:text>
+                            <a href="http://passport.yandex.ru/passport?mode=changepass">менять пароль</a><xsl:text> от почтового ящика.</xsl:text>
+                            <br/>
+                            <a href="http://mail-blog.ya.ru/replies.xml?item_no=1063">Как придумать сложный пароль</a>
+                            <xsl:text>, чтобы он легко запоминался?</xsl:text>
+                        </div>
+                    </div>
+                    <div class="b-setup__notify">
+                        <img  class="b-ico b-ico_info"><xsl:attribute name="src"><xsl:value-of select="'&static;/lego/blocks/b-ico/b-ico.gif'"/></xsl:attribute></img>
+                        <div class="b-setup__notify-text">
+                            <xsl:text>Также советуем оставить </xsl:text>
+                            <a href="http://passport.yandex.ru/passport?mode=passport&amp;from=mail&amp;retpath=http://mail.yandex.ru">дополнительные данные о себе</a>
+                            <xsl:text> &#8212; телефон, дату рождения, страну проживания и т. п. </xsl:text>
+                            <br/>
+                            <xsl:text>Это поможет вам восстановить пароль, если вы вдруг его забудете.</xsl:text>
+                        </div>
+                    </div>
+                    <div class="b-setup__notify">
+                        <img  class="b-ico b-ico_warn"><xsl:attribute name="src"><xsl:value-of select="'&static;/lego/blocks/b-ico/b-ico.gif'"/></xsl:attribute></img>
+                        <div class="b-setup__notify-text">
+                            <xsl:text>При необходимости вы можете </xsl:text>
+                            <a href="http://passport.yandex.ru/passport?mode=unsubscribe&amp;from=mail">удалить</a>
+                            <xsl:text> свой почтовый ящик.</xsl:text>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+<!-- Шаблоны для вывода каждого пункта -->
+
+<xsl:template  match="setup-index" mode="block-content-item">
+    <xsl:param name="item-id"/>
+    <xsl:param name="item-description"/>
+
+    <td class="b-setup__col">
+        <a class="b-setup-item" href="#setup/{$item-id}">
+            <i class="b-setup-item__icon b-setup-item__icon_{$item-id}"></i>
+
+            <span class="b-setup-item__text">
+                <span class="b-setup-item__title">
+                    <xsl:value-of select="/page/setup-menu/descendant::item[@id = $item-id]/@menu-name"/>
+                </span>
+            
+                <span class="b-setup-item__description">
+                    <xsl:value-of select="$item-description"/>
+                </span>
+	    </span>
+        </a>
+    </td>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+</xsl:stylesheet>
+

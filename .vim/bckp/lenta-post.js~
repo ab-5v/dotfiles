@@ -1,0 +1,119 @@
+(function() {
+    var methods = {
+        'lenta-post.mark-read': {
+            doHtml: function(ids) {
+                bLentaPostsBox.iteratePosts(ids, function() {$(this).removeClass('b-lenta-message_unread');});
+                return hLentaPost.markRead(ids);
+            },
+            doClearCache: function(ids, params) {
+                hLentaPosts.clearCacheUnread();
+            },
+            handler: ['do-lenta-post-mark-read', 'lenta-subscriptions'],
+            hCallback: function() {
+                bLentaSubscriptions.invalidate();
+                bLentaSubscriptions.run();
+            }
+        },
+        'lenta-post.mark-unread': {
+            doHtml: function(ids) {
+                bLentaPostsBox.iteratePosts(ids, function() {$(this).addClass('b-lenta-message_unread');});
+                return hLentaPost.markUnread(ids);
+            },
+            doClearCache: function(ids, params) {
+                hLentaPosts.clearCacheUnread();
+            },
+            handler: ['do-lenta-post-mark-unread', 'lenta-subscriptions'],
+            hCallback: function() {
+                bLentaSubscriptions.invalidate();
+                bLentaSubscriptions.run();
+            }
+        },
+        'lenta-post.set-tag': {
+            doHtml: function(ids, params) {
+                bLentaPostsBox.iteratePosts(ids, function() {
+                    $('img[action=lenta-post.tag]', this).
+                        addClass('b-mail-icon_important').
+                        removeClass('b-mail-icon_unimportant');
+                });
+                return hLentaPost.setTag(ids, params.tag_id);
+            },
+            doClearCache: function(ids, params) {
+                hLentaPosts.clearCacheByTag(params.tag_id);
+            },
+            handler: ['do-lenta-post-set-tag', 'lenta-tags'],
+            hCallback: function() {
+                bLentaTags.invalidate();
+                bLentaTags.run();
+            }
+        },
+        'lenta-post.unset-tag': {
+            doHtml: function(ids, params) {
+                bLentaPostsBox.iteratePosts(ids, function() {
+                    $('img[action=lenta-post.tag]', this).
+                        addClass('b-mail-icon_unimportant').
+                        removeClass('b-mail-icon_important');
+                });
+                return hLentaPost.unsetTag(ids, params.tag_id);
+            },
+            doClearCache: function(ids, params) {
+                hLentaPosts.clearCacheByTag(params.tag_id);
+            },
+            handler: ['do-lenta-post-unset-tag', 'lenta-tags'],
+            hCallback: function() {
+                bLentaTags.invalidate();
+                bLentaTags.run();
+            }
+        }
+    }
+
+    var command = function(o) {
+        var method = methods[o.action];
+        var ids = o.params.ids || null;
+        if (!ids) {
+            var $div = $(o.event.currentTarget).closest('.b-lenta-message');
+            ids = [Daria.parseQuery($div.attr("params")).id];
+        }
+        ids = method.doHtml(ids, o.params);
+        if (ids.length) {
+            method.doClearCache(ids, o.params);
+            Handler.doAll(
+                method.handler,
+                $.extend({}, o.params, { _service: 'lenta', item_id: ids.join(',') }),
+                method.hCallback
+            );
+        }
+    }
+    for (name in methods) {
+        Actions.add(new Action(name, command));
+    }
+})();
+
+Actions.add(
+    new Action("lenta-post.toggle", function(o) {
+        var $div = $(o.event.currentTarget).closest('.b-lenta-message');
+        var closed = !$div.is('.b-lenta-message_open');
+        if (closed) {
+            $div.addClass('b-lenta-message_open');
+            Actions.run("lenta-post.mark-read", o.event, o.params);
+        } else {
+            $div.removeClass('b-lenta-message_open');
+        }
+    })
+);
+
+Actions.add(
+    new Action("lenta-post.mark", function(o) {
+        var $div = $(o.event.currentTarget).closest('.b-lenta-message');
+        var action = $div.is('.b-lenta-message_unread') ?
+            'lenta-post.mark-read' : 'lenta-post.mark-unread';
+        Actions.run(action, o.event, o.params);
+    })
+);
+
+Actions.add(
+    new Action("lenta-post.tag", function(o) {
+        var action = $(o.event.currentTarget).is('.b-mail-icon_important') ?
+            'lenta-post.unset-tag' : 'lenta-post.set-tag';
+        Actions.run(action, o.event, o.params);
+    })
+);

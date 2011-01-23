@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "../../blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    >
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="setup-sender" mode="block-content">
+<div class="b-layout__inner">
+    <div class="b-setup">
+        <div class="b-setup__inner b-setup__inner_no-submit">
+            <form class="daria-form" method="POST" action="settings.update-form">
+
+                <a href="" class="b-setup__inner__reset">
+                    <xsl:value-of select="i18n('%Setup_отменить_изменения')"/>
+                </a>
+
+                <xsl:apply-templates select="/" mode="setup-title-breadcrumbs"/>
+
+                <table class="b-setup__inner__table">
+                    <tbody>
+                        <tr class="b-setup__line">
+                            <td class="b-setup__col">
+                                <div class="b-form-layout">
+                                    <div class="b-form-layout__block b-form-layout__block_settings">
+                                        <div class="b-form-layout__title">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Моё_имя')"/>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <div class="b-form-layout__field">
+                                                <span class="b-form-element" onclick="">
+                                                    <input type="text" class="b-form-element__input-text daria-form-changeble" name="from_name" value="{$settings/from_name}"/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <div class="b-form-layout__field">
+                                                <span class="b-form-layout__text b-form-layout__text_hint">
+                                                    <xsl:value-of select="i18n('%Setup_Sender_Моё_имя_description')"/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="b-form-layout__block b-form-layout__block_settings">
+                                        <div class="b-form-layout__title">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Подпись')"/>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <span class="b-form-element" onclick="">
+                                                <div class="b-form-element__textarea__wrapper">
+                                                    <textarea name="signature" class="b-form-element__textarea b-form-element__textarea_signature daria-form-changeble">
+                                                        <xsl:value-of select="$settings/signature"/>
+                                                    </textarea>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="b-form-layout__block b-form-layout__block_settings">
+                                        <div class="b-form-layout__title">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Расположение_подписи')"/>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <span class="b-form-element">
+                                                <span>
+                                                    <xsl:attribute name="class">
+                                                        <xsl:text>b-form-element__radio</xsl:text>
+                                                        <xsl:if test="$settings[signature_top]">
+                                                            <xsl:text> b-form-element__radio_checked</xsl:text>
+                                                        </xsl:if>
+                                                    </xsl:attribute>
+
+                                                    <label>
+                                                        <input type="radio" class="b-form-element__radio__input daria-form-changeble" name="signature_top" value="on">
+                                                            <xsl:apply-templates select="$settings[signature_top]" mode="checked"/>
+                                                        </input>
+                                                        <xsl:value-of select="i18n('%Setup_Sender_сразу_после_ответа')"/>
+                                                    </label>
+                                                </span>
+                                            </span>
+                                            <span class="b-form-element">
+                                                <span>
+                                                    <xsl:attribute name="class">
+                                                        <xsl:text>b-form-element__radio</xsl:text>
+                                                        <xsl:if test="$settings[not(signature_top)]">
+                                                            <xsl:text> b-form-element__radio_checked</xsl:text>
+                                                        </xsl:if>
+                                                    </xsl:attribute>
+
+                                                    <label>
+                                                        <input type="radio" class="b-form-element__radio__input daria-form-changeble" name="signature_top" value="">
+                                                            <xsl:apply-templates select="$settings[not(signature_top)]" mode="checked"/>
+                                                        </input>
+                                                        <xsl:value-of select="i18n('%Setup_Sender_внизу_всего_письма')"/>
+                                                    </label>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="b-setup__col">
+                                <div class="b-form-layout">
+                                    <div class="b-form-layout__block b-form-layout__block_settings">
+                                        <div class="b-form-layout__title">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Отправлять_письма_с_адреса')"/>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <span class="b-form-element" onclick="">
+                                                <xsl:apply-templates select="$account-information/emails/email" mode="setup-sender-default-email"/>
+                                                <xsl:apply-templates select="$settings/reply_to/item[text()]" mode="setup-sender-default-email"/>
+                                            </span>
+                                        </div>
+                                        <div class="b-form-layout__line">
+                                            <span class="b-form-layout__text">
+                                                <a href="http://validator.yandex.ru/">
+                                                    <xsl:value-of select="i18n('%Setup_Sender_Добавить_адрес')"/>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <input type="submit" value="{i18n('%Setup_сохранить_изменения')}" class="b-setup__inner__submit"/>
+            </form>
+        </div>
+
+        <div class="b-setup__inner">
+            <div class="b-setup-title">
+                <xsl:value-of select="i18n('%Setup_Sender_Мой_портрет')"/>
+            </div>
+            <div class="b-form-layout">
+                <div class="b-form-layout__block">
+                    <div class="b-form-layout__line b-form-layout__line_no-height">
+                        <div class="b-form-layout__field">
+                            <div class="b-settings-setting">
+                                <div class="b-settings-setting__content">
+                                    <div class="b-settings-field b-settings-field_userpic">
+                                        <div class="b-userpic-choose">
+                                            <div class="b-userpic-choose__pic b-userpic-choose__pic_show">
+                                                <div class="b-userpic-choose__pic-image">
+                                                    <img class="b-userpic-choose__pic-image__image"  data-src="//upics.yandex.net/{$account-information/uid}/normal/mail/" onerror="$(this).closest('.b-userpic-choose__pic').find('.b-userpic-choose__pic-delete').addClass('g-hidden');this.src='&static;/blocks/b-mail-person/userpic/b-mail-person__userpic_none.png';">
+                                                        <xsl:attribute name="src"><xsl:value-of select="concat('//upics.yandex.net/', $account-information/uid, '/normal/mail/?rnd=', generate-id(.))"/></xsl:attribute>
+                                                    </img>
+                                                </div>
+                                                <div class="b-userpic-choose__pic-delete daria-action" action="settings.userpic-remove">
+                                                    <span class="b-pseudo-link">
+                                                        <xsl:value-of select="i18n('%Setup_Sender_удалить')"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-form-layout__field">
+                            <div class="b-settings-setting">
+                                <div class="b-settings-setting__content">
+                                    <div class="b-settings-field b-settings-field_upload">
+                                        <div class="b-input-file">
+                                            <div class="b-input-file__i">
+                                                <div class="b-custom-button b-custom-button_light">
+                                                    <i class="b-custom-button__label">
+                                                        <xsl:value-of select="i18n('%Setup_Sender_Загрузить_портрет')"/>
+                                                    </i>
+                                                </div>
+                                                <div class="b-input-file__input">
+                                                    <input type="file" name="file" class="b-input-file__input__file"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="b-settings-field__hint">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Загрузить_портрет_description')"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-form-layout__field">
+                            <div class="b-settings-setting">
+                                <div class="b-settings-setting__content">
+                                    <div class="b-settings-field b-settings-field_upload">
+                                        <div class="b-settings-field__button daria-action" action="settings.userpic-make">
+                                            <div class="b-custom-button b-custom-button_light">
+                                                <i class="b-custom-button__label">
+                                                    <xsl:value-of select="i18n('%Setup_Sender_Сфотографироваться')"/>
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <p class="b-settings-field__hint">
+                                            <xsl:value-of select="i18n('%Setup_Sender_Сфотографироваться_description')"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<!-- Выбор ящика, с которого по умолчанию будут отправляться письма-->
+<xsl:template match="email | item" mode="setup-sender-default-email">
+    <xsl:variable name="email">
+        <xsl:choose>
+            <xsl:when test="login">
+                <xsl:value-of select="concat(login, '@', domain)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <span>
+        <xsl:attribute name="class">
+            <xsl:text>b-form-element__radio</xsl:text>
+            <xsl:if test="$email=$settings/default_email">
+                <xsl:text> b-form-element__radio_checked</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+
+        <label>
+            <input type="radio" class="b-form-element__radio__input daria-form-changeble" name="default_email" value="{$email}">
+                <xsl:if test="$email=$settings/default_email">
+                    <xsl:attribute name="checked">checked</xsl:attribute>
+                </xsl:if>
+            </input>
+            <xsl:value-of select="$email"/>
+        </label>
+    </span>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+</xsl:stylesheet>
+

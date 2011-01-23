@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "blocks/blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+    xmlns:lego="https://lego.yandex-team.ru"
+    xmlns:x="http://www.yandex.ru/xscript"
+    xmlns:re="http://exslt.org/regular-expressions"
+    xmlns:exsl="http://exslt.org/common"
+    xmlns:func="http://exslt.org/functions"
+    xmlns:ya="urn:yandex-functions"
+    xmlns:str="http://exslt.org/strings"
+    xmlns:daria="http://daria.yandex.ru"
+    extension-element-prefixes="func ya str re"
+    exclude-result-prefixes=" lego x func ya str re exsl daria "
+    >
+
+<xsl:import href="static/pages/2pane/blue-based/blue/daria/daria.xsl"/>
+
+<!-- ############################################################################################################## -->
+
+<xsl:output encoding="utf-8" method="xml" indent="no" media-type="text/html; charset=utf-8" omit-xml-declaration="yes"
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+    />
+
+<!-- ############################################################################################################## -->
+
+<!-- Строка вида 001010001... - т.е. из нулей и единиц. Каждая цифра соответствует (по порядковому номеру) настройке в js/components/debug/debug.settings.xml -->
+<xsl:variable name="debug-settings" select="str:split(x:get-cookie('daria-debug', ''), '')"/>
+<xsl:key name="debug-settings" match="debug-setting" use="@id"/>
+
+<!-- ############################################################################################################## -->
+
+<xsl:variable name="config" select="/page/config"/>
+<xsl:variable name="config-js-id">
+    <xsl:choose>
+        <xsl:when test="daria:debug-settings('dont-minimize-js') and $config/js/dont-minimize">dont-minimize</xsl:when>
+        <xsl:otherwise>default</xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+<xsl:variable name="config-js" select="$config/js/*[name() = $config-js-id]"/> <!-- FIXME: Дурацкий xsl. Городить ключ или функцию ради двух строчек не хочется. -->
+
+<xsl:variable name="settings" select="/page/settings"/>
+<xsl:variable name="account-information" select="/page/account-information"/>
+
+<xsl:variable name="db" select="$account-information/db"/>
+
+<xsl:variable name="user-login" select="$account-information/login"/>
+<xsl:variable name="is-auth" select="$user-login != ''"/>
+
+<xsl:variable name="is-fatal-error" select="not($settings and $account-information) or $settings/error or $account-information/error"/>
+
+<xsl:variable name="sid-666" select="$account-information/sids/sid[. = '666']"/>
+<xsl:variable name="sid-667" select="$account-information/sids/sid[. = '667']"/>
+
+<xsl:variable name="page-params" select="/page/page-params"/>
+
+<xsl:variable name="this" select="x:get-protocol-arg('originalurl')"/>
+<xsl:variable name="original-host" select="x:get-protocol-arg('originalhost')"/>
+
+<xsl:variable name="is-corp" select="$config/corp"/>
+<xsl:variable name="is-dev" select="$config/dev"/>
+<xsl:variable name="is-prod" select="$config/prod"/>
+
+<xsl:variable name="pdd-domain" select="re:match($this, '\/for\/([^\/]*)')"/>
+
+<xsl:variable name="passport-host">
+    <xsl:choose>
+        <xsl:when test="$is-corp">http://passport.yandex-team.ru</xsl:when>
+        <xsl:otherwise>http://passport.yandex.ru</xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+<xsl:variable name="login-form">
+    <xsl:choose>
+        <xsl:when test="$is-corp">http://mail.yandex-team.ru</xsl:when>
+        <xsl:otherwise>http://mail.yandex.ru</xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+
+<!-- Подключать ли вебчат. -->
+<xsl:variable name="webchat-enabled" select="not($pdd-domain) and not($is-corp) and $settings/show_chat"/>
+<xsl:variable name="webchat-static-path" select="concat(/page/webchat_config/static_path, /page/webchat_config/revision)"/>
+
+<!-- Подключать ли transport. -->
+<xsl:variable name="transport-enabled" select="not(daria:debug-settings('disable-transport'))"/>
+
+<!-- Идентификатор темы оформления -->
+<xsl:variable name="color-theme-id">
+    <xsl:choose>
+        <xsl:when test="$settings/color_scheme = /page/color-themes/color-theme/@id">
+            <xsl:value-of select="$settings/color_scheme"/>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>blue</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+
+<!-- Цвет оформления -->
+<xsl:variable name="color-theme-color" select="/page/color-themes/color-theme[@id = $color-theme-id]/@color"/>
+
+<!-- Тема оформления -->
+<xsl:variable name="color-theme-name" select="/page/color-themes/color-theme[@id = $color-theme-id]/@theme"/>
+
+<xsl:variable name="static-root" select="$config/static-root"/>
+<xsl:variable name="lego:lego-static-host" select="$config/lego-static-path"/>
+
+<!-- NOTE: Вписать сюда 'ru' или 'en' вместо '', если нужно включить локали. Не удалять эту строчку, иначе будет неопределенная переменная. -->
+<xsl:variable name="locale" select="'ru'"/>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="/">
+<xsl:value-of select="x:http-header-out('Content-Type', 'text/html; charset=utf-8')"/>
+<xsl:if test="not($is-auth)">
+    <xsl:value-of select="x:http_redirect(concat($login-form, '?retpath=', x:urlencode('utf-8', $this)))"/>
+</xsl:if>
+<html>
+    <xsl:if test="$settings/hide_daria_header">
+        <xsl:attribute name="class">b-page_minified</xsl:attribute>
+    </xsl:if>
+<head>
+    <title>Яндекс.Почта</title>
+    <xsl:apply-templates select="page" mode="init"/>
+</head>
+<body>
+    <xsl:value-of select="$pdd-domain"/>
+    <div class="b-page">
+        <xsl:call-template name="updater"/>
+        <div class="b-page__content">
+            <xsl:apply-templates select="page" mode="header"/>
+
+            <xsl:apply-templates select="page" mode="content"/>
+        </div>
+    </div>
+
+    <div class="b-page-bottom">
+        <xsl:apply-templates select="page" mode="footer"/>
+    </div>
+
+    <!-- Это для префетчинга. Чтобы знать до первого запроса состояние флага threaded. -->
+    <script>
+        <xsl:text>Daria.login = </xsl:text><xsl:value-of select="x:js-quote($user-login)"/><xsl:text>;</xsl:text>
+        <xsl:text>Daria.themeColor = </xsl:text><xsl:value-of select="x:js-quote($color-theme-color)"/><xsl:text>;</xsl:text>
+        <xsl:text>Daria.themeName = </xsl:text><xsl:value-of select="x:js-quote($color-theme-name)"/><xsl:text>;</xsl:text>
+        <xsl:if test="$settings/folder_thread_view">Daria.Handler.handlers.settings.threaded = true;</xsl:if>
+        <xsl:if test="$sid-666 or $is-corp">Daria.yatester = true;</xsl:if>
+        <xsl:if test="$is-fatal-error">Daria.isFatalError = true;</xsl:if>
+        <xsl:if test="$locale">Daria.locale = </xsl:if><xsl:value-of select="x:js-quote($locale)"/><xsl:text>;</xsl:text>
+        <xsl:apply-templates select="/page/client-xsl-config"/>
+    </script>
+
+    <!-- tns-counter. Выводим его руками в самом низу. -->
+    <i class="l-head__gap" style="background:url(//www.tns-counter.ru/V13a****yandex_ru/ru/CP1251/tmsec=yandex_mail/0)"></i>
+</body>
+</html>
+</xsl:template>
+
+<!-- Шаблон с предложением обновить браузер. Выводится в index.xml и lite.xml -->
+<xsl:template name="updater">
+    <xsl:param name="compact" select="false()"/>
+    <xsl:variable name="update-browser" select="x:get-state-arg('update-browser')"/>
+    <xsl:variable name="update-browser-data" select="/page/browser-updater/browser[@name = $update-browser]"/>
+    <div>
+        <xsl:attribute name="class">
+            <xsl:text>b-updater</xsl:text>
+            <xsl:if test="$compact"><xsl:text> b-updater_compact</xsl:text></xsl:if>
+        </xsl:attribute>
+        <xsl:if test="not($compact)">
+            <xsl:attribute name="style">display: none</xsl:attribute>
+        </xsl:if>
+        <table class="b-updater__i">
+        <tr>
+            <td class="b-updater__side" rowspan="2">
+                <img src="&static;/blocks/b-mail-icon/_type/b-mail-icon_attention-big.gif" alt="" class="b-mail-icon b-mail-icon_attention-big"/>
+            </td>
+            <td rowspan="2" class="b-updater__content">
+                <xsl:choose>
+                    <xsl:when test="$compact">
+                        <div class="b-updater__header">Ваша версия браузера не поддерживает современные технологии.</div>
+                        <div class="b-updater__text">Сейчас вы находитесь в лёгкой версии Почты. Чтобы перейти на полную версию, обновите браузер.</div>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <div class="b-updater__text">Почта может некорректно работать в этой версии браузера. Рекомендуем обновить браузер до более современной версии.</div>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <div class="b-updater__browser b-updater__browser_{$update-browser}">
+                    <a class="b-updater__browser__button" href="{$update-browser-data/link}" target="_top">
+                        <span class="b-updater__browser__button__i1">
+                            <span class="b-updater__browser__button__logo"></span>
+                            <span class="b-updater__browser__button__i2">Обновить</span>
+                        </span>
+                    </a>
+                    <span class="b-updater__browser__description">
+                        <xsl:value-of select="$update-browser-data/descr"/>
+                        <span class="b-updater__browser__misc"><xsl:value-of select="$update-browser-data/filesize"/></span>
+                        <span class="b-updater__browser__misc"><xsl:value-of select="$update-browser-data/version"/></span>
+                    </span>
+                </div>
+            </td>
+            <td class="b-updater__side b-updater__side_never-ever">
+                <a class="b-pseudo-link b-updater__never-ever daria-action" action="common.hide" params="selector=.b-updater" target="_top">
+                <xsl:if test="$compact">
+                    <xsl:attribute name="href">/pda</xsl:attribute>
+                </xsl:if>
+                <span class="b-updater__never-ever__icon">×</span>скрыть</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="b-updater__side b-updater__side_who-else">
+                <span class="b-updater__who-else">Выбрать и установить <a href="http://soft.yandex.ru/" target="_top">другой браузер</a></span>
+            </td>
+        </tr>
+        </table>
+    </div>
+</xsl:template>
+
+<xsl:template match="client-xsl-config">
+    <xsl:text>Daria.Config.XSL = {</xsl:text>
+    <xsl:apply-templates select="*" mode="client-xsl-config"/>
+    <xsl:if test="$is-corp">
+        <xsl:text>, "is-corp":""</xsl:text>
+    </xsl:if>
+    <xsl:if test="$pdd-domain">
+        <xsl:text>, "pdd-domain": "</xsl:text>
+        <xsl:value-of select="$pdd-domain"/>
+        <xsl:text>"</xsl:text>
+    </xsl:if>
+    <xsl:text>};</xsl:text>
+</xsl:template>
+
+<xsl:template match="*" mode="client-xsl-config">
+    <xsl:value-of select="concat(x:json-quote(name()), ':', x:json-quote(.))"/>
+    <xsl:if test="position() != last()">, </xsl:if>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="/" mode="lego:params">
+    <lego:id>mail</lego:id>
+    <lego:static-host/>
+    <xsl:if test="$is-auth">
+        <lego:login><xsl:value-of select="$user-login"/></lego:login>
+    </xsl:if>
+    <lego:js-common>http://yandex.st/lego/2.2.10/common/js/_common.js</lego:js-common>
+    <lego:passport-host><xsl:value-of select="$passport-host"/></lego:passport-host>
+</xsl:template>
+
+<xsl:template match="page" mode="init">
+    <xsl:variable name="css-path-prefix" select="concat('&static;/pages/2pane/', $color-theme-name, '/', $color-theme-color, '/_2pane_', $color-theme-name, '_', $color-theme-color)"/>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>-->
+    <xsl:comment>[if gt IE 7]>&lt;!</xsl:comment>
+        <link rel="stylesheet" href="{$css-path-prefix}.css"/>
+    <xsl:comment>&lt;![endif]</xsl:comment>
+    <xsl:comment>[if lt IE 8]&gt;&lt;link rel="stylesheet" href="<xsl:value-of select="$css-path-prefix"/>.ie.css"/&gt;&lt;![endif]</xsl:comment>
+
+    <link rel="shortcut icon" href="/neo2/favicon.ico"/>
+    <script><xsl:text disable-output-escaping="yes">window.onerror=function(msg,url,line){var i=new Image();i.src='/monitoring.txt?login=</xsl:text><xsl:value-of select="$user-login"/><xsl:text disable-output-escaping="yes">&amp;errorType=JSError&amp;msg='+encodeURIComponent(msg)+'&amp;url='+encodeURIComponent(url)+'&amp;line='+line;}</xsl:text></script>
+
+    <script>if(!window.Daria){window.Daria={}};<xsl:value-of select="js-config"/></script>
+    <script src="{$config-js/jquery}"></script>
+    <xsl:choose>
+        <xsl:when test="$locale">
+            <script src="{$static-root}/{$config-js/mail}.{$locale}.js"></script>
+        </xsl:when>
+        <xsl:otherwise>
+            <script src="{$static-root}/{$config-js/mail}.js"></script>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="page" mode="header">
+    <!-- DARIA-300: Реализовать в xsl блоки b-head-decor и b-foot-decor. -->
+    <i class="b-head-decor"><i class="b-head-decor__inner"></i></i>
+    <xsl:apply-templates select="lego:page/lego:b-page/lego:b-header"/>
+</xsl:template>
+
+<xsl:template match="lego:b-header[$pdd-domain]" mode="lego:link_exit">
+    <a class="b-header__link b-header__link_exit" href="http://passport.yandex.ru/for/{$pdd-domain}/passport?mode=logout&amp;retpath=http%3A%2F%2Fwww.yandex.ru%2F">Выход</a>
+</xsl:template>
+<!-- ############################################################################################################## -->
+
+<xsl:template match="page" mode="content">
+    <noscript>
+        <div class="b-load-message">
+            <p>Эта версия почты не работает с отключенным JavaScript.</p>
+            <p><a href="http://help.yandex.ru/neomail/?id=1111476">Как включить JavaScript</a>.</p>
+        </div>
+    </noscript>
+    <xsl:choose>
+        <xsl:when test="$is-fatal-error">
+            <div class="b-load-message">
+                <p>Ой, у нас что-то сломалось.</p>
+                <p>Ну на то она и бета-версия.</p>
+                <p>Уже чиним.</p>
+            </div>
+        </xsl:when>
+        <xsl:otherwise>
+            <div class="block-app">
+                <div class="block-app__loading">
+                    <div class="b-load-message">Загружается...</div>
+                </div>
+            </div>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="page" mode="footer">
+    <!-- DARIA-300: Реализовать в xsl блоки b-head-decor и b-foot-decor. -->
+    <i class="b-foot-decor b-foot-decor_17"><i class="b-foot-decor__inner"></i></i>
+    <xsl:apply-templates select="lego:page/lego:b-page/lego:b-footer"/>
+
+    <!-- Сюда сношу все, не относящееся прямо к Дарье. Лего, Вебчат и т.д. -->
+
+    <xsl:if test="$transport-enabled">
+        <script type="text/javascript" src="{$static-root}/js/transport/_Transport.js"></script>
+    </xsl:if>
+    <xsl:if test="$webchat-enabled and $webchat-static-path">
+        <script type="text/javascript" src="{$webchat-static-path}/locale/ru.js"></script>
+        <script type="text/javascript" src="{$webchat-static-path}/_jquery-plugins.js"></script>
+        <script type="text/javascript" src="{$webchat-static-path}/_webchat-mail-neo2.js"></script>
+        <!--<script type="text/javascript" src="{$webchat-static-path}/Roster/FakeCP.js"></script>-->
+        <!--<script type="text/javascript" src="{$webchat-static-path}/Roster/Logger.js"></script>-->
+    </xsl:if>
+
+    <xsl:apply-templates select="/" mode="lego:js-init"/>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="lego:b-search/lego:button" mode="lego:input-attributes">
+    <xsl:apply-imports/>
+    <xsl:attribute name="action">search</xsl:attribute>
+    <xsl:attribute name="class">b-search__submit daria-action</xsl:attribute>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<!-- FIXME: Временно отрываем tns-counter, чтобы не тормозил загрузку. -->
+<xsl:template match="lego:b-header" mode="lego:tns"/>
+
+<!-- ############################################################################################################## -->
+
+<!-- DARIA-1624 - Положить под марку лого NDA -->
+<xsl:template match="lego:b-head-logo[$is-corp]" mode="lego:content">
+    <img class="b-head-logo__stamp" src="&static;/blocks/b-head-logo/b-head-logo__stamp.png" alt="NDA"/>
+    <xsl:apply-imports/>
+</xsl:template>
+
+<!-- FIXME: Это копипаст. Убрать когда будем переходить на 2.3. -->
+<!-- Подробности: https://ml.yandex-team.ru/archive/thread10652845/ -->
+<xsl:template match="lego:b-head-name">
+    <strong class="b-head-name">
+        <xsl:apply-templates select="." mode="lego:block-attributes"/>
+        <xsl:choose>
+            <xsl:when test="$lego:params/lego:index">
+                <xsl:apply-templates select="." mode="lego:content"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <a class="b-head-name__link" href="/">
+                    <xsl:apply-templates select="." mode="lego:url"/>
+                    <xsl:apply-templates select="." mode="lego:content"/>
+                </a>
+            </xsl:otherwise>
+        </xsl:choose>
+    </strong>
+</xsl:template>
+
+<xsl:template match="lego:b-head-name" mode="lego:url">
+    <xsl:apply-imports/>
+    <!-- FIXME: Гразный хак. -->
+    <xsl:attribute name="class">b-head-name__link daria-action</xsl:attribute>
+    <xsl:attribute name="action">mailbox.check</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="lego:b-head-name" mode="lego:url-content">
+    <xsl:text>#inbox</xsl:text>
+</xsl:template>
+
+<xsl:template match="lego:b-head-name" mode="lego:content">
+    <xsl:value-of select="x:tolower(.)"/>
+    <img src="&static;/lego/blocks/b-ico/b-ico.gif" class="b-ico b-ico_beta" alt=""/>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="lego:setup" mode="lego:url-content">
+    <xsl:text>#setup</xsl:text>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<!-- FIXME: Временно отрубаем счетчики, чтобы не возиться с переопределением Календарь -> Я.ру. -->
+<xsl:variable name="lego:show-counters" select="false()"/>
+
+<!-- FIXME: Дальше идет серия грязных хаков. Правильно нужно делать так: завести отдельный набор табов и подключать в raw.xml именно его.
+            Но. Это невозможно сделать потому, что у нас зафиксирована версия Лего на конкретную ревизию. Нужно перейти вместо этого
+            на стабильную версию: 2.2 или 2.3. -->
+
+<xsl:template match="lego:item[@service-id = 'calendar']/lego:link" mode="lego:url-content">
+    <xsl:text>http://my.ya.ru</xsl:text>
+</xsl:template>
+
+<xsl:template match="lego:item[@service-id = 'calendar']/lego:link" mode="lego:content">
+    <xsl:text>Я.ру</xsl:text>
+</xsl:template>
+
+<xsl:template match="lego:item[@service-id = 'calendar' and @current]" mode="lego:current">
+    <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="lego:item[@service-id = 'wow']"/>
+
+<!-- В yandex-team.ru убиваем паспортную выпадушку. -->
+<xsl:template match="lego:b-head-user[$is-corp]" mode="lego:block-class-js"/>
+
+<!-- Путь к аватару берем из cfg/config.xml если он там есть (нужно для yandex-team). Иначе используем дефолтный вариант. -->
+<xsl:template match="lego:b-userpic[$config/avatar-url]" mode="lego:src-content">
+    <xsl:apply-templates select="$config/avatar-url" mode="src-content"/>
+</xsl:template>
+
+<xsl:template match="login" mode="src-content">
+    <xsl:value-of select="$user-login"/>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<func:function name="daria:debug-settings">
+    <xsl:param name="id"/>
+    <xsl:variable name="setting" select="key('debug-settings', $id)"/> <!-- Ищем в xml тег <setting> с нужным id. -->
+    <xsl:variable name="index" select="count($setting/preceding-sibling::debug-setting) + 1"/> <!-- Определяем его порядковый номер в списке. -->
+    <func:result select="$debug-settings[$index] = '1'"/> <!-- Возвращаем true, если в куке на соответствующем месте стоит единичка. -->
+</func:function>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="lego:daria-version">
+    <xsl:variable name="cfg" select="/page/config"/>
+    <span>
+        <xsl:if test="$cfg/version"><xsl:attribute name="title"><xsl:value-of select="$cfg/version"/></xsl:attribute></xsl:if>
+        <xsl:text>β-версия</xsl:text>
+        <xsl:if test="$cfg/date"><xsl:value-of select="concat(' (', $cfg/date, ')')"/></xsl:if>
+    </span>
+</xsl:template>
+
+</xsl:stylesheet>
+

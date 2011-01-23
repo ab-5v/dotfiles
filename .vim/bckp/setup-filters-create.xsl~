@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "../../blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    >
+
+<!-- ############################################################################################################## -->
+
+<!-- FIXME: Переназвать моды -->
+
+<xsl:template match="setup-filters-create" mode="block-content">
+    <xsl:variable name="filter" select="/page/filters/body/action[id = /page/page-params/id]" />
+    <xsl:variable name="conditions" select="$filter/conditions/item[field != 'att' and field != 'nospam' and field != 'clearspam' and field != 'all']"/>
+    <xsl:variable name="message" select="/page/message"/>
+    <div class="b-setup">
+        <div class="b-setup__inner">
+            <form class="b-setup__form daria-form">
+                <xsl:attribute name="action">
+                    <xsl:choose>
+                        <xsl:when test="$filter">filters.edit</xsl:when>
+                        <xsl:otherwise>filters.add</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+
+                <input type="hidden" name="fid" value="{$filter/id}" />
+                <input type="hidden" name="filter_name">
+                    <xsl:attribute name="value">
+                        <xsl:choose>
+                            <xsl:when test="string($filter/rule_name)">
+                                <xsl:value-of select="$filter/rule_name"/>
+                            </xsl:when>
+                            <xsl:otherwise>Моё правило</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </input>
+
+                <xsl:apply-templates select="/" mode="setup-title-breadcrumbs">
+                    <xsl:with-param name="item-id">
+                        <xsl:choose>
+                            <xsl:when test="$filter">filters-edit</xsl:when>
+                            <xsl:otherwise>filters-create</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:with-param>
+                </xsl:apply-templates>
+
+                <div class="b-form-layout">
+
+                    <div class="b-form-layout__block">
+                        <div class="b-form-layout__field">
+                            <div class="b-form-layout__line">
+                                <span class="b-form-element b-form-element_selects-as-text">
+                                    <span class="b-form-element__select b-form-element__select_selected-as-text">
+                                        <span class="b-form-layout__text">
+                                            <xsl:text>Применять </xsl:text>
+                                            <span class="b-form-element__select__text">
+                                                <xsl:apply-templates select="." mode="filters-logic-label"/>
+                                                <xsl:text>&#160;</xsl:text>
+                                                <span class="b-pseudo-link daria-action" action="filters.show-filters-create-logic">изменить</span>
+                                            </span>
+                                        </span>
+
+                                        <select class="b-form-element__select__select" name="letter">
+                                            <xsl:apply-templates select="/page/filters/filters-data/logic/item"
+                                                                 mode="filters-logic"/>
+                                        </select>
+                                        <xsl:text>&#160;</xsl:text>
+                                        <select class="b-form-element__select__select" name="attachment">
+                                            <xsl:apply-templates select="/page/filters/filters-data/attachment/item"
+                                                                 mode="filters-attachment"/>
+                                        </select>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="b-form-layout__block">
+                        <div class="b-form-layout__field">
+                            <div class="b-form-layout__line">
+                                <div class="b-form-layout__title">Если</div>
+                            </div>
+                        </div>
+                        <div>
+                            <xsl:attribute name="class">
+                                <xsl:text>b-form-layout__field</xsl:text>
+                                <xsl:if test="count($conditions) &lt;= 1 and not($message)"> b-form-layout__field_show-one-mode</xsl:if>
+                            </xsl:attribute>
+
+                            <div class="b-form-layout__line b-form-layout__line_show-after-clone">
+                                <span class="b-form-element" onclick="">
+                                    <span class="b-form-element__select">
+                                        <select class="b-form-element__select__select" name="logic">
+                                            <!-- И или ИЛИ -->
+                                            <xsl:variable name="logic">
+                                                <xsl:choose>
+                                                    <!-- Для фильтра "по письму" - И -->
+                                                    <xsl:when test="$message">
+                                                        <xsl:text>1</xsl:text>
+                                                    </xsl:when>
+                                                    <!-- При редактировании фильтра - его логику -->
+                                                    <xsl:when test="$filter">
+                                                        <xsl:value-of select="$filter/conditions/item[pattern/text()]/cond_link"/>
+                                                    </xsl:when>
+                                                    <!-- Для нового фильтра - ИЛИ -->
+                                                    <xsl:otherwise>
+                                                        <xsl:text>0</xsl:text>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </xsl:variable>
+                                            <xsl:apply-templates select="/page/filters/filters-data/and-or/item" mode="filters-and-or">
+                                                <xsl:with-param name="logic" select="$logic"/>
+                                            </xsl:apply-templates>
+                                        </select>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <xsl:choose>
+                                <xsl:when test="$filter">
+                                    <xsl:for-each select="$conditions">
+                                        <xsl:variable name="custom" select="field != 'subject' and field != 'from' and field != 'to' and field != 'cc' and field != 'body' and field != 'filename'"/>
+
+                                        <xsl:apply-templates select="/" mode="filters-condition">
+                                            <xsl:with-param name="custom" select="$custom"/>
+                                            <xsl:with-param name="condition" select="."/>
+                                            <xsl:with-param name="condition-field1" select="./field"/>
+                                            <xsl:with-param name="condition-field2" select="./oper_id"/>
+                                            <xsl:with-param name="condition-field3" select="./pattern"/>
+                                        </xsl:apply-templates>
+                                    </xsl:for-each>
+                                </xsl:when>
+                                <xsl:when test="$message">
+                                    <xsl:apply-templates select="/" mode="filters-condition">
+                                        <xsl:with-param name="condition-field1" select="'from'"/>
+                                        <xsl:with-param name="condition-field3" select="$message/from/email"/>
+                                    </xsl:apply-templates>
+                                    <xsl:apply-templates select="/" mode="filters-condition">
+                                        <xsl:with-param name="condition-field1" select="'subject'"/>
+                                        <xsl:with-param name="condition-field3" select="$message/subject"/>
+                                    </xsl:apply-templates>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:apply-templates select="/" mode="filters-condition"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+
+                            <div class="b-form-layout__line">
+                                <a href="" class="b-form-layout__clone-line daria-action" action="filters.add-condition" >
+                                    <xsl:text>Добавить условие</xsl:text>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b-form-layout__block b-form-layout__block_settings-filter">
+                        <div class="b-form-layout__title">Выполнить действие</div>
+
+                        <xsl:apply-templates select="/page/filters/filters-data/actions/item[not(@req-pass='yes')]" mode="filters-action">
+                            <xsl:with-param name="filter" select="$filter"/>
+                        </xsl:apply-templates>
+                    </div>
+
+                    <div class="b-form-layout__block b-form-layout__block_settings-filter">
+                        <!--div class="b-form-layout__line">
+                            <span class="b-form-layout__text">
+                                <xsl:text>При активации правил пересылки писем потребуется ввести пароль. </xsl:text>
+                                <span class="b-pseudo-link daria-action" action="filters.enable-forwarding-options">Продолжить</span>
+                            </span>
+                        </div-->
+                        <xsl:apply-templates select="/page/filters/filters-data/actions/item[@req-pass='yes']" mode="filters-action">
+                            <xsl:with-param name="filter" select="$filter"/>
+                            <!--xsl:with-param name="disabled" select="true()"/-->
+                        </xsl:apply-templates>
+                    </div>
+
+                    <div class="b-form-layout__block b-form-layout__block_settings-filter">
+                        <div class="b-form-layout__line">
+                            <div class="b-form-layout__field">
+                                <span class="b-form-element" onclick="">
+                                    <span class="b-form-element__checkbox">
+                                        <label>
+                                            <input type="checkbox" class="b-form-element__checkbox__input" name="stop" value="on" >
+                                                <xsl:apply-templates select="$filter[stop = 'yes']" mode="checked"/>
+                                            </input>
+                                            <xsl:text>Не применять остальные правила</xsl:text>
+                                        </label>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <span class="b-mail-button b-mail-button_round">
+                    <input type="submit" class="b-mail-button__button">
+                        <xsl:attribute name="value">
+                            <xsl:choose>
+                                <xsl:when test="$filter">Изменить правило</xsl:when>
+                                <xsl:otherwise>Создать правило</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </input>
+                </span>
+                <a href="#setup/filters">Отмена</a>
+            </form>
+        </div>
+    </div>
+</xsl:template>
+
+<!-- Все радио, кроме ответить -->
+<xsl:template match="item" mode="filters-action">
+    <xsl:param name="filter"/>
+    <xsl:param name="disabled"/>
+
+    <xsl:variable name="dependence-id" select="concat(@id, '_', generate-id(.))"/>
+
+    <div class="b-form-layout__line">
+        <!-- Сам радио -->
+        <div class="b-form-layout__field b-form-layout__field_size_14em">
+            <span>
+                <xsl:attribute name="class">
+                    <xsl:text>b-form-element</xsl:text>
+                    <xsl:if test="$disabled">
+                        <xsl:text> b-form-element_disabled</xsl:text>
+                    </xsl:if>
+                </xsl:attribute>
+                <span class="b-form-element__radio">
+                    <label>
+                        <input type="radio" name="cliker" value="{@id}" dependence-parent-id="{$dependence-id}"
+                               class="b-form-element__radio__input daria-dependence-parent" >
+                            <xsl:attribute name="class">
+                                <xsl:text>b-form-element__radio__input daria-dependence-parent</xsl:text>
+                                <xsl:if test="$disabled">
+                                    <xsl:text> daria-dependence-child</xsl:text>
+                                </xsl:if>
+                            </xsl:attribute>
+                            <xsl:if test="$disabled">
+                                <xsl:attribute name="disabled">disabled</xsl:attribute>
+                                <xsl:attribute name="dependence-child-id">passwd</xsl:attribute>
+                            </xsl:if>
+                            <xsl:apply-templates select="." mode="filters-action-checked" />
+                        </input>
+                        <xsl:value-of select="label"/>
+                    </label>
+                </span>
+            </span>
+        </div>
+        <!-- Зависимый контрол, если нужен -->
+        <xsl:apply-templates select="." mode="filters-action-input">
+            <xsl:with-param name="filter" select="$filter"/>
+            <xsl:with-param name="disabled" select="$disabled"/>
+            <xsl:with-param name="dependence-id" select="$dependence-id"/>
+        </xsl:apply-templates>
+    </div>
+</xsl:template>
+
+<!-- Радио ответить -->
+<xsl:template match="item[@id = 'reply']" mode="filters-action">
+    <xsl:param name="filter"/>
+
+    <div class="b-form-layout__line">
+        <div class="b-form-element">
+            <span class="b-form-element__radio">
+                <label>
+                    <input type="radio" name="cliker" value="reply" dependence-parent-id="{@id}" dependence-child-id="reply"
+                           class="b-form-element__radio__input daria-dependence-parent">
+                        <!--xsl:attribute name="disabled">disabled</xsl:attribute-->
+                        <xsl:apply-templates select="." mode="filters-action-checked" />
+                    </input>
+                    <xsl:text>Ответить следующим текстом</xsl:text>
+                </label>
+            </span>
+        </div>
+    </div>
+    <div class="b-form-layout__line b-form-layout__line_checkbox">
+        <div class="b-form-layout__field">
+            <span class="b-form-element b-form-element_disabled">
+                <textarea disabled="disabled" name="autoanswer" dependence-child-id="{@id}"
+                        class="b-form-element__textarea daria-dependence-child">
+                    <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+                    <xsl:if test="$filter/action = 'reply'">
+                        <xsl:value-of select="$filter/param"/>
+                    </xsl:if>
+                </textarea>
+            </span>
+        </div>
+    </div>
+</xsl:template>
+
+<xsl:template match="item" mode="filters-action-checked"/>
+
+<xsl:template match="item[/page/filters/body/action[id = /page/page-params/id]/action = @id]" mode="filters-action-checked">
+    <xsl:attribute name="checked">checked</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="item[not(/page/page-params/id) and @id='move']" mode="filters-action-checked">
+    <xsl:attribute name="checked">checked</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="item[/page/filters/body/action[id = /page/page-params/id]/action = 'forwardwithstore' and @id = 'forward']" mode="filters-action-checked">
+    <xsl:attribute name="checked">checked</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="item[
+                        /page/filters/body/action[id = /page/page-params/id]/param = 'lid_read' and
+                        @id = 'movel' and
+                        not(@param = 'noselect')]" mode="filters-action-checked" />
+
+<xsl:template match="item[
+                        not(/page/filters/body/action[id = /page/page-params/id]/param = 'lid_read') and
+                        @id = 'movel' and
+                        @param = 'noselect']" mode="filters-action-checked" />
+
+<xsl:template match="item" mode="filters-action-input-disabled">
+    <xsl:attribute name="disabled">disabled</xsl:attribute>
+</xsl:template>
+
+<!-- На форме создания фильртра не дизейблим "Положить в папку" -->
+<xsl:template match="item[not(/page/page-params/id) and @id='move']" mode="filters-action-input-disabled"/>
+
+<!-- Не дизейблим, если это то действие, которое указано в фильтре  -->
+<xsl:template match="item[/page/filters/body/action[id = /page/page-params/id]/action = @id]" mode="filters-action-input-disabled"/>
+
+<!-- Не дизейблим действие forward, если в фильтре экшен forwardwithstore -->
+<xsl:template match="item[/page/filters/body/action[id = /page/page-params/id]/action = 'forwardwithstore' and @id = 'forward']" mode="filters-action-input-disabled"/>
+
+<!-- Дизейблим селект с метками, если действие "отметить прочитанными" -->
+<xsl:template match="item[
+                        /page/filters/body/action[id = /page/page-params/id]/action = 'movel' and
+                        /page/filters/body/action[id = /page/page-params/id]/param = 'lid_read' and
+                        @id = 'movel' and
+                        not(@param = 'noselect')]" mode="filters-action-input-disabled">
+    <xsl:attribute name="disabled">disabled</xsl:attribute>
+</xsl:template>
+
+<xsl:template match="item[
+                        /page/filters/body/action[id = /page/page-params/id]/action = 'movel' and
+                        not(/page/filters/body/action[id = /page/page-params/id]/param = 'lid_read') and
+                        @id = 'movel' and
+                        @param = 'noselect']" mode="filters-action-input-disabled">
+    <xsl:attribute name="disabled">disabled</xsl:attribute>
+</xsl:template>
+
+<!-- Зависимые контролы -->
+<xsl:template match="item" mode="filters-action-input" />
+
+<!-- Зависимый контрол "Переложить в папку" -->
+<xsl:template match="item[@id = 'move']" mode="filters-action-input">
+    <xsl:param name="filter" select="."/>
+    <xsl:param name="dependence-id"/>
+
+    <div class="b-form-layout__field">
+        <span class="b-form-element">
+            <span class="b-form-element__select">
+                <select class="b-form-element__select__select daria-dependence-child folders-select"
+                        dependence-child-id="{$dependence-id}" name="move_folder">
+                    <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+                    <xsl:for-each select="/page/folders/folder">
+                        <option value="{name}" class="b-form-element__option">
+                            <xsl:if test="name = $filter/param">
+                                <xsl:attribute name="selected">selected</xsl:attribute>
+                            </xsl:if>
+                            <xsl:value-of select="name"/>
+                        </option>
+                    </xsl:for-each>
+                    <option value="new_folder" class="b-form-element__option">Новая папка…</option>
+                </select>
+            </span>
+        </span>
+    </div>
+</xsl:template>
+
+<!-- Зависимый контрол "Присвоить метку" -->
+<xsl:template match="item[@id = 'movel']" mode="filters-action-input">
+    <xsl:param name="filter" select="."/>
+    <xsl:param name="dependence-id"/>
+
+    <div class="b-form-layout__field">
+        <span class="b-form-element">
+            <span class="b-form-element__select">
+                <select class="b-form-element__select__select daria-dependence-child labels-select"
+                        dependence-child-id="{$dependence-id}" name="move_label">
+                    <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+                    <option value="priority_high" class="b-filters-select__option" action="labels.add">Важные</option>
+                    <xsl:for-each select="/page/labels/label[user]">
+                        <option value="{name}" class="b-form-element__option">
+                            <!-- FIXME: Сделать выбор для "Важные" и "Прочтенное" -->
+                            <xsl:if test="@id = $filter/param">
+                                <xsl:attribute name="selected">selected</xsl:attribute>
+                            </xsl:if>
+                            <xsl:value-of select="name"/>
+                        </option>
+                    </xsl:for-each>
+                    <option value="new_label" class="b-form-element__option">Новая метка…</option>
+                </select>
+            </span>
+        </span>
+    </div>
+</xsl:template>
+
+<xsl:template match="item[@id = 'movel' and @param='noselect']" mode="filters-action-input">
+    <xsl:param name="dependence-id"/>
+
+    <input type="hidden" value="lid_read" name="move_label" dependence-child-id="{$dependence-id}" class="daria-dependence-child">
+        <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+    </input>
+</xsl:template>
+
+<xsl:template match="item[@id = 'forward' or @id='notify']" mode="filters-action-input">
+    <xsl:param name="filter" select="."/>
+    <xsl:param name="dependence-id"/>
+
+    <div class="b-form-layout__field">
+        <div class="b-form-layout__line">
+            <span class="b-form-element b-form-element_disabled">
+                <input type="text" name="{@id}_address" dependence-child-id="{$dependence-id}"
+                       class="b-form-element__input-text daria-dependence-child">
+                    <xsl:if test="$filter/action = @id or @id = 'forward' and $filter/action = 'forwardwithstore'">
+                        <xsl:attribute name="value">
+                            <xsl:choose>
+                                <xsl:when test="$filter/action = 'forwardwithstore'">
+                                    <xsl:value-of select="$filter/param"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$filter/param"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+                </input>
+                <xsl:if test="@id = 'forward'">
+                    <span class="b-form-element__checkbox b-form-element__checkbox_small">
+                        <label>
+                            <input type="checkbox" dependence-child-id="{$dependence-id}" name="forward_with_store"
+                                   class="b-form-element__checkbox__input daria-dependence-child">
+                                <xsl:apply-templates select="." mode="filters-action-input-disabled" />
+                                <xsl:apply-templates select="$filter[action = 'forwardwithstore']" mode="checked"/>
+                            </input>
+                            <xsl:text>сохранить копию при пересылке</xsl:text>
+                        </label>
+                    </span>
+                </xsl:if>
+
+                <!-- Ошибка - введён тот же ящик для которого настраивается фильтр -->
+                <span class="b-notification b-notification_error-self-address-{@id} g-hidden">
+                    <span class="b-notification__i">
+                        <img  title="" alt="[!]" class="b-mail-icon b-mail-icon_error"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_error.gif'"/></xsl:attribute></img>
+                        <xsl:text>Нельзя создать правило с пересылкой на тот же адрес, на котором создается правило.</xsl:text>
+                    </span>
+                </span>
+                <!-- Ошибка - неверный формат email-a -->
+                <span class="b-notification b-notification_error-pattern-{@id} g-hidden">
+                    <span class="b-notification__i">
+                        <img  title="" alt="[!]" class="b-mail-icon b-mail-icon_error"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_error.gif'"/></xsl:attribute></img>
+                        <xsl:text>Некорректный адрес электронной почты.</xsl:text>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
+</xsl:template>
+
+<xsl:template match="/" mode="filters-condition" >
+    <xsl:param name="custom"/>
+    <xsl:param name="condition" select="."/>
+    <xsl:param name="condition-field1"/>
+    <xsl:param name="condition-field2" select="'1'"/>
+    <xsl:param name="condition-field3"/>
+
+    <div class="b-form-layout__line">
+        <div class="b-form-layout__field">
+            <span class="b-form-element">
+                <span class="b-form-element__select">
+                    <select  class="b-filters-select__select" name="field1">
+                        <xsl:apply-templates select="//filters-data/fields/item" mode="filters-condition-fields" >
+                            <xsl:with-param name="custom" select="$custom"/>
+                            <xsl:with-param name="condition-field1" select="$condition-field1"/>
+                        </xsl:apply-templates>
+                    </select>
+                </span>
+                <xsl:text>&#160;</xsl:text>
+                <span class="b-form-element__select">
+                    <select  class="b-filters-select__select" name="field2">
+                        <xsl:apply-templates select="//filters-data/conditions/item" mode="filters-fields-conditions" >
+                            <xsl:with-param name="condition" select="$condition"/>
+                            <xsl:with-param name="condition-field2" select="$condition-field2"/>
+                        </xsl:apply-templates>
+                    </select>
+                </span>
+            </span>
+            <xsl:text>&#160;</xsl:text>
+            <input type="text" name="field3" class="b-form-element__input-text" value="{$condition-field3}"/>
+        </div>
+        <xsl:text>&#160;</xsl:text>
+        <span action="filters.delete-condition" class="b-form-layout__button b-form-layout__button_delete daria-action">
+            <xsl:text>×</xsl:text>
+        </span>
+
+
+    </div>
+
+</xsl:template>
+
+<xsl:template match="/filters-condition-new">
+    <xsl:apply-templates select="/" mode="filters-condition"/>
+</xsl:template>
+
+<xsl:template match="item" mode="filters-attachment">
+    <xsl:variable name="filter" select="/page/filters/body/action[id = /page/page-params/id]"/>
+    <xsl:variable name="item" select="."/>
+    <option value="{@value}" class="b-filters-select__option">
+        <xsl:if test="$filter/conditions/item[field = 'att']/oper_id = $item/@value">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+
+        <xsl:value-of select="label"/>
+    </option>
+</xsl:template>
+
+<xsl:template match="item" mode="filters-logic">
+    <xsl:variable name="filter" select="/page/filters/body/action[id = /page/page-params/id]"/>
+    <xsl:variable name="item" select="."/>
+    <option value="{@value}" class="b-filters-select__option">
+        <xsl:if test="$filter/conditions/item[field = $item/@value]">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+
+        <xsl:value-of select="label"/>
+    </option>
+</xsl:template>
+
+<xsl:template match="item" mode="filters-condition-fields">
+    <xsl:param name="custom"/>
+    <xsl:param name="condition-field1"/>
+
+    <option value="{@value}" class="b-filters-select__option">
+        <xsl:choose>
+            <xsl:when test="@value = $condition-field1">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+                <xsl:value-of select="."/>
+            </xsl:when>
+            <xsl:when test="$custom and @value = 'sender'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="$condition-field1"/></xsl:attribute>
+                <xsl:value-of select="concat('Заголовок &quot;', $condition-field1, '&quot;')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </option>
+</xsl:template>
+
+<xsl:template match="item" mode="filters-fields-conditions">
+    <xsl:param name="condition-field2"/>
+    <option value="{@value}" class="b-form-element__option">
+        <xsl:if test="@value = $condition-field2">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        <xsl:value-of select="."/>
+    </option>
+</xsl:template>
+
+<xsl:template match="setup-filters-create[not(/page/filters/body/action[id = /page/page-params/id])]" mode="filters-logic-label">
+    <xsl:value-of select="/page/filters/filters-data/logic/item[@value='nospam']/label" />
+    <xsl:text>&#160;</xsl:text>
+    <xsl:value-of select="/page/filters/filters-data/attachment/item[@value='']/label" />
+</xsl:template>
+
+<xsl:template match="setup-filters-create" mode="filters-logic-label">
+    <xsl:variable name="filter" select="/page/filters/body/action[id = /page/page-params/id]"/>
+
+    <xsl:variable name="logic">
+        <xsl:choose>
+            <xsl:when test="$filter/conditions/item[field = 'all']" >all</xsl:when>
+            <xsl:when test="$filter/conditions/item[field = 'nospam']" >nospam</xsl:when>
+            <xsl:otherwise >clearspam</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="att">
+        <xsl:choose>
+            <xsl:when test="$filter/conditions/item[field = 'att']" >
+                <xsl:value-of select="$filter/conditions/item[field = 'att']/oper_id"/>
+            </xsl:when>
+            <xsl:otherwise></xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:value-of select="/page/filters/filters-data/logic/item[@value = $logic]/label"/>
+    <xsl:text>&#160;</xsl:text>
+    <xsl:value-of select="/page/filters/filters-data/attachment/item[@value = $att]/label"/>
+
+</xsl:template>
+
+<xsl:template match="item" mode="filters-and-or">
+    <xsl:param name="logic"/>
+
+    <option value="{@value}" class="b-form-element__option">
+        <xsl:if test="$logic = @value">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        <xsl:value-of select="."/>
+    </option>
+</xsl:template>
+
+<!-- Диалог для создания кастомного поля фильтра -->
+<xsl:template match="filters-sender-create">
+    <div class="b-popup__field b-popup__field_folder-new">
+        <label class="b-popup__field__label">
+            <xsl:text>Название заголовка (например - Sender):</xsl:text>
+            <input class="b-popup__field__input" type="text" maxlength="30" value="{value}"/>
+        </label>
+    </div>
+</xsl:template>
+
+</xsl:stylesheet>
+

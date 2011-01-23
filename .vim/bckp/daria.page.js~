@@ -1,0 +1,788 @@
+/*
+    Global variables:
+        Page
+*/
+
+// Текущие атрибуты страницы.
+var Page = Daria.Page = {
+    type     : null, // Тип, например, messages/message/compose/...
+    key      : null, // Ключ -- хэш-строка из параметров.
+    selected : false, // Есть ли в данный момент выделенные письма.
+    selects  : {}, // Хэш состояний флага selected для всех страниц.
+    params   : {} // Текущие параметры страницы.
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.History = {
+    history: []
+};
+
+Page.History.add = function(info) {
+    var history = this.history;
+    var l = history.length;
+    var last = history[l - 1];
+    if (!last || last.url != info.url) {
+        history.push(info);
+    }
+};
+
+Page.History.prev = function(n) {
+    if (n === undefined) { n = 1; }
+    var history = this.history;
+    var l = history.length;
+    return history[l - n - 1]; // Предыдущая страница, если есть.
+};
+
+Page.History.back = function() {
+    var prev = this.prev();
+    if (prev) {
+        this.history.pop();
+        Page.go(prev.url);
+    } else {
+        Page.home();
+    }
+};
+
+Page.Log = {
+    log: []
+};
+
+Page.Log.add = function(info) {
+    this.log.push(info);
+    if (info.what == "go") {
+        Page.History.add(info); // Отдельно логируем переходы. Чтобы потом можно было бы back сделать.
+    }
+};
+
+Page.Log.show = function() {
+    var log = this.log;
+    for (var i = 0, l = log.length; i < l; i++) {
+        var item = log[i];
+        switch (item.what) {
+            case "go":
+                console.log("go: ", item.url);
+                break;
+            case "action":
+                console.log("action: ", item.action, " params: ", item.params);
+                break;
+        }
+    }
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.HOME_HASH = '#inbox';
+
+Page.home = function(callback, options) {
+    if (!$.isFunction(callback)) {
+        options = callback;
+        callback = null;
+    }
+    Page.go(Page.HOME_HASH, callback, options);
+};
+
+Page.refresh = function(callback, options) {
+    Page.go(Page.hash, callback, options);
+};
+
+// Первым параметром всегда приходит хэш (возможно пустой).
+// Т.е. не http://mail.yandex.ru/neo2/#inbox, а просто #inbox. Или же "" в случае, если мы пришли на /neo2/.
+Page.go = function(hash, callback, options) {
+    var init = !Page.hash; // Если в Page.hash ничего нет, то это первый вызов.
+    var replace = init; // Нужно ли после окончания процесса заменить урл (в этом случае в хистори это не попадет) или же "пойти" на этот урл,
+                        // выставим флаг forceHashChange, чтобы когда случится таки hashChange не попасть сюда же во второй раз.
+                        // Если init, то переход точно делать не нужно.
+
+    if (!hash) { // Пришли на /neo2/ -- нужно перейти на #inbox.
+        hash = Page.HOME_HASH;
+        replace = true; // При это этот "переход" в хистори браузера добавлять не нужно.
+    }
+
+    if (!init) { // В первый раз не нужно обрабатывать уход со страницы.
+        var go = events.trigger("beforeunload");
+        if (go === false) {
+            if (!confirm('Вы не отправили письмо и не сохранили его как черновик. Для того, чтобы вернуться и сохранить изменения, нажмите «Отмена», в противном случае набранный вами текст будет потерян.')) { return; }
+        }
+    }
+
+    events.trigger("pageunload");
+
+    var rewrited = Page.rewriteURL(hash);
+    if (!rewrited) { // Предполагается, что мы сами битых урлов рисовать не должны.
+                     // Т.к. мы пришли в Дарью по "левому" урлу или же юзер сам вбил в адресную строку левый урл. Берем дефолтный и парсим снова.
+        hash = Page.HOME_HASH;
+        rewrited = Page.rewriteURL(hash);
+        replace = true;
+    }
+
+    var params = Daria.parseURL(rewrited);
+    Page.rewriteParams(params);
+
+    if (Daria.checkAuth() === false) { return; } // Перед любым действием проверяем, а не разлогинились ли мы?
+
+    // Запускаем процесс, но "переход" по ссылке случится только тогда, когда благополучно вернется ответ с данными
+    // и страница будет перерисована соответственно. Тогда location.hash будет заменен на hash (если он был).
+    bApp.run(params, function() {
+        Page.hash = hash;
+        Page.forceHashChange = hash; // Запоминаем, что этот hashchange мы вызвали сами, чтобы повторно не обрабатывать.
+        if (replace) {
+            window.location.replace(hash);
+        } else {
+            window.location.href = hash;
+        }
+
+        window.scrollTo(0, 0); // Отскролливаем наверх при переходе по страницам
+
+        Page.params = params;
+        Page.type   = params._page;
+        Page.key    = Page.getKey(params);
+
+        Page.Log.add({
+            what: "go",
+            url: hash,
+            params: params,
+            type: Page.type,
+            key: Page.key
+        });
+
+        watcher.set("pageKey", Page.key);
+        watcher.set("pageType", Page.type);
+
+        events.trigger("params.change", params, true); // NOTE: Третий параметр выставлен в true, чтобы сперва отработал обработчик params.change,
+                                                       //       а потом уже зависящие от него перепроверки других параметров.
+        events.trigger("pageload", params);
+
+        if (callback) { callback(); }
+    }, options);
+
+    return false; // Ничего больше сейчас не делаем.
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.rewriteURL = function(_url) {
+    if (!_url) { return null; }
+
+    var parts = _url.replace(/^.*?#/, '').split('/');
+
+    var url = null;
+    var type = parts.shift();
+    var isID = (parts[0] && /^\d+$/.test(parts[0])); // Есть числовой параметр: id-шник папки, метки, письма, треда.
+
+    switch (type) {
+
+        // Превращаем имена дефолтных папок в id-шники.
+        case 'inbox':
+        case 'sent':
+        case 'spam':
+        case 'trash':
+        case 'draft':
+        case 'outbox':
+            url = '#messages&current_folder=' + hFolders.ids[type];
+            break;
+
+        // Список писем в папке или метке.
+        case 'label':
+        case 'folder':
+            if (isID) {
+                url = '#messages&current_' + type + '=' + parts.shift();
+            }
+            break;
+
+        // Просмотр письма.
+        case 'message':
+            if (isID) {
+                url = '#message&ids=' + parts.shift();
+            }
+            break;
+
+        // Просмотр треда.
+        case 'thread':
+            if (isID) {
+                url = '#messages&thread_id=' + parts.shift();
+            }
+            break;
+
+        // Композ и черновик.
+        case 'compose':
+            url = '#compose';
+            if (isID) {
+                url += '&ids=' + parts.shift();
+            } else {
+                parts[0] = parts.join('/');
+                // обрабатываем mailto:address@domain.ru?subject=subject
+                if(parts[0].indexOf('mailto=') > -1){
+                    var params = parts[0].split(/\?|&/);
+                    params = $.map(
+                        params,
+                        function(p){
+                            if(p.indexOf('mailto=') == 0){
+                                p = 'to=' + p.split('=')[1].replace(/^mailto:/, '');
+                            }
+                            return p;
+                        }
+                    );
+                    parts[0] = params.join('&');
+                }
+            }
+            break;
+
+        case 'done':
+            if (isID) {
+                url = '#done&ids=' + parts.shift();
+            }
+            break;
+
+        // Поиск.
+        case 'search':
+            if (parts[0]) {
+                url = '#messages&request=' + parts.shift();
+            }
+            break;
+
+        // Контакты.
+        case 'contacts':
+            url = '#contacts';
+            break;
+
+        // Настройки.
+        case 'setup':
+            url = '#setup';
+            if (parts[0]) { // FIXME: Тут нужен список всех табов, если такого таба нет, то возвращаем просто #setup.
+                url += '&tab=' + parts.shift();
+            }
+            break;
+
+        case 'unread':
+            url = '#messages&goto=all&extra_cond=only_new';
+            break;
+
+        case 'attachments':
+            url = '#messages&goto=all&extra_cond=only_atta';
+            break;
+
+        case 'all':
+            url = '#messages&goto=all';
+            break;
+    }
+
+    if (url && parts[0]) { // Если остались еще какие-то параметры, добавляем их к тому, что уже нареврайтилось.
+        url += '&' + parts[0];
+    }
+
+    return url; // Если вернулся null, значит это "не наш" урл, на него переходить не нужно.
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.params2query = function(params, exclude) {
+    exclude = exclude || {};
+
+    var pName, pValue;
+    var query = "", n = 0;
+    for (pName in params) {
+        if (pName.charAt(0) == '_' || exclude[pName]) { continue; }
+        pValue = params[pName];
+        if (pValue) {
+            if (n++) { query += '&'; }
+            query += pName + '=' + pValue;
+        }
+    }
+    return query;
+};
+
+// Рисуем красивый урл по параметрам. Функция обратная к Page.rewriteURL.
+Page.params2url = function(params) {
+    var type = params._page;
+
+    var url;
+    var exclude = {
+        'goto': 1,
+        'extra_cond': 1,
+        'request': 1,
+        'current_label': 1,
+        'current_folder': 1,
+        'threaded': 1
+    };
+
+    var fid = params.current_folder;
+    if (type == "messages") {
+        if (params['goto'] == "all") {
+            var extra = params.extra_cond;
+            if (extra == "only_new") {
+                url = "#unread";
+            } else if (extra == "only_atta") {
+                url = "#attachments";
+            } else if (!extra) {
+                url = "#all";
+            }
+        } else if (params.request) {
+            url = "#search/" + params.request;
+        } else if (params.current_label) {
+            url = "#label/" + params.current_label;
+        } else if (fid) {
+            var symbol = hFolders.symbols[fid];
+            if (symbol) {
+                url = "#" + symbol;
+            } else {
+                url = "#folder/" + fid;
+            }
+        }
+    }
+    // FIXME: Пока что для других типов страницы не нужно.
+
+    var query = Page.params2query(params, exclude);
+    if (query) {
+        url += '/' + query;
+    }
+
+    return url;
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+// * DARIA-2192 Если пришло новое письма в заголовок добавлять «Вам письмо - <Цифирка> - <Имя папки> - Яндекс.Почта"
+// Активен ли текущий таб
+var isActiveWindow = true;
+var gotNewMail = false;
+
+// При активации таба, перерисовываем тайтл
+events.bind(
+    "focusin",
+    function(){
+        isActiveWindow = true;
+
+        // Обновляем тайтл
+        if (gotNewMail) {
+            gotNewMail = false;
+            Page.updateTitle();
+        }
+    }
+);
+events.bind(
+    "transport.insert",
+    function(){
+        gotNewMail = true;
+        if (isActiveWindow) {
+            Page.updateTitle();
+        }
+    }
+);
+events.bind("focusout", function(){isActiveWindow = false;});
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.updateTitle = function(params) {
+    params = params || Page.params;
+    var pageType = watcher.get("pageType");
+
+    var title = '';
+    var id = params.ids;
+
+    // В неактивных табах сигнализируем о получении нового письма в title
+    if (gotNewMail && !isActiveWindow) {
+        title += 'Вам письмо! ';
+    }
+
+    switch (pageType) {
+        case 'message':
+            var subject = hMessage.getSubject(id);
+            var from = hMessage.getFromName(id);
+            if (subject && from) {
+                title += 'Письмо «' + subject + '» — ' + from;
+            }
+            break;
+        case 'messages':
+            var fid = params.current_folder;
+            if (fid) {
+                var folder = hFolders.getFolderById(fid);
+                if (folder) {
+                    var fName = Daria.nodeValue(folder, "name");
+                    var fNew = Daria.nodeValue(folder, "new");
+                    title += fNew > 0 ? fNew + ' · ' + fName : fName;
+                }
+            }
+            break;
+            // TODO: Можно и для всего остального написать. Для меток как минимум.
+        case 'compose':
+            if (!id) {
+                title += 'Новое письмо';
+                break;
+            }
+
+            var oper = params.oper;
+            switch (oper) {
+                case 'reply':
+                case 'reply-all':
+                    title += 'Ответ на письмо';
+                    break;
+                case 'forward':
+                    title += 'Пересылка письма';
+                    break;
+                default:
+                    title += 'Сохраненное письмо';
+            }
+            if (id && /^\d+$/.test(id) && hMessage.isCached(id)) { // Это пересылка или ответ на одно письмо, а не на список.
+                var subject = hMessage.getSubject(id);
+                title += ' «' + subject + '»';
+            }
+
+            break;
+        }
+
+    if (title) {
+        title += ' — ';
+    }
+    title += 'Яндекс.Почта';
+
+    document.title = title;
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+// Добавляем или удаляем из запроса параметр threaded, в зависимости от текущих настроек.
+Page.rewriteParams = function(params) {
+    if (params._page != "messages") { return; }
+
+    var fids = hFolders.ids;
+    var id = params["current_folder"];
+    if (hSettings.isThreaded() && !params.extra_cond && id && id != fids.spam && id != fids.trash && id != fids.draft) {
+        params.threaded = "yes";
+    } else {
+        delete params["threaded"];
+    }
+
+    // Для поиска - не ищем в папках Исходящие и Спам.
+    if (params.request && !params.fid) {
+        params.fid = fids.outbox + "," + fids.spam;
+        params.excluded = "yes";
+    }
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.getKey = function(params) {
+    var key = "page=" + params._page;
+    $.each(Daria.keys(params).sort(), function(i, v) { // Не используем $.param потому, что sort() важен.
+        if (v[0] != '_') {
+            key += "&" + v + "=" + params[v];
+        }
+    });
+    return key;
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.getSelectedMessagesIds = function() {
+    var active = bMessagesBox.active;
+
+    if (watcher.get("pageType") === "messages") {
+        return active.table.getIDs().ids;
+    } else {
+        return [ active.params.ids ];
+    }
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+Page.init = function() {
+
+    // Создаем блок верхнего уровня и выставляем ему фиктивный кэш.
+    var app = new Block.App("app");
+    app.setCache({
+        node: Daria.byClass("block-app")[0],
+        valid: undefined // Если тут false, то считается, что в node не заглушка. И нужно будет позвать onhtmldestroy.
+    });
+
+    // Вешаем события.
+/*
+    if (!$.browser.opera) {
+        $("body").delegate("a, .daria-action", "keydown", function(e) {
+            if (e.keyCode === 13) {
+                var $target = $(e.target);
+                Daria.click($target);
+                return false;
+            }
+        });
+    }
+*/
+    /**
+     * https://jira.yandex-team.ru/browse/DARIA-1230
+     * В IE есть баг, который, пока не пофикшен в jQuery 1.4.2, а именно
+     * http://dev.jquery.com/ticket/6359
+     * Если кратко - когда live-ом (или delegate-ом на один и тот же элемент) пусть даже для разных селекторов
+     * биндится и click и sumbit и при этом click биндится раньше submit, то в IE при клике по input[type=submit] формы
+     * игнорируется обработчик submit-a, при этом если в одном из полей формы нажать на Enter, то обработчик вызовется.
+     * Чтобы избежать этой неприятности нужно либо вешать delegate-ы клика и сабмита на разные элементы,
+     * либо delegate сабмита вешать раньше delegate-a клика.
+     * Тут использованы обе возможности избежать проблем и в дальнейшем надо следить за этим правилом,
+     * пока не выйдет фикс jquery
+     */
+
+    $("body").delegate(".daria-form", "submit", function(e) {
+        var target = e.currentTarget;
+        var returnValue = true;
+        var $target = $(target);
+
+        var action = target.getAttribute('action');
+        if (action && $target.hasClass('daria-form') && !$target.attr('disabled')) {
+            returnValue = Actions.run(action, e);
+        }
+        return (returnValue === undefined) ? false : returnValue;
+    });
+
+    var re_parseURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-_A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+
+    $("body").delegate("a, .daria-action", "click", function(e) {
+
+        var target = e.currentTarget; // В e.target находится то, на чем действительно случился event.
+                                      // Например, если кликнуть в <a href="#inbox"><span>Входящие</span></a>, то e.target будет <span>, а e.currentTarget -- <a>.
+        var returnValue = true;
+
+        var action = target.getAttribute('action');
+        if (action && $(target).hasClass('daria-action')) {
+            returnValue = Actions.run(action, e);
+        } else {
+            var href = target.getAttribute('href');
+
+            if (!href) { return true; }
+
+            if (href.indexOf('javascript:') == 0) { return false; }
+            if (href.indexOf('conf:sip:') == 0 || href.indexOf('meet:sip:') == 0) { return true; }
+
+            var result = re_parseURL.exec(href); // url, scheme, slash, host, port, path, query, hash
+
+            // В ИЕ когда в атрибуте href написано "#inbox", getAttribute('href')
+            // возвращает полный урл, например, "http://mail.yandex.ru/neo2/#inbox".
+            // Вытаскиваем из урла host и сравниваем с window.location.host чтобы
+            // понять "наш" это урл или нет.
+            if (result && result[3] != window.location.host) {
+                return true;
+            }
+
+            if (result && result[5] != "neo2/") {
+                return true;
+            }
+
+            var hash = href.replace(/^[^#]*(.*)$/, '$1'); // Отрезаем все, что до #.
+
+            returnValue = Page.go(hash);
+        }
+        return (returnValue === undefined) ? false : returnValue;
+    });
+
+    window.onbeforeunload = function() {
+        var go = events.trigger("beforeunload");
+        if (go === false) {
+            return 'Вы не отправили письмо и не сохранили его как черновик. Для того, чтобы вернуться и сохранить изменения, нажмите «Отмена», в противном случае набранный вами текст будет потерян.';
+        }
+    };
+
+    Table.initEvents();
+
+    if ($.browser.msie && $.browser.version < 7) {
+
+        var body = document.body;
+        body.runtimeStyle.zoom = 1;
+        var max = parseInt(body.currentStyle['min-width'], 10);
+
+        $(window).bind("resize", function() {
+            var w = document.documentElement.clientWidth;
+            if (w != body.w) {
+                body.w = w;
+                if (w < max) {
+                    body.style.width = max;
+                } else {
+                    body.style.width = 'auto';
+                }
+            }
+        });
+
+    }
+
+    /* Код для daria.hashhistory.js */
+    /*
+    */
+    $(document).bind('hashchange', function() {
+        var hash = window.location.hash;
+        if (Page.forceHashChange == hash) { // Мы сами вызвали этот hashchange, так что его нужно проигнорировать. Действие уже совершено.
+            Page.forceHashChange = null;
+            return false;
+        }
+        Page.forceHashChange = null;
+        Page.go(hash);
+    });
+
+    /* Код для jquery.ba-hashchange.js */
+    /*
+    $(window).bind('hashchange', function() {
+        var hash = window.location.hash;
+        if (Page.forceHashChange == hash) { // Мы сами вызвали этот hashchange, так что его нужно проигнорировать. Действие уже совершено.
+            Page.forceHashChange = null;
+            return false;
+        }
+        Page.forceHashChange = null;
+        Page.go(hash);
+    });
+    */
+
+    /* Код для jquery.history.js */
+    /*
+    $.history.init( function(hash) {
+        if (hash[0] != '#') { hash = '#' + hash; }
+        if (Page.forceHashChange == hash) { // Мы сами вызвали этот hashchange, так что его нужно проигнорировать. Действие уже совершено.
+            Page.forceHashChange = null;
+            return false;
+        }
+        Page.forceHashChange = null;
+        Page.go(hash);
+    } );
+    */
+
+    // Событие получения и потери фокуса табом
+    function focusin(){events.trigger('focusin');}
+    function focusout(){events.trigger('focusout');}
+
+    if($.browser.msie){
+        $(document).bind('focusout', focusout);
+        $(document).bind('focusin', focusin);
+    } else {
+        $(window).bind('blur', focusout);
+        $(window).bind('focus', focusin);
+    }
+
+    // Инициализируем watch'и.
+
+    watcher.watch("pageKey");
+    watcher.watch("pageType");
+
+    watcher.watch("selectedCount");
+    watcher.watch("selected", {
+        get: function() {
+            return (Page.type == "message" || watcher.get("selectedCount") > 0);
+        },
+        deps: [ "selectedCount", "pageKey" ],
+        value: false
+        // , debug: true
+    });
+
+    watcher.watch("pageHub", {
+        get: function() {
+            var type = watcher.get("pageType");
+            if (type == "message" || type == "messages" || type == "compose") { return "mail"; }
+            if (type == "setup") { return "setup"; }
+            if (type == "contacts") { return "contacts"; }
+        },
+        deps: [ "pageType" ],
+        value: "mail"
+        // , debug: true
+    });
+
+    var defaultFolders = [ "spam", "trash", "sent", "draft" ];
+    $.each(defaultFolders, function(i, name) {
+        watcher.watch("its-" + name);
+    });
+
+    events.bind("pageKey.change", function() {
+        var params = Page.params;
+        var fid;
+        var type = Page.type;
+        if (type == "messages") {
+            fid = params.current_folder;
+        } else if (type == "message") {
+            fid = hMessage.getFolderId(params.ids);
+        } else {
+            return;
+        }
+
+        var ids = hFolders.ids;
+        $.each(defaultFolders, function(i, name) {
+            watcher.set("its-" + name, (ids[name] == fid));
+        });
+    });
+
+    events.bind("pageload", function(e, params) {
+        Page.updateTitle(params);
+        hColorSchemes.rotateSkin();
+
+        if (params._page == "message") { // Сообщения для вебчата о том, что мы открыли письмо.
+            var id = params.ids;
+            var node = bMessagesBox.active.getCache().node; // FIXME: Нужна, видимо, не нода всего письма, а нода контейнера для вебчатовского уведомления.
+            events.trigger("webchat.messageload", {
+                id: id,
+                node: node,
+                email: hMessage.getFromEmail(id),
+                name: hMessage.getFromName(id)
+            });
+        }
+    });
+
+    events.bind("pageHub.change", function(e, diff) {
+        var $tabs = $(".b-service-tabs");
+        var oldTab = diff.oldValue;
+        if (oldTab) {
+            $tabs.find(".b-service-tabs__item_current").removeClass("b-service-tabs__item_current");
+        }
+        var newTab = diff.value;
+        $tabs.find(".b-service-tabs__item_" + newTab).addClass("b-service-tabs__item_current");
+    });
+
+    // Метрика.
+    var mcid = Daria.Config.metricaID;
+    if (mcid) {
+        events.bind("pageinit", function() {
+            $.getScript("//mc.yandex.ru/metrika/watch.js", function() { // FIXME: Загружать сразу в mail.js.
+                if (window.Ya && Ya.Metrika) {
+                    var counter = window['yaCounter' + mcid] = new Ya.Metrika(mcid);
+                    events.bind("pageload", function() {
+                        counter.hit(window.location.href, document.title, null); // На каждый "переход по страницам" дергаем счетчик.
+                    });
+                }
+            });
+        });
+    }
+
+    var cid = "";
+    for (var i = 0; i < 16; i++) {
+        cid += (~~(Math.random() * 256)).toString(16);
+    }
+    Page.connection_id = cid;
+
+    Page.doParams = {
+        'connection_id': Page.connection_id,
+        'ckey': Page.ckey
+    };
+
+    // раз в час рефрешим куку
+    function refreshCookie(){
+        var protocol = document.location.protocol;
+        var host = document.location.host;
+
+        // Получаем ПДД домен из урла
+        var pdd_domain = document.location.href.match(/\/for\/([^\/]*)/);
+        pdd_domain = pdd_domain ? '/for/' + pdd_domain[1] : '';
+
+        var retpath = encodeURIComponent(protocol + '//' + host + '/neo2/js/auth.js');
+        $.ajax({url: protocol + '//' + Daria.Config.passport + pdd_domain + '/?retpath=' + retpath, dataType: 'script', type: 'GET'});
+    }
+
+    refreshCookie();
+
+    setInterval(
+        refreshCookie,
+        3600000
+    );
+};
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+/*
+// Пример, как не позволять юзеру уходить со страницы без confirm'а. Сам confirm выше в этом же файле.
+Daria.onBeforeUnload = events.bind("beforeunload", function() {
+    return false;
+});
+// Снимаем confirm.
+// events.unbind("beforeunload", Daria.onBeforeUnload);
+*/
+

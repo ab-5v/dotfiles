@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % blocks.ent SYSTEM "../blocks.ent"> %blocks.ent;
+]>
+
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    >
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="app" mode="block-content">
+    <xsl:choose>
+        <xsl:when test="$settings/hide_daria_header">
+            <img  alt="+" title="Стандартный вид" class="b-mail-icon b-mail-icon_minify b-mail-icon_full-head-hide daria-action" action="common.minify"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_full-head-show.png'"/></xsl:attribute></img>
+        </xsl:when>
+        <xsl:otherwise>
+            <img  alt="-" title="Компактный вид" class="b-mail-icon b-mail-icon_minify b-mail-icon_full-head-hide daria-action" action="common.minify"><xsl:attribute name="src"><xsl:value-of select="'&static;/blocks/b-mail-icon/_type/b-mail-icon_full-head-hide.png'"/></xsl:attribute></img>
+        </xsl:otherwise>
+    </xsl:choose>
+    <div class="b-layout">
+        <div class="b-layout__left">
+            <div class="b-teaser"></div>
+            <!--
+            <div class="b-teaser b-teaser_attention">
+                <a class="b-teaser__link daria-action" action="debug.feedback">
+                    <xsl:text>Вы участник β-тестирования. Если вы нашли проблему, </xsl:text>
+                    <span class="b-teaser__text">сообщите о&#160;ней</span>
+                    <xsl:text>.</xsl:text>
+                </a>
+            </div>
+            -->
+            <!-- FIXME: Заглушка для тизера. -->
+            <!--
+            <div class="b-teaser b-teaser_collector">
+                <a href="setup" class="b-teaser__link">
+                    <span class="b-teaser__text">Соберитесь, пожалуйста</span>
+                    <xsl:text> и&#160;соберите всю вашу почту в&#160;одном ящике</xsl:text>
+                </a>
+            </div>
+            -->
+
+            <xsl:apply-templates select="left-box" mode="block"/>
+            <xsl:apply-templates select="webchat" mode="block"/>
+            <xsl:apply-templates select="banner" mode="block"/>
+
+            <!-- Сам блок выводится всегда, независимо от настройки. А вот его контент зависит от настройки. -->
+            <xsl:apply-templates select="informer-news" mode="block"/>
+        </div>
+        <div class="b-layout__right">
+            <div class="b-layout__right__content">
+                <xsl:apply-templates select="/" mode="service-tabs"/>
+                <xsl:apply-templates select="." mode="toolbar"/>
+                <xsl:apply-templates select="right-box" mode="block"/>
+            </div>
+        </div>
+        <xsl:apply-templates select="/" mode="attachments-button"/>
+    </div>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+<xsl:template match="/" mode="service-tabs">
+    <div class="b-service-tabs">
+        <a href="#inbox" class="b-service-tabs__item b-service-tabs__item_current b-service-tabs__item_mail">Письма</a>
+        <a href="#contacts" class="b-service-tabs__item b-service-tabs__item_contacts">Контакты</a>
+        <xsl:choose>
+            <xsl:when test="/page/config[is-corp]">
+                <a href="http://calendar.yandex-team.ru/" class="b-service-tabs__item">Календарь</a>
+                <a href="http://mail.yandex-team.ru/neo/webchat_history_all" target="_blank" class="b-service-tabs__item">История общения</a>
+            </xsl:when>
+            <xsl:when test="/page/config/pdd-domain">
+                <a href="calendar.yandex.ru/for/{/page/config/pdd-domain}/" class="b-service-tabs__item">Календарь</a>
+            </xsl:when>
+            <xsl:otherwise>
+                <a href="http://calendar.yandex.ru/" class="b-service-tabs__item">Календарь</a>
+                <a href="http://mail.yandex.ru/lenta" target="_blank" class="b-service-tabs__item">Подписки</a>
+            </xsl:otherwise>
+        </xsl:choose>
+    </div>
+</xsl:template>
+
+<!-- ############################################################################################################## -->
+
+</xsl:stylesheet>
+
