@@ -89,7 +89,7 @@ nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 nmap <space> za
 
 colorscheme lucius
-"syntax on
+syntax on
 
 
 " Only do this part when compiled with support for autocommands.
