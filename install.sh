@@ -1,3 +1,6 @@
 #!/bin/bash
+if [ -d "../.vim" ]; then
+    rm -rf ../.vim
+fi
 cp -rf .vim ../.vim
-cp -r .vimrc ../.vimrc
+cp .vimrc ../.vimrc
