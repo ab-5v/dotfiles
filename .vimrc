@@ -18,7 +18,7 @@ set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
 
 set list                        " show invisible chars
-set listchars=tab:>.,trail:·,extends:#,nbsp:·
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
 set termencoding=utf-8
 set encoding=utf-8
