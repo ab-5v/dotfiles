@@ -1326,7 +1326,7 @@ endfunction
 
 unlet! s:zen_settings
 let s:zen_settings = {
-\    'indentation': "\t",
+\    'indentation': "    ",
 \    'lang': "en",
 \    'charset': "UTF-8",
 \    'css': {
