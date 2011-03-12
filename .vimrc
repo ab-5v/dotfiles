@@ -1,4 +1,3 @@
-
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
 set tabstop=4                   " a tab is four spaces
@@ -55,10 +54,6 @@ map! <F1> <Esc>
 " Quickly close the current window
 nnoremap q :q<CR>
 
-" Use Q for formatting the current paragraph (or visual selection)
-vmap Q gq
-nmap Q gqap
-
 " make p in Visual mode replace the selected text with the yank register
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
@@ -111,9 +106,5 @@ if has("autocmd")
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
-else
-
-set autoindent          " always set autoindenting on
 
 endif " has("autocmd")
-
