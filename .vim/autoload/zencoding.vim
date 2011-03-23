@@ -2005,40 +2005,46 @@ let s:zen_settings = {
 \    'xsl': {
 \        'extends': 'html',
 \        'default_attributes': {
-\            'tmatch': [{'match': ''}, {'mode': ''}],
-\            'tname': [{'name': ''}],
+\            'tmm': [{'match': ''}, {'mode': ''}],
+\            'tm': [{'match': ''}],
 \            'xsl:when': {'test': ''},
-\            'var': [{'name': ''}, {'select': ''}],
-\            'vari': {'name': ''},
+\            'vns': [{'name': ''}, {'select': ''}],
+\            'vn': {'name': ''},
 \            'if': {'test': ''},
-\            'call': {'name': ''},
-\            'attr': {'name': ''},
-\            'wp': [{'name': ''}, {'select': ''}],
-\            'par': [{'name': ''}, {'select': ''}],
-\            'val': {'select': ''},
-\            'co': {'select': ''},
-\            'each': {'select': ''},
-\            'ap': [{'select': ''}, {'mode': ''}]
+\            'atn': {'name': ''},
+\            'wpn': [{'name': ''}, {'select': ''}],
+\            'pns': [{'name': ''}, {'select': ''}],
+\            'pn': [{'name': ''}, {'select': ''}],
+\            'vos': {'select': ''},
+\            'cos': {'select': ''},
+\            'atsm': [{'select': ''}, {'mode': ''}],
+\            'ats': [{'select': ''}]
 \        },
 \        'aliases': {
-\            'tmatch': 'xsl:template',
-\            'tname': 'xsl:template',
-\            'var': 'xsl:variable',
-\            'vari': 'xsl:variable',
+\            'tmm': 'xsl:template',
+\            'tm': 'xsl:template',
+\            'vns': 'xsl:variable',
+\            'vn': 'xsl:variable',
 \            'if': 'xsl:if',
-\            'call': 'xsl:call-template',
-\            'wp': 'xsl:with-param',
-\            'par': 'xsl:param',
-\            'val': 'xsl:value-of',
-\            'attr': 'xsl:attribute',
-\            'co' : 'xsl:copy-of',
-\            'each' : 'xsl:for-each',
-\            'ap' : 'xsl:apply-templates'
+\            'wpn': 'xsl:with-param',
+\            'pn': 'xsl:param',
+\            'pns': 'xsl:param',
+\            'vos': 'xsl:value-of',
+\            'atn': 'xsl:attribute',
+\            'cos' : 'xsl:copy-of',
+\            'ats' : 'xsl:apply-templates',
+\            'atsm' : 'xsl:apply-templates'
 \        },
 \        'expandos': {
-\            'choose': 'xsl:choose>xsl:when+xsl:otherwise'
+\            'ch': 'xsl:choose>xsl:when+xsl:otherwise'
 \        }
 \    },
+\    'javascript': {
+\        'snippets': {
+\            'cl': 'console.log(arguments);',
+\            'jstr': 'JSON.stringify(|);'
+\        }
+\     },
 \    'haml': {
 \        'extends': 'html'
 \    },
