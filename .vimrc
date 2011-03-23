@@ -44,8 +44,6 @@ set showtabline=2                   " always show tabline
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, since we don't have to press that annoying Shift key that
 " slows the commands down
-nnoremap ; :
-
 nnoremap t :tabe 
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
@@ -98,6 +96,8 @@ if has("autocmd")
 
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
+  " clone comment leader on "Return" or "o"
+  autocmd FileType javascript setlocal fo+=ro
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
