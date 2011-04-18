@@ -2033,7 +2033,8 @@ let s:zen_settings = {
 \            'atn': 'xsl:attribute',
 \            'cos' : 'xsl:copy-of',
 \            'ats' : 'xsl:apply-templates',
-\            'atsm' : 'xsl:apply-templates'
+\            'atsm' : 'xsl:apply-templates',
+\            'tt': 'xsl:text'
 \        },
 \        'expandos': {
 \            'ch': 'xsl:choose>xsl:when+xsl:otherwise'
@@ -2041,7 +2042,12 @@ let s:zen_settings = {
 \    },
 \    'javascript': {
 \        'snippets': {
-\            'cl': 'console.log(arguments);',
+\            'cla': 'console.log(arguments);',
+\            'cl': 'console.log(|)',
+\            'cd': 'console.dir(|)',
+\            'cdx': 'console.dirxml(|)',
+\            'ct': 'console.time(|)',
+\            'cte': 'console.timeEnd(|)',
 \            'jstr': 'JSON.stringify(|);'
 \        }
 \     },
