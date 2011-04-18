@@ -84,6 +84,7 @@ nmap <space> za
 colorscheme lucius
 syntax on
 
+let g:user_zen_expandabbr_key = '<F2>'
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")

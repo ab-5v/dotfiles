@@ -2043,11 +2043,11 @@ let s:zen_settings = {
 \    'javascript': {
 \        'snippets': {
 \            'cla': 'console.log(arguments);',
-\            'cl': 'console.log(|)',
-\            'cd': 'console.dir(|)',
-\            'cdx': 'console.dirxml(|)',
-\            'ct': 'console.time(|)',
-\            'cte': 'console.timeEnd(|)',
+\            'cl': 'console.log(|);',
+\            'cd': 'console.dir(|);',
+\            'cdx': 'console.dirxml(|);',
+\            'ct': 'console.time(|);',
+\            'cte': 'console.timeEnd(|);',
 \            'jstr': 'JSON.stringify(|);'
 \        }
 \     },
