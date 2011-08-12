@@ -44,7 +44,7 @@ set showtabline=2                   " always show tabline
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, since we don't have to press that annoying Shift key that
 " slows the commands down
-nnoremap t :tabe 
+nnoremap t :tabe <C-r>=expand('%:p:h')<CR>/
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
@@ -80,6 +80,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
 nmap <space> za
+
 
 colorscheme lucius
 syntax on

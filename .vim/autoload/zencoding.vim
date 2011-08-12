@@ -2038,7 +2038,8 @@ let s:zen_settings = {
 \        },
 \        'expandos': {
 \            'ch': 'xsl:choose>xsl:when+xsl:otherwise'
-\        }
+\        },
+\        'empty_elements': 'xsl:variable,xsl:param,xsl:value-of'
 \    },
 \    'javascript': {
 \        'snippets': {
