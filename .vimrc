@@ -40,6 +40,10 @@ set nomodeline                  " disable mode lines (security measure)
 set showtabline=2                   " always show tabline
 
 
+set pastetoggle=<F3>
+
+map <F4> :set nonu! <CR>
+map <F5> :set nowrap! <CR>
 
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, since we don't have to press that annoying Shift key that
