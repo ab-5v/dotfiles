@@ -1,3 +1,5 @@
+set nocompatible
+
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
 set tabstop=4                   " a tab is four spaces
@@ -37,18 +39,20 @@ set showcmd                     " show (partial) command in the last line of the
                                 "    this also shows visual selection info
 set nomodeline                  " disable mode lines (security measure)
 
-set showtabline=2                   " always show tabline
+set showtabline=2               " always show tabline
 
+set synmaxcol=256               " Syntax coloring lines that are too long just slows down the world
 
-set pastetoggle=<F3>
+set stl=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L
 
-map <F4> :set nonu! <CR>
-map <F5> :set nowrap! <CR>
+set cpoptions=ces$
 
-" Since I never use the ; key anyway, this is a real optimization for almost
-" all Vim commands, since we don't have to press that annoying Shift key that
-" slows the commands down
-nnoremap t :tabe <C-r>=expand('%:p:h')<CR>/
+" Toggle paste mode
+nmap  ,p :set invpaste:set paste?
+" Set text wrapping toggles
+nmap  ,w :set invwrap:set wrap?
+
+nmap ,t :tabe <C-r>=expand('%:p:h')<CR>/
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
@@ -70,10 +74,6 @@ nmap <silent> ,/ :nohlsearch<CR>
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
 
-" Jump to matching pairs easily, with Tab
-nnoremap <Tab> %
-vnoremap <Tab> %
-
 " Strip all trailing whitespace from a file, using ,w
 nnoremap ,w :%s/\s\+$//<cr>:let @/=''<CR>
 
@@ -85,14 +85,13 @@ nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
 nmap <space> za
 
-
 source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
 colorscheme lucius
 syntax on
 
-let g:user_zen_expandabbr_key = '<F2>'
+let g:user_zen_expandabbr_key = '§'
 
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
