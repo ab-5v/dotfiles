@@ -88,8 +88,13 @@ nmap <space> za
 source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-colorscheme lucius
 syntax on
+
+if (&t_Co > 16)
+    colorscheme lucius
+else
+    colorscheme default
+endif
 
 let g:user_zen_expandabbr_key = '§'
 
