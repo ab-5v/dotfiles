@@ -85,8 +85,8 @@ nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
 nmap <space> za
 
-source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
+"source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
+"call pathogen#infect()
 
 syntax on
 
@@ -95,6 +95,17 @@ if (&t_Co > 16)
 else
     colorscheme default
 endif
+
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'git://github.com/mattn/zencoding-vim.git'
+Bundle 'git://github.com/pangloss/vim-javascript.git'
+Bundle 'git://github.com/othree/html5.vim.git'
+
+
 
 let g:user_zen_expandabbr_key = '§'
 
