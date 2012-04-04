@@ -106,6 +106,19 @@ Bundle 'git://github.com/othree/html5.vim.git'
 filetype plugin indent on
 
 let g:user_zen_expandabbr_key = '§'
+let g:user_zen_settings = {
+\  'javascript': {
+\      'snippets': {
+\          'cla': 'console.log(arguments);',
+\          'cl': 'console.log(|);',
+\          'cd': 'console.dir(|);',
+\          'cdx': 'console.dirxml(|);',
+\          'ct': 'console.time(|);',
+\          'cte': 'console.timeEnd(|);',
+\          'jstr': 'JSON.stringify(|);'
+\      }
+\   }
+\}
 
 
 " For all text files set 'textwidth' to 78 characters.
