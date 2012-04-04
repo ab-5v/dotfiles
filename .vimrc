@@ -85,9 +85,6 @@ nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
 nmap <space> za
 
-"source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
-"call pathogen#infect()
-
 syntax on
 
 if (&t_Co > 16)
@@ -106,14 +103,10 @@ Bundle 'git://github.com/pangloss/vim-javascript.git'
 Bundle 'git://github.com/othree/html5.vim.git'
 
 
+filetype plugin indent on
 
 let g:user_zen_expandabbr_key = '§'
 
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
-" Also load indent files, to automatically do language-dependent indenting.
-filetype plugin indent on
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
@@ -127,4 +120,3 @@ autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
 \   exe "normal g`\"" |
 \ endif
-
