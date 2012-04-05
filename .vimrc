@@ -107,6 +107,7 @@ filetype plugin indent on
 
 let g:user_zen_expandabbr_key = '§'
 let g:user_zen_settings = {
+\  'indentation': '    ',
 \  'javascript': {
 \      'snippets': {
 \          'cla': 'console.log(arguments);',
@@ -117,6 +118,46 @@ let g:user_zen_settings = {
 \          'cte': 'console.timeEnd(|);',
 \          'jstr': 'JSON.stringify(|);'
 \      }
+\   },
+\   'xsl': {
+\       'extends': 'html',
+\       'default_attributes': {
+\           'tm': [{'match': ''}],
+\           'tmm': [{'match': ''}, {'mode': ''}],
+\           'if': {'test': ''},
+\           'when': {'test': ''},
+\           'vn': [{'name': ''}],
+\           'vns': [{'name': ''}, {'select': ''}],
+\           'wpn': [{'name': ''}],
+\           'wpns': [{'name': ''}, {'select': ''}],
+\           'pn': [{'name': ''}],
+\           'pns': [{'name': ''}, {'select': ''}],
+\           'vos': {'select': ''},
+\           'atn': {'name': ''},
+\           'ats': [{'select': ''}],
+\           'atsm': [{'select': ''}, {'mode': ''}]
+\       },
+\       'aliases': {
+\           'tm': 'xsl:template',
+\           'tmm': 'xsl:template',
+\           'if': 'xsl:if',
+\           'when': 'xsl:when',
+\           'vn': 'xsl:variable',
+\           'vns': 'xsl:variable',
+\           'wpn': 'xsl:with-param',
+\           'wpns': 'xsl:with-param',
+\           'pn': 'xsl:param',
+\           'pns': 'xsl:param',
+\           'vos': 'xsl:value-of',
+\           'atn': 'xsl:attribute',
+\           'ats' : 'xsl:apply-templates',
+\           'atsm' : 'xsl:apply-templates',
+\           'tt': 'xsl:text'
+\       },
+\       'expandos': {
+\           'ch': 'xsl:choose>when+xsl:otherwise'
+\       },
+\       'empty_elements': 'vos'
 \   }
 \}
 
