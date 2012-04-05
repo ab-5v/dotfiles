@@ -4,3 +4,5 @@ if [ -d "../.vim" ]; then
 fi
 cp -rf .vim ../.vim
 cp .vimrc ../.vimrc
+
+vim +BundleInstall +qall
