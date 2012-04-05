@@ -121,6 +121,9 @@ let g:user_zen_settings = {
 \   },
 \   'xsl': {
 \       'extends': 'html',
+\       'snippets': {
+\           '!': '<!-- | -->'
+\       },
 \       'default_attributes': {
 \           'tm': [{'match': ''}],
 \           'tmm': [{'match': ''}, {'mode': ''}],
