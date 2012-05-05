@@ -41,7 +41,7 @@ set nomodeline                  " disable mode lines (security measure)
 
 set showtabline=2               " always show tabline
 
-set synmaxcol=256               " Syntax coloring lines that are too long just slows down the world
+set synmaxcol=500               " Syntax coloring lines that are too long just slows down the world
 
 set stl=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L
 
@@ -102,6 +102,7 @@ Bundle 'git://github.com/mattn/zencoding-vim.git'
 Bundle 'git://github.com/pangloss/vim-javascript.git'
 Bundle 'git://github.com/othree/html5.vim.git'
 Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
+Bundle 'git://github.com/sukima/xmledit.git'
 
 filetype plugin indent on
 
@@ -164,11 +165,16 @@ let g:user_zen_settings = {
 \   }
 \}
 
+let g:xml_syntax_folding = 1
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
 " clone comment leader on "Return" or "o"
 autocmd FileType javascript setlocal fo+=ro
+
+autocmd FileType xslt setl foldmethod=syntax
+autocmd FileType xslt setl foldnestmax=2
+autocmd FileType xslt setl foldlevel=1
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
