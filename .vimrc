@@ -17,6 +17,7 @@ set scrolloff=4                 " keep 4 lines off the edges of the screen when 
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
+set laststatus=2   " Always show the statusline
 
 set list                        " show invisible chars
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
@@ -103,6 +104,7 @@ Bundle 'git://github.com/pangloss/vim-javascript.git'
 Bundle 'git://github.com/othree/html5.vim.git'
 Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
 Bundle 'git://github.com/sukima/xmledit.git'
+Bundle 'git://github.com/Lokaltog/vim-powerline.git'
 
 filetype plugin indent on
 
