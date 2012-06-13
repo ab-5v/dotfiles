@@ -105,6 +105,7 @@ Bundle 'git://github.com/othree/html5.vim.git'
 Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
 Bundle 'git://github.com/sukima/xmledit.git'
 Bundle 'git://github.com/wavded/vim-stylus.git'
+Bundle 'git://github.com/nono/vim-handlebars.git'
 
 filetype plugin indent on
 
@@ -167,6 +168,9 @@ let g:user_zen_settings = {
 \   },
 \   'stylus': {
 \       'extends': 'css',
+\   },
+\   'handlebars': {
+\       'extends': 'html',
 \   }
 \}
 
