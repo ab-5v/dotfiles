@@ -164,6 +164,9 @@ let g:user_zen_settings = {
 \           'ch': 'xsl:choose>when+xsl:otherwise'
 \       },
 \       'empty_elements': 'vos'
+\   },
+\   'stylus': {
+\       'extends': 'css',
 \   }
 \}
 
