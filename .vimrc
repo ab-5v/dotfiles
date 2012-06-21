@@ -79,10 +79,10 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap ,w :%s/\s\+$//<cr>:let @/=''<CR>
 
 " highlight conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+match ErrorMsg '[<=>]\\{7}.*$'
 
 " shortcut to jump to next conflict marker
-nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+nmap <silent> ,c /[<=>]\\{7}.*$<CR>
 
 nmap <space> za
 
