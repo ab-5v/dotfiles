@@ -79,10 +79,10 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap ,w :%s/\s\+$//<cr>:let @/=''<CR>
 
 " highlight conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+match ErrorMsg '[<=>]\\{7}.*$'
 
 " shortcut to jump to next conflict marker
-nmap <silent> ,c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+nmap <silent> ,c /[<=>]\\{7}.*$<CR>
 
 nmap <space> za
 
@@ -100,12 +100,14 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'git://github.com/mattn/zencoding-vim.git'
-Bundle 'git://github.com/pangloss/vim-javascript.git'
+Bundle 'git://github.com/artjock/vim-javascript.git'
 Bundle 'git://github.com/othree/html5.vim.git'
 Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
 Bundle 'git://github.com/sukima/xmledit.git'
 Bundle 'git://github.com/wavded/vim-stylus.git'
 Bundle 'git://github.com/kchmck/vim-coffee-script.git'
+Bundle 'git://github.com/nono/vim-handlebars.git'
+Bundle 'git://github.com/vim-scripts/nginx.vim.git'
 
 filetype plugin indent on
 
@@ -168,6 +170,9 @@ let g:user_zen_settings = {
 \   },
 \   'stylus': {
 \       'extends': 'css',
+\   },
+\   'handlebars': {
+\       'extends': 'html',
 \   }
 \}
 
