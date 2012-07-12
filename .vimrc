@@ -108,6 +108,7 @@ Bundle 'git://github.com/wavded/vim-stylus.git'
 Bundle 'git://github.com/kchmck/vim-coffee-script.git'
 Bundle 'git://github.com/nono/vim-handlebars.git'
 Bundle 'git://github.com/vim-scripts/nginx.vim.git'
+Bundle 'git://github.com/elzr/vim-json.git'
 
 filetype plugin indent on
 
@@ -182,9 +183,14 @@ let g:xml_syntax_folding = 1
 autocmd FileType text setlocal textwidth=78
 " clone comment leader on "Return" or "o"
 autocmd FileType javascript setlocal fo+=ro
+
 autocmd FileType javascript setl foldmethod=syntax
 autocmd FileType javascript setl foldnestmax=2
 autocmd FileType javascript setl foldlevel=1
+
+autocmd FileType json setl foldmethod=syntax
+autocmd FileType json setl foldnestmax=2
+autocmd FileType json setl foldlevel=1
 
 autocmd FileType xslt setl foldmethod=syntax
 autocmd FileType xslt setl foldnestmax=2
