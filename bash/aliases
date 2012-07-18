@@ -1,5 +1,6 @@
 # Unix
-alias ll='ls -lAhG'
+alias ll="ls -lAh --color"
+alias l="ll -v | awk '{print \"   \"\$9\" \"\$10\" \"\$11}';echo ''"
 alias md='mkdir -p'
 alias s='cd ..'
 
