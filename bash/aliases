@@ -1,7 +1,10 @@
+# Unix
 alias ll='ls -lAhG'
 alias md='mkdir -p'
 alias s='cd ..'
 
+# Vim
+alias v='vim -p'
 
 # Git
 alias gc='git commit'
