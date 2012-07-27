@@ -4,7 +4,7 @@ bash:
 	git submodule init
 	git submodule update
 	ln -nfs ~/dotfiles/bashrc ~/.bashrc
-	. ~/.bash_profile
+	cd ~; source ~/.bash_profile
 
 vim:
 	make -C vim/
