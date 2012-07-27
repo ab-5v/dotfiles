@@ -1,0 +1,32 @@
+alias ll='ls -lAhG'
+alias md='mkdir -p'
+alias s='cd ..'
+
+
+# Git
+alias gc='git commit'
+alias gca='git commit -a'
+alias gap='git add -p'
+# Commit pending changes and quote all args as message
+function gg() {
+    git commit -am "$*"
+}
+alias gco='git checkout'
+alias gd='git diff'
+alias gl='git pull --rebase'
+alias gp='git push'
+alias g='git status'
+
+vcprompt ()
+{
+    local b="$(git symbolic-ref HEAD 2>/dev/null)";
+    if [ -n "$b" ]; then
+        local branch=${b##refs/heads/};
+
+        if [ "$branch" = "master" ]; then
+            printf "%s " "m";
+        else
+            printf "%s " $branch;
+        fi
+    fi
+}
