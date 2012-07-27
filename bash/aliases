@@ -15,9 +15,11 @@ vg(){
 alias gc='git commit'
 alias gca='git commit -a'
 alias gap='git add -p'
+alias ggr='git grep'
+
 # Commit pending changes and quote all args as message
 function gg() {
-    git commit -am "$*"
+    git commit -avm "$*"
 }
 alias gco='git checkout'
 alias gd='git diff'
