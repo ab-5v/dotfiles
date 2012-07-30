@@ -15,9 +15,8 @@ vg(){
 
 # Git
 alias gc='git commit'
-alias gca='git commit -a'
 alias gap='git add -p'
-alias ggr='git grep'
+alias gr='git grep'
 
 # Commit pending changes and quote all args as message
 function gg() {
