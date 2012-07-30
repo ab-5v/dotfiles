@@ -196,6 +196,8 @@ autocmd FileType xslt setl foldmethod=syntax
 autocmd FileType xslt setl foldnestmax=2
 autocmd FileType xslt setl foldlevel=1
 
+au BufNewFile,BufRead *.yate setf xml
+
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
 
