@@ -108,7 +108,7 @@ Bundle 'git://github.com/wavded/vim-stylus.git'
 Bundle 'git://github.com/kchmck/vim-coffee-script.git'
 Bundle 'git://github.com/nono/vim-handlebars.git'
 Bundle 'git://github.com/vim-scripts/nginx.vim.git'
-Bundle 'git://github.com/elzr/vim-json.git'
+Bundle 'git://github.com/maksimr/vim-yate.git'
 
 filetype plugin indent on
 
