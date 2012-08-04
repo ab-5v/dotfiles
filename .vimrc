@@ -89,7 +89,7 @@ nmap <space> za
 syntax on
 
 if (&t_Co > 16)
-    colorscheme lucius
+    colorscheme lucius2
 else
     colorscheme default
 endif
@@ -101,13 +101,9 @@ call vundle#rc()
 
 Bundle 'git://github.com/mattn/zencoding-vim.git'
 Bundle 'git://github.com/artjock/vim-javascript.git'
-Bundle 'git://github.com/othree/html5.vim.git'
-Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
-Bundle 'git://github.com/sukima/xmledit.git'
 Bundle 'git://github.com/wavded/vim-stylus.git'
 Bundle 'git://github.com/kchmck/vim-coffee-script.git'
 Bundle 'git://github.com/nono/vim-handlebars.git'
-Bundle 'git://github.com/vim-scripts/nginx.vim.git'
 Bundle 'git://github.com/maksimr/vim-yate.git'
 
 filetype plugin indent on
