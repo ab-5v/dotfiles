@@ -174,6 +174,7 @@ let g:user_zen_settings = {
 \}
 
 let g:xml_syntax_folding = 1
+let html_no_rendering = 1
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
