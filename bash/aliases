@@ -13,6 +13,8 @@ vg(){
     vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | egrep "*.$ft"`
 }
 
+# open git status m-files in vim
+alias gv='vim -p `git ls-files -m`'
 # Git
 alias gc='git commit'
 alias gap='git add -p'
