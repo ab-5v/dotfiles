@@ -234,3 +234,6 @@ if exists("+showtabline")
      set stal=2
      set tabline=%!MyTabLine()
 endif
+
+hi WrongSpaces ctermfg=240 guibg=red
+match WrongSpaces /[ \t]\+$\| \t[ \t]*/
