@@ -1,6 +1,9 @@
 # Unix
-alias ll="ls -lAhG"
-alias l="ll -v | awk '{print \"   \"\$9\" \"\$10\" \"\$11}';echo ''"
+alias bbb='. ~/.bash_profile'
+alias bbe='vim ~/.dotfiles/bash/aliases'
+alias ll='ls -ltrhG'
+alias lla='ls -ltrAhG'
+alias l='ls -1trG'
 alias md='mkdir -p'
 alias s='cd ..'
 alias ss='cd ..; cd ..'
