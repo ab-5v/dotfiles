@@ -66,7 +66,7 @@ hi Float            ctermfg=116                                     cterm=none
 " ----------------
 " any variable name
 hi Identifier       guifg=#efaf7f                                   gui=none
-hi Identifier       ctermfg=240                                     cterm=none
+hi Identifier       ctermfg=151                                     cterm=none
 " function, method, class
 hi Function         guifg=#efaf7f                                   gui=none
 hi Function         ctermfg=150                                     cterm=none
@@ -91,7 +91,7 @@ hi Label            guifg=#b3d38c                                   gui=none
 hi Label            ctermfg=150                                     cterm=none
 " sizeof, +, *
 hi Operator         guifg=#b3d38c                                   gui=none
-hi Operator         ctermfg=151                                     cterm=none
+hi Operator         ctermfg=240                                     cterm=none
 " any other keyword
 hi Keyword          guifg=#b3d38c                                   gui=none
 hi Keyword          ctermfg=151                                     cterm=none

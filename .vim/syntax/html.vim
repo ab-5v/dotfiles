@@ -220,8 +220,8 @@ if version >= 508 || !exists("did_html_syn_inits")
   if version < 508
     let did_html_syn_inits = 1
   endif
-  HtmlHiLink htmlTag                     Identifier
-  HtmlHiLink htmlEndTag                  Identifier
+  HtmlHiLink htmlTag                     Operator
+  HtmlHiLink htmlEndTag                  Operator
   HtmlHiLink htmlArg                     Type
   HtmlHiLink htmlTagName                 htmlStatement
   HtmlHiLink htmlSpecialTagName          Exception
