@@ -28,6 +28,7 @@ alias gv='vim -p `git ls-files -m`'
 alias gc='git commit'
 alias gap='git add -p'
 alias gr='git grep'
+alias gcl='git clone'
 
 # Commit pending changes and quote all args as message
 function gg() {
