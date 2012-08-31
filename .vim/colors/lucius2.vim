@@ -91,10 +91,13 @@ hi Label            guifg=#b3d38c                                   gui=none
 hi Label            ctermfg=150                                     cterm=none
 " sizeof, +, *
 hi Operator         guifg=#b3d38c                                   gui=none
-hi Operator         ctermfg=240                                     cterm=none
+hi Operator         ctermfg=151                                     cterm=none
 " any other keyword
 hi Keyword          guifg=#b3d38c                                   gui=none
 hi Keyword          ctermfg=151                                     cterm=none
+
+hi Punctuation         guifg=#b3d38c                                   gui=none
+hi Punctuation         ctermfg=240                                     cterm=none
 
 
 " Preprocessor Group
