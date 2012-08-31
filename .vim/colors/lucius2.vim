@@ -88,13 +88,13 @@ hi Repeat           guifg=#b3d38c                                   gui=none
 hi Repeat           ctermfg=150                                     cterm=none
 " case, default
 hi Label            guifg=#b3d38c                                   gui=none
-hi Label            ctermfg=150                                     cterm=none
+hi Label            ctermfg=151                                     cterm=none
 " sizeof, +, *
 hi Operator         guifg=#b3d38c                                   gui=none
-hi Operator         ctermfg=151                                     cterm=none
+hi Operator         ctermfg=150                                     cterm=none
 " any other keyword
 hi Keyword          guifg=#b3d38c                                   gui=none
-hi Keyword          ctermfg=151                                     cterm=none
+hi Keyword          ctermfg=150                                     cterm=none
 
 hi Punctuation         guifg=#b3d38c                                   gui=none
 hi Punctuation         ctermfg=240                                     cterm=none
@@ -123,7 +123,7 @@ hi PreCondit        ctermfg=223                                     cterm=none
 " ----------
 " int, long, char
 hi Type             guifg=#93d6a9                                   gui=none
-hi Type             ctermfg=151                                     cterm=none
+hi Type             ctermfg=150                                     cterm=none
 " static, register, volative
 hi StorageClass     guifg=#93d6a9                                   gui=none
 hi StorageClass     ctermfg=115                                     cterm=none
