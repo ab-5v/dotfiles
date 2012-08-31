@@ -123,7 +123,7 @@ hi PreCondit        ctermfg=223                                     cterm=none
 " ----------
 " int, long, char
 hi Type             guifg=#93d6a9                                   gui=none
-hi Type             ctermfg=150                                     cterm=none
+hi Type             ctermfg=151                                     cterm=none
 " static, register, volative
 hi StorageClass     guifg=#93d6a9                                   gui=none
 hi StorageClass     ctermfg=115                                     cterm=none
