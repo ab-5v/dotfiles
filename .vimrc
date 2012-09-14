@@ -173,7 +173,6 @@ let g:user_zen_settings = {
 \   }
 \}
 
-let g:xml_syntax_folding = 1
 let html_no_rendering = 1
 
 " For all text files set 'textwidth' to 78 characters.
@@ -192,6 +191,9 @@ autocmd FileType json setl foldlevel=1
 autocmd FileType xslt setl foldmethod=syntax
 autocmd FileType xslt setl foldnestmax=2
 autocmd FileType xslt setl foldlevel=1
+
+" disabling folding by default
+set nofoldenable
 
 au BufNewFile,BufRead *.yate setf xml
 
