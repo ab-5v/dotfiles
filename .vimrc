@@ -119,7 +119,9 @@ let g:user_zen_settings = {
 \          'cdx': 'console.dirxml(|);',
 \          'ct': 'console.time(|);',
 \          'cte': 'console.timeEnd(|);',
-\          'jstr': 'JSON.stringify(|);'
+\          'jstr': 'JSON.stringify(|);',
+\          'it': "it('|', function() {});",
+\          'db': "describe('|', function() {});"
 \      }
 \   },
 \   'xsl': {
