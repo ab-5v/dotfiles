@@ -194,6 +194,8 @@ autocmd FileType xslt setl foldmethod=syntax
 autocmd FileType xslt setl foldnestmax=2
 autocmd FileType xslt setl foldlevel=1
 
+autocmd FileType stylus set softtabstop=2 tabstop=2 shiftwidth=2
+
 " disabling folding by default
 set nofoldenable
 
