@@ -40,6 +40,8 @@ set showcmd                     " show (partial) command in the last line of the
                                 "    this also shows visual selection info
 set nomodeline                  " disable mode lines (security measure)
 
+set tabpagemax=50               " allow to open more than 10 tabs
+
 set showtabline=2               " always show tabline
 
 set synmaxcol=500               " Syntax coloring lines that are too long just slows down the world
