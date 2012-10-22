@@ -60,12 +60,14 @@ nmap ,t :tabe <C-r>=expand('%:p:h')<CR>/
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
 
+" remap macro to m
+nnoremap m q
+
 " Quickly close the current window
 nnoremap q :q<CR>
 
 " make p in Visual mode replace the selected text with the yank register
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
-
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
 nmap <silent> ,d "_d
