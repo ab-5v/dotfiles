@@ -51,17 +51,17 @@ set stl=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L
 set cpoptions=ces$
 
 " Toggle paste mode
-nmap  ,p :set invpaste:set paste?
+nmap  ,p :set invpaste<CR>
 " Set text wrapping toggles
-nmap  ,w :set invwrap:set wrap?
+nmap  ,w :set invwrap<CR>
 
 nmap ,t :tabe <C-r>=expand('%:p:h')<CR>/
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
 
-" remap macro to m
-nnoremap m q
+" remap macro to ,q
+nnoremap ,q q
 
 " Quickly close the current window
 nnoremap q :q<CR>
