@@ -15,6 +15,8 @@ alias s='cd ..'
 alias ss='cd ..; cd ..'
 alias sss='cd ..; cd ..; cd ..'
 
+alias m='make'
+
 # Vim
 alias v='vim -p'
 vg(){
