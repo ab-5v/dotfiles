@@ -187,8 +187,6 @@ autocmd FileType text setlocal textwidth=78
 autocmd FileType javascript setlocal fo+=ro
 
 autocmd FileType javascript setl foldmethod=syntax
-autocmd FileType javascript setl foldnestmax=2
-autocmd FileType javascript setl foldlevel=1
 
 autocmd FileType json setl foldmethod=syntax
 autocmd FileType json setl foldnestmax=2
