@@ -2,9 +2,9 @@
 alias bbb='. ~/.bash_profile'
 alias bbe='vim ~/.dotfiles/bash/aliases'
 if [[ $PLATFORM == 'Linux' ]]; then
-    alias ll='ls -lh --color=auto'
-    alias lla='ls -lAh --color=auto'
-    alias l='ls -1 --color=auto'
+    alias ll='ls -lh --group-directories-first --color=auto'
+    alias lla='ls -lAh --group-directories-first --color=auto'
+    alias l='ls -1 --group-directories-first --color=auto'
 else
     alias ll='ls -lhG'
     alias lla='ls -lAhG'
