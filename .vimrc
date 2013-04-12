@@ -60,6 +60,12 @@ nmap <leader>w :set invwrap<CR>
 " Open new tab from the current folder
 nmap <leader>t :tabe <C-r>=expand('%:p:h')<CR>/
 
+" remap macro to ,q
+nnoremap ,q q
+
+" Quickly close the current window
+nnoremap q :q<CR>
+
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
 
