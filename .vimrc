@@ -92,7 +92,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 
-Bundle 'tomasr/molokai.git'
+Bundle 'jonathanfilip/vim-lucius'
 Bundle 'wavded/vim-stylus.git'
 Bundle 'maksimr/vim-yate.git'
 Bundle 'artjock/vim-javascript.git'
@@ -100,7 +100,8 @@ Bundle 'artjock/vim-javascript.git'
 filetype plugin indent on
 
 if (&t_Co > 16)
-    colorscheme molokai
+    colorscheme lucius
+    LuciusDark
 else
     colorscheme default
 endif
