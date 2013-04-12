@@ -98,7 +98,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 
-Bundle 'noahfrederick/Hemisu'
+Bundle 'flazz/vim-colorschemes'
 Bundle 'wavded/vim-stylus.git'
 Bundle 'maksimr/vim-yate.git'
 Bundle 'artjock/vim-javascript.git'
@@ -107,7 +107,7 @@ filetype plugin indent on
 
 set background=dark
 if (&t_Co > 16)
-    colorscheme hemisu
+    colorscheme lucius
 else
     colorscheme default
 endif
