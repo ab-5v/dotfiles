@@ -83,7 +83,7 @@ nmap <space> za
 syntax on
 
 if (&t_Co > 16)
-    colorscheme lucius2
+    colorscheme default
 else
     colorscheme default
 endif
