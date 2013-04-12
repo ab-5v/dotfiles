@@ -93,13 +93,16 @@ filetype off                   " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'git://github.com/wavded/vim-stylus.git'
-Bundle 'git://github.com/maksimr/vim-yate.git'
-Bundle 'git://github.com/artjock/vim-javascript.git'
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+
+Bundle 'wavded/vim-stylus.git'
+Bundle 'maksimr/vim-yate.git'
+Bundle 'artjock/vim-javascript.git'
 
 filetype plugin indent on
-
-let html_no_rendering = 1
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
