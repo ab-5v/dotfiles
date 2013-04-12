@@ -11,13 +11,12 @@ set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set number                      " always show line numbers
 set showmatch                   " set show matching parenthesis
-set smarttab                    " insert tabs on the start of a line according to
-                                "    shiftwidth, not tabstop
+set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
 set scrolloff=4                 " keep 4 lines off the edges of the screen when scrolling
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
-set laststatus=2   " Always show the statusline
+set laststatus=2                " Always show the statusline
 
 set list                        " show invisible chars
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
@@ -29,15 +28,13 @@ set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 set nobackup                    " do not keep backup files, it's 70's style cluttering
 set noswapfile                  " do not write annoying intermediate swap files,
-                                "    who did ever restore from swap files anyway?
 set wildmenu                    " make tab completion for files/buffers act like bash
 set wildmode=list:longest       " show a list when pressing tab and complete first full match
 set wildignore=*.swp,*.bak,*.pyc,*.class
 
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
-set showcmd                     " show (partial) command in the last line of the screen
-                                "    this also shows visual selection info
+set showcmd                     " show (partial) command in the last line of the screen and visual selection info
 set nomodeline                  " disable mode lines (security measure)
 
 set tabpagemax=50               " allow to open more than 10 tabs
@@ -46,47 +43,40 @@ set showtabline=2               " always show tabline
 
 set synmaxcol=500               " Syntax coloring lines that are too long just slows down the world
 
-set stl=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L
+set statusline=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L   " statusline format
 
-set cpoptions=ces$
+" disable arrows
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+let mapleader=","
 
 " Toggle paste mode
-nmap  ,p :set invpaste<CR>
+nmap <leader>p :set invpaste<CR>
 " Set text wrapping toggles
-nmap  ,w :set invwrap<CR>
-
-nmap ,t :tabe <C-r>=expand('%:p:h')<CR>/
+nmap <leader>w :set invwrap<CR>
+" Open new tab from the current folder
+nmap <leader>t :tabe <C-r>=expand('%:p:h')<CR>/
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
 map! <F1> <Esc>
 
-" remap macro to ,q
-nnoremap ,q q
-
-" Quickly close the current window
-nnoremap q :q<CR>
-
-" make p in Visual mode replace the selected text with the yank register
-vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
-" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
-" yanked stack (also, in visual mode)
-nmap <silent> ,d "_d
-vmap <silent> ,d "_d
-
 " Clears the search register
-nmap <silent> ,/ :nohlsearch<CR>
+nmap <silent> <leader>/ :nohlsearch<CR>
 
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
 
 " Strip all trailing whitespace from a file, using ,w
-nnoremap ,w :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 
 " highlight conflict markers
 match ErrorMsg '[<=>]\\{7}.*$'
 
 " shortcut to jump to next conflict marker
-nmap <silent> ,c /[<=>]\\{7}.*$<CR>
+nmap <silent> <leader>c /[<=>]\\{7}.*$<CR>
 
 nmap <space> za
 
@@ -103,81 +93,11 @@ filetype off                   " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'git://github.com/mattn/zencoding-vim.git'
-Bundle 'git://github.com/artjock/vim-javascript.git'
 Bundle 'git://github.com/wavded/vim-stylus.git'
-Bundle 'git://github.com/kchmck/vim-coffee-script.git'
-Bundle 'git://github.com/nono/vim-handlebars.git'
 Bundle 'git://github.com/maksimr/vim-yate.git'
+Bundle 'git://github.com/artjock/vim-javascript.git'
 
 filetype plugin indent on
-
-let g:user_zen_expandabbr_key = '§'
-let g:user_zen_settings = {
-\  'indentation': '    ',
-\  'javascript': {
-\      'snippets': {
-\          'cla': 'console.log(arguments);',
-\          'cl': 'console.log(|);',
-\          'cd': 'console.dir(|);',
-\          'cdx': 'console.dirxml(|);',
-\          'ct': 'console.time(|);',
-\          'cte': 'console.timeEnd(|);',
-\          'jstr': 'JSON.stringify(|);',
-\          'it': "it('|', function() {});",
-\          'db': "describe('|', function() {});"
-\      }
-\   },
-\   'xsl': {
-\       'extends': 'html',
-\       'snippets': {
-\           '!': '<!-- | -->'
-\       },
-\       'default_attributes': {
-\           'tm': [{'match': ''}],
-\           'tmm': [{'match': ''}, {'mode': ''}],
-\           'if': {'test': ''},
-\           'when': {'test': ''},
-\           'vn': [{'name': ''}],
-\           'vns': [{'name': ''}, {'select': ''}],
-\           'wpn': [{'name': ''}],
-\           'wpns': [{'name': ''}, {'select': ''}],
-\           'pn': [{'name': ''}],
-\           'pns': [{'name': ''}, {'select': ''}],
-\           'vos': {'select': ''},
-\           'atn': {'name': ''},
-\           'ats': [{'select': ''}],
-\           'atsm': [{'select': ''}, {'mode': ''}]
-\       },
-\       'aliases': {
-\           'tm': 'xsl:template',
-\           'tmm': 'xsl:template',
-\           'if': 'xsl:if',
-\           'when': 'xsl:when',
-\           'vn': 'xsl:variable',
-\           'vns': 'xsl:variable',
-\           'wpn': 'xsl:with-param',
-\           'wpns': 'xsl:with-param',
-\           'pn': 'xsl:param',
-\           'pns': 'xsl:param',
-\           'vos': 'xsl:value-of',
-\           'atn': 'xsl:attribute',
-\           'ats' : 'xsl:apply-templates',
-\           'atsm' : 'xsl:apply-templates',
-\           'tt': 'xsl:text'
-\       },
-\       'expandos': {
-\           'ch': 'xsl:choose>when+xsl:otherwise'
-\       },
-\       'empty_elements': 'vos'
-\   },
-\   'stylus': {
-\       'extends': 'css',
-\   },
-\   'handlebars': {
-\       'extends': 'html',
-\   }
-\}
 
 let html_no_rendering = 1
 
@@ -186,33 +106,8 @@ autocmd FileType text setlocal textwidth=78
 " clone comment leader on "Return" or "o"
 autocmd FileType javascript setlocal fo+=ro
 
-autocmd FileType javascript setl foldmethod=syntax
-
-autocmd FileType json setl foldmethod=syntax
-autocmd FileType json setl foldnestmax=2
-autocmd FileType json setl foldlevel=1
-
-autocmd FileType xslt setl foldmethod=syntax
-autocmd FileType xslt setl foldnestmax=2
-autocmd FileType xslt setl foldlevel=1
-
-autocmd FileType stylus setl softtabstop=2 tabstop=2 shiftwidth=2
-
-" disabling folding by default
-set nofoldenable
-
-au BufNewFile,BufRead *.yate setf xml
-
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\   exe "normal g`\"" |
-\ endif
 
 if exists("+showtabline")
      function MyTabLine()
@@ -242,6 +137,3 @@ if exists("+showtabline")
      set stal=2
      set tabline=%!MyTabLine()
 endif
-
-hi WrongSpaces ctermfg=240 guibg=red
-match WrongSpaces /[ \t]\+$\| \t[ \t]*/
