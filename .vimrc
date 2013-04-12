@@ -82,12 +82,6 @@ nmap <space> za
 
 syntax on
 
-if (&t_Co > 16)
-    colorscheme default
-else
-    colorscheme default
-endif
-
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -98,11 +92,18 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 
+Bundle 'tomasr/molokai.git'
 Bundle 'wavded/vim-stylus.git'
 Bundle 'maksimr/vim-yate.git'
 Bundle 'artjock/vim-javascript.git'
 
 filetype plugin indent on
+
+if (&t_Co > 16)
+    colorscheme molokai
+else
+    colorscheme default
+endif
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
