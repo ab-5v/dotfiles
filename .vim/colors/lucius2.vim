@@ -12,7 +12,7 @@ let colors_name="lucius2"
 
 " == Normal color ==
 hi Normal           guifg=#e0e0e0           guibg=#202020
-hi Normal           ctermfg=251             ctermbg=234
+hi Normal           ctermfg=253             ctermbg=234
 
 
 " == Comments ==
