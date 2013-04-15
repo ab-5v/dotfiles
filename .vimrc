@@ -98,6 +98,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 
+Bundle 'Shougo/neosnippet'
+
 Bundle 'wavded/vim-stylus.git'
 Bundle 'maksimr/vim-yate.git'
 Bundle 'artjock/vim-javascript.git'
@@ -109,6 +111,12 @@ if (&t_Co > 16)
 else
     colorscheme default
 endif
+
+let g:neosnippet#snippets_directory='~/.vim/snippets'
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
 
 " For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
