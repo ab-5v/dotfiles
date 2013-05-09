@@ -1,20 +1,18 @@
 
 # console
 snippet cl
-    console.log(${1:arguments});${2}
+    console.log(${1:arguments});
 
 snippet fr
-    function(${1:val}) { return ${2}; }${3}
+    function(${1:val}) { return ${2}; }
 
 # testing
 snippet db
     describe('${1:title}', function() {
 
-        it('${2:should work}', function() {
-            ${3}
-        });${4}
+        ${2}
 
-    });${5}
+    });
 
 snippet be
     beforeEach(function() {
@@ -24,7 +22,7 @@ snippet be
 snippet it
     it('${1:should work}', function() {
         ${2}
-    });${3}
+    });
 
 snippet ex
-    expect( ${1} ).to.eql( ${2} );${3}
+    expect( ${1} ).to.eql( ${2} );
