@@ -47,6 +47,10 @@ alias up='git stash; gus; git stash pop'
 alias gp='git push'
 alias g='git status'
 
+function npublish() {
+    git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
+}
+
 vcprompt ()
 {
     local b="$(git symbolic-ref HEAD 2>/dev/null)";
