@@ -59,6 +59,8 @@ nmap <leader>p :set invpaste<CR>
 nmap <leader>w :set invwrap<CR>
 " Open new tab from the current folder
 nmap <leader>t :tabe <C-r>=expand('%:p:h')<CR>/
+" Edit file from the current folder
+nmap <leader>e :e <C-r>=expand('%:p:h')<CR>/
 
 " remap macro to ,q
 nnoremap ,q q
