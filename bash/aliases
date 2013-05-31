@@ -42,7 +42,7 @@ alias gus='git pull --rebase ; git submodule update --init'
 alias gsu='git submodule update --init'
 alias up='git stash; gus; git stash pop'
 alias gp='git push'
-alias g='git status --short'
+alias g='git status --short --branch'
 
 function npublish() {
     git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
