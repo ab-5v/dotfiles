@@ -128,6 +128,11 @@ autocmd FileType javascript setlocal fo+=ro
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
 
+augroup myvimrchooks
+    au!
+    autocmd bufwritepost .vimrc source ~/.vimrc
+augroup END
+
 if exists("+showtabline")
      function MyTabLine()
          let s = ''
