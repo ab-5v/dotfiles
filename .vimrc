@@ -125,6 +125,8 @@ autocmd FileType text setlocal textwidth=78
 " clone comment leader on "Return" or "o"
 autocmd FileType javascript setlocal fo+=ro
 
+autocmd FileType stylus setl softtabstop=2 tabstop=2 shiftwidth=2
+
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
 
