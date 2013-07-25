@@ -5,7 +5,6 @@ function __c(){
     printf $'\[\e[38;05;%dm\]' $1
 }
 
-
 if [ -z "$HOSTNAME" ]
 then
     HOSTNAME=$HOST
@@ -13,4 +12,4 @@ fi
 
 # Update the command prompt to be <user>:<current_directory>(git_branch) >
 # Note that the git branch is given a special color
-PS1="$(__c 237)$HOSTNAME $(__c 35)\$(vcprompt)$(__c 74)\w$(__c 253) "
+PS1="\e[0m$(__c 237)$HOSTNAME $(__c 35)\$(vcprompt)$(__c 74)\w$(__c 253) "
