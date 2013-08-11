@@ -1,0 +1,10 @@
+term xterm-256color
+shell -$SHELL
+startup_message off
+altscreen on
+autodetach on
+defbce "on"
+defscrollback 10000
+termcapinfo xterm* ti@:te@
+
+caption always "%{= kw}%-Lw%{= kw}%{+b}[%n %t]%{-b}%{= kw}%+Lw%1`"
