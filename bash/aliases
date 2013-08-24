@@ -17,6 +17,8 @@ alias m='make'
 
 # Vim
 alias v='vim -p'
+alias sv='sudo vim -p'
+
 function vg(){
     ft=${2:-"*"}
     vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | egrep "*.$ft"`
