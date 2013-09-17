@@ -100,11 +100,11 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 
-Bundle 'Shougo/neosnippet'
+Bundle 'git@github.com:Shougo/neosnippet.git'
 
-Bundle 'wavded/vim-stylus.git'
-Bundle 'maksimr/vim-yate.git'
-Bundle 'artjock/vim-javascript.git'
+Bundle 'git@github.com:wavded/vim-stylus.git'
+Bundle 'git@github.com:maksimr/vim-yate.git'
+Bundle 'git@github.com:artjock/vim-javascript.git'
 
 filetype plugin indent on
 
