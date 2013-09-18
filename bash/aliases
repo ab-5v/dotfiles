@@ -38,7 +38,7 @@ function gg() {
 }
 alias gco='git checkout'
 alias gd='git diff'
-alias gl='git log --graph --oneline --decorate --abbrev-commit'
+alias gl='git log --graph --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)%an%Creset" --abbrev-commit'
 alias gu='git pull --rebase'
 alias gus='git pull --rebase ; git submodule update --init'
 alias gsu='git submodule update --init'
