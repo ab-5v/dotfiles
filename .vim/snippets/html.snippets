@@ -8,3 +8,52 @@ snippet script
 
 snippet link
     <link href="${1}" rel="stylesheet" />
+
+
+snippet if
+    <TMPL_IF ${1}>
+        ${2}
+    </TMPL_IF>
+
+snippet ifc
+    <TMPL_IF [% ${1} %]>
+        ${1}
+    </TMPL_IF>
+
+snippet ife
+    <TMPL_IF ${1}>
+        ${2}
+    <TMPL_ELSE>
+        ${3}
+    </TMPL_IF>
+
+snippet ifce
+    <TMPL_IF [% ${1} %]>
+        ${2}
+    <TMPL_ELSE>
+        ${3}
+    </TMPL_IF>
+
+snippet loop
+    <TMPL_LOOP ${1}>
+        ${2}
+    </TMPL_LOOP>
+
+snippet inc
+    <TMPL_INCLUDE inc/${1}>
+
+snippet var
+    <TMPL_VAR ${1}>
+
+snippet sv
+    <TMPL_SETVAR ${1}>${2}</TMPL_SETVAR>
+
+snippet comment
+    <TMPL_COMMENT>${1}</TMPL_COMMENT>
+
+snippet exp
+    <TMPL_IF b_site_experiment_${1}>${2}</TMPL_IF>
+
+snippet debug
+    <TMPL_IF b_site_experiment_sfrisby_debug><h1>${1:debug}</h1></TMPL_IF>
+
