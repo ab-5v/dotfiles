@@ -5,8 +5,7 @@ bash:
 	@echo '. ~/.bash_profile'
 
 vim:
-	git submodule init
-	git submodule update
+	git submodule update --init
 	make -C vim/
 
 .PHONY: bash vim all
