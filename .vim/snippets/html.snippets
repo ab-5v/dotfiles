@@ -15,24 +15,13 @@ snippet if
         ${2}
     </TMPL_IF>
 
-snippet ifc
-    <TMPL_IF [% ${1} %]>
+snippet else
+    <TMPL_ELSE>
         ${1}
-    </TMPL_IF>
 
-snippet ife
-    <TMPL_IF ${1}>
+snippet elsif
+    <TMPL_ELSIF ${1}>
         ${2}
-    <TMPL_ELSE>
-        ${3}
-    </TMPL_IF>
-
-snippet ifce
-    <TMPL_IF [% ${1} %]>
-        ${2}
-    <TMPL_ELSE>
-        ${3}
-    </TMPL_IF>
 
 snippet loop
     <TMPL_LOOP ${1}>
@@ -45,16 +34,13 @@ snippet inc
 snippet var
     <TMPL_VAR ${1}>
 
-snippet sv
+snippet setvar
     <TMPL_SETVAR ${1}>${2}</TMPL_SETVAR>
 
 snippet comment
     <TMPL_COMMENT>${1}</TMPL_COMMENT>
 
-snippet ibse
-    <TMPL_IF b_site_experiment_${1}>${2}</TMPL_IF>
-
-snippet cs
+snippet case
     <TMPL_CASE ${1}>
         ${2}
     </TMPL_CASE>
