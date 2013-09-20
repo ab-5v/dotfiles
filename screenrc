@@ -7,4 +7,6 @@ defbce "on"
 defscrollback 10000
 termcapinfo xterm* ti@:te@
 
+setenv SSH_AUTH_SOCK "$HOME/.ssh/screen-ssh-agent-sock"
+
 caption always "%{= kw}%-Lw%{= kw}%{+b}[%n %t]%{-b}%{= kw}%+Lw%1`"
