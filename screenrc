@@ -6,6 +6,7 @@ autodetach on
 defbce "on"
 defscrollback 10000
 termcapinfo xterm* ti@:te@
+attrcolor d -d
 
 setenv SSH_AUTH_SOCK "$HOME/.ssh/screen-ssh-agent-sock"
 
