@@ -302,6 +302,10 @@ hi VimwikiHeader5   ctermfg=182                                     cterm=none
 hi VimwikiHeader6   guifg=#90d0a0                                   gui=bold
 hi VimwikiHeader6   ctermfg=115                                     cterm=none
 
+" HTML
+hi htmlEndTag           ctermfg=240       cterm=none
+hi htmlTag              ctermfg=240       cterm=none
+
 " JavaScript
 
 hi jsCvsTag               ctermfg=9         cterm=none
