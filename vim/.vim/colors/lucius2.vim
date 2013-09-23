@@ -143,10 +143,10 @@ hi MatchParen       guifg=#00ff00           guibg=NONE              gui=bold
 hi MatchParen       ctermfg=46              ctermbg=NONE            cterm=bold
 " the '~' and '@' and showbreak, '>' double wide char doesn't fit on line
 hi NonText          guifg=#404040                                   gui=none
-hi NonText          ctermfg=238                                     cterm=none
+hi NonText          ctermfg=232                                     cterm=none
 " meta and special keys used with map, unprintable characters
 hi SpecialKey       guifg=#405060
-hi SpecialKey       ctermfg=239
+hi SpecialKey       ctermfg=232
 " titles for output from :set all, :autocmd, etc
 hi Title            guifg=#62bdde                                   gui=none
 hi Title            ctermfg=74                                      cterm=none
