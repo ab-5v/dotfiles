@@ -33,6 +33,10 @@ alias gap='git add -p'
 alias gr='git grep'
 alias gcl='git clone'
 
+function grf() {
+    gr $* | awk -F ':' '{print $1}' | sort | uniq
+}
+
 # Commit pending changes and quote all args as message
 function gg() {
     git commit -avm "$*"
