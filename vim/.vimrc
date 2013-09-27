@@ -105,7 +105,7 @@ Bundle 'git@github.com:Shougo/neosnippet.git'
 Bundle 'git@github.com:wavded/vim-stylus.git'
 Bundle 'git@github.com:maksimr/vim-yate.git'
 Bundle 'git@github.com:artjock/vim-javascript.git'
-Bundle 'git@github.com:vim-scripts/tmpl.vim.git'
+Bundle 'git@github.com:artjock/vim-tmpl.git'
 
 filetype plugin indent on
 
