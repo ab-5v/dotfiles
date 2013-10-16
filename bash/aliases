@@ -42,16 +42,19 @@ function gg() {
     git commit -avm "$*"
 }
 alias gco='git checkout'
+alias gb='git branch'
 alias gd='git diff'
 alias gl='git log --graph --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %C(dim cyan)(%cr) %C(dim white)%an%Creset" --abbrev-commit'
 alias gl1='gl -n1'
 alias glmy='gl --author "`git config user.email`"'
+alias glmy1='glmy -n1'
 alias gu='git pull --rebase'
 alias gus='git pull --rebase ; git submodule update --init'
 alias gsu='git submodule update --init'
 alias up='git stash; gus; git stash pop'
 alias gp='git push'
 alias g='git status --short --branch'
+alias gsh='git show'
 
 function npublish() {
     git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
