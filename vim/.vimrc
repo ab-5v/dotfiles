@@ -57,6 +57,8 @@ let mapleader=","
 nmap <leader>p :set invpaste<CR>
 " Set text wrapping toggles
 nmap <leader>w :set invwrap<CR>
+" Open new tab
+nmap <leader>T :tabe 
 " Open new tab from the current folder
 nmap <leader>t :tabe <C-r>=expand('%:p:h')<CR>/
 " Edit file from the current folder
