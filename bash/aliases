@@ -44,6 +44,7 @@ function gg() {
 alias gco='git checkout'
 alias gb='git branch'
 alias gd='git diff'
+alias gdw='gd --word-diff'
 alias gl='git log --graph --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %C(dim cyan)(%cr) %C(dim white)%an%Creset" --abbrev-commit --date-order'
 alias gl1='gl -n1'
 alias glmy='gl --author "`git config user.email`"'
