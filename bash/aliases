@@ -57,6 +57,8 @@ alias gp='git push'
 alias g='git status --short --branch'
 alias gsh='git show'
 
+alias vlmy='vim -p `glmy1 --name-only | tail -n+2`'
+
 function npublish() {
     git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
 }
