@@ -20,13 +20,6 @@ alias m='make'
 alias v='vim -p'
 alias sv='sudo vim -p'
 
-function vg(){
-    ft=${2:-"*"}
-    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | egrep "*.$ft"`
-}
-
-# open git status m-files in vim
-alias gv='vim -p `git ls-files -m`'
 # Git
 alias gc='git commit'
 alias gap='git add -p'
@@ -57,7 +50,21 @@ alias gp='git push'
 alias g='git status --short --branch'
 alias gsh='git show'
 
-alias vlmy='vim -p `glmy1 --name-only | tail -n+2`'
+# open git status m-files in vim
+alias vg='vim -p `git ls-files -m`'
+
+# open files found by git grep
+function vgr(){
+    ft=${2:-"*"}
+    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | egrep "*.$ft"`
+}
+
+# open files changed by commit
+function vgl(){
+    hash=${1:-`glmy -1 --no-color --pretty=oneline | awk '{print $2}'`}
+    vim -p `git show --name-only --pretty=oneline "$hash" | tail -n+2`
+}
+
 
 function npublish() {
     git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
