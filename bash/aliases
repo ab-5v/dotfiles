@@ -57,7 +57,7 @@ alias vg='vim -p `git ls-files -m`'
 function vgr(){
     fnp1=${2:-"*"}
     fnp2=${3:-"*"}
-    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | grep "$fnp1" | grep "$fnp2"`
+    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | grep -E "$fnp1" | grep -E "$fnp2"`
 }
 
 # open files changed by commit
