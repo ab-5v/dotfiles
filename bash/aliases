@@ -67,6 +67,10 @@ function vgl(){
 }
 
 
+function vf(){
+    vim -p `find -name "*$1*"`
+}
+
 function npublish() {
     git commit -am "$1" && git push && git tag "$1" && git push --tags && npm publish
 }
