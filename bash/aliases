@@ -66,6 +66,11 @@ function vgl(){
     vim -p `git show --name-only --pretty=oneline "$hash" | tail -n+2`
 }
 
+function vgb(){
+    branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed  's|refs/heads/||'`}
+    vim -p `git log --oneline --name-only --graph "master..$branch" | grep -v '*' | sort | uniq`
+}
+
 
 function vf(){
     vim -p `find -name "*$1*"`
