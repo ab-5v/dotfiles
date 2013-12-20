@@ -6,15 +6,28 @@ alias vs='sudo vim -p'
 # open git status m-files in vim
 alias vg='vim -p `git ls-files -m`'
 
+# function sua() { sort | uniq -c | sort -rn | awk '{print $2}'; }
+
 # open files found by git grep
 function vgr(){
-    vim -p "+:silent /$1" `git grep $* | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}'`
+    vim -p "+:silent /$1" `git grep $* | awk -F ':' '{print $1}' | sort | uniq`
 }
 
 # open files changed by commit
 function vgl(){
-    hash=${1:-`glmy -1 --no-color --pretty=oneline | awk '{print $2}'`}
-    vim -p `git show --name-only --pretty=oneline "$hash" | tail -n+2`
+
+    local filter="jpg$|png$|gif$|db$";
+
+    local cmd="show";
+    local hash=${1:-$(git log --author $(git config user.email) -1 --format="%h")};
+
+    # not hash - grep by commit message
+    if [[ ! $hash =~ ^[0-9a-f]+$ ]]; then
+        cmd="log";
+        hash="-i --grep $hash";
+    fi
+
+    vim -p `git $cmd --name-only --format='%%' $hash | grep -Ev "%|$filter" | sort | uniq`;
 }
 
 # open all files changed in branch
