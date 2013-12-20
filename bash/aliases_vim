@@ -1,6 +1,6 @@
 # Vim
 alias v='vim -p'
-alias sv='sudo vim -p'
+alias vs='sudo vim -p'
 
 
 # open git status m-files in vim
@@ -8,9 +8,7 @@ alias vg='vim -p `git ls-files -m`'
 
 # open files found by git grep
 function vgr(){
-    fnp1=${2:-"*"}
-    fnp2=${3:-"*"}
-    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | grep -E "$fnp1" | grep -E "$fnp2"`
+    vim -p "+:silent /$1" `git grep $* | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}'`
 }
 
 # open files changed by commit
