@@ -32,8 +32,12 @@ function vgl(){
 
 # open all files changed in branch
 function vgb(){
-    branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed  's|refs/heads/||'`}
-    vim -p `git log --oneline --name-only --graph "master..$branch" | grep -v '*' | sort | uniq`
+
+    local filter="jpg$|png$|gif$|db$";
+
+    local branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||'`}
+
+    vim -p `git log --name-only --format='%%' master..$branch | grep -Ev "%|$filter" | sort | uniq`
 }
 
 function vf(){
