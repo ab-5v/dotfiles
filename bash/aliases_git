@@ -1,0 +1,30 @@
+
+# Git
+alias g='git status --short --branch'
+alias gc='git commit'
+alias gr='git grep'
+alias gb='git branch'
+alias gd='git diff'
+
+alias gcl='git clone'
+alias gco='git checkout'
+alias gap='git add -p'
+alias gsh='git show'
+
+alias gl='git log --graph --abbrev-commit --date-order --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %C(dim cyan)(%cr) %C(dim white)%an%Creset"'
+alias glmy='gl --author "`git config user.email`"'
+
+alias gu='git pull --rebase'
+alias gus='git pull --rebase ; git submodule update --init'
+alias gsu='git submodule update --init'
+alias gup='git stash; gus; git stash pop'
+alias gp='git push'
+
+# Commit pending changes and quote all args as message
+function gg() {
+    git commit -avm "$*"
+}
+
+function grf() {
+    gr $* | awk -F ':' '{print $1}' | sort | uniq
+}

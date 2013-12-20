@@ -1,0 +1,18 @@
+# Unix
+if [[ $PLATFORM == 'Linux' ]]; then
+# --group-directories-first
+    alias ll='ls -lh --color=auto'
+    alias lla='ls -lAh --color=auto'
+    alias l='ls -1 --color=auto'
+else
+    alias ll='ls -lhG'
+    alias lla='ls -lAhG'
+    alias l='ls -1G'
+fi
+alias md='mkdir -p'
+alias s='cd ..'
+alias ss='cd ..; cd ..'
+alias sss='cd ..; cd ..; cd ..'
+
+alias m='make'
+

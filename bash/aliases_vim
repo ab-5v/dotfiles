@@ -1,0 +1,30 @@
+# Vim
+alias v='vim -p'
+alias sv='sudo vim -p'
+
+
+# open git status m-files in vim
+alias vg='vim -p `git ls-files -m`'
+
+# open files found by git grep
+function vgr(){
+    fnp1=${2:-"*"}
+    fnp2=${3:-"*"}
+    vim -p +/$1 `git grep "$1" | awk -F ':' '{print $1}' | sort | uniq -c | sort -rn | awk '{print $2}' | grep -E "$fnp1" | grep -E "$fnp2"`
+}
+
+# open files changed by commit
+function vgl(){
+    hash=${1:-`glmy -1 --no-color --pretty=oneline | awk '{print $2}'`}
+    vim -p `git show --name-only --pretty=oneline "$hash" | tail -n+2`
+}
+
+# open all files changed in branch
+function vgb(){
+    branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed  's|refs/heads/||'`}
+    vim -p `git log --oneline --name-only --graph "master..$branch" | grep -v '*' | sort | uniq`
+}
+
+function vf(){
+    vim -p `find -name "*$1*"`
+}
