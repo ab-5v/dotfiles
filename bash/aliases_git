@@ -2,7 +2,7 @@
 # Git
 alias g='git status --short --branch'
 alias gc='git commit'
-alias gr='git grep'
+alias gr='git grep --line-number --break --heading'
 alias gb='git branch'
 alias gd='git diff'
 
@@ -26,5 +26,5 @@ function gg() {
 }
 
 function grf() {
-    gr $* | awk -F ':' '{print $1}' | sort | uniq
+    git grep --name-only $*
 }
