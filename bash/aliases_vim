@@ -10,7 +10,7 @@ alias vg='vim -p `git ls-files -m`'
 
 # open files found by git grep
 function vgr(){
-    vim -p "+:silent /$1" `git grep $* | awk -F ':' '{print $1}' | sort | uniq`
+    vim -p "+:silent /$1" `git grep --name-only $*`
 }
 
 # open files changed by commit
