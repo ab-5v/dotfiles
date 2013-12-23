@@ -1,0 +1,50 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 login"
+  exit 1
+fi
+
+login=$1
+home=/home/$login
+
+adduser $login
+usermod -a -G sudo $login
+id $login
+
+echo -n "Enter public key: "
+read ssh_key
+
+mkdir $home/.ssh
+echo $ssh_key >> $home/.ssh/authorized_keys 
+
+chmod 700 $home/.ssh
+chmod 600 $home/.ssh/*
+
+chown -R artjock $home/.ssh
+chgrp -R artjock $home/.ssh
+
+sed -i 's|^\(AcceptEnv LANG LC_*\)|#\1|' /etc/ssh/sshd_config
+sed -i 's|^#\(PasswordAuthentication\) \(yes\)|\1 no|' /etc/ssh/sshd_config
+sed -i 's|^\(PermitRootLogin\) yes|\1 no|' /etc/ssh/sshd_config
+
+iptables -P INPUT DROP
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
+iptables -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -j DROP
+
+apt-get -qq update
+apt-get install make git software-properties-common iptables-persistent
+
+add-apt-repository ppa:chris-lea/node.js
+apt-get -qq update
+apt-get install nodejs
+
