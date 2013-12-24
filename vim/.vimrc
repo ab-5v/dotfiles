@@ -167,3 +167,36 @@ if exists("+showtabline") && !exists("*TabLineNumbers")
      set stal=2
      set tabline=%!TabLineNumbers()
 endif
+
+
+" If there isn't one, append a semicolon to the end of the current line and vice versa
+function! s:ToggleTrailingSemiColon()
+  if getline('.') !~ ';$'
+    let original_cursor_position = getpos('.')
+    exec("s/$/;/")
+    call setpos('.', original_cursor_position)
+  else
+    let original_cursor_position = getpos('.')
+    exec("s/;$//")
+    call setpos('.', original_cursor_position)
+  endif
+endfunction
+
+" For programming languages using a semi colon at the end of statement.
+autocmd FileType * nmap <silent> ,; :call <SID>ToggleTrailingSemiColon()<CR>
+
+" If there isn't one, append a semicolon to the end of the current line and vice versa
+function! s:ToggleTrailingComma()
+  if getline('.') !~ ',$'
+    let original_cursor_position = getpos('.')
+    exec("s/$/,/")
+    call setpos('.', original_cursor_position)
+  else
+    let original_cursor_position = getpos('.')
+    exec("s/,$//")
+    call setpos('.', original_cursor_position)
+  endif
+endfunction
+
+" For programming languages using a semi colon at the end of statement.
+autocmd FileType * nmap <silent> ,, :call <SID>ToggleTrailingComma()<CR>
