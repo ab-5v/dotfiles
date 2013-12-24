@@ -3,6 +3,7 @@
 alias g='git status --short --branch'
 alias gc='git commit'
 alias gr='git grep --line-number --break --heading'
+alias grf='git grep --name-only'
 alias gb='git branch'
 alias gd='git diff'
 
@@ -11,7 +12,7 @@ alias gco='git checkout'
 alias gap='git add -p'
 alias gsh='git show'
 
-alias gl='git log --graph --abbrev-commit --date-order --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %C(dim cyan)(%cr) %C(dim white)%an%Creset"'
+alias gl='git log --graph --date-order --pretty=format:"%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %C(dim cyan)(%cr) %C(dim white)%an%Creset"'
 alias glmy='gl --author "`git config user.email`"'
 
 alias gu='git pull --rebase'
@@ -23,8 +24,4 @@ alias gp='git push'
 # Commit pending changes and quote all args as message
 function gg() {
     git commit -avm "$*"
-}
-
-function grf() {
-    git grep --name-only $*
 }

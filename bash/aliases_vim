@@ -44,5 +44,5 @@ function vf(){
 
     local filter="jpg$|png$|gif$|db$";
 
-    vim -p `git ls-files "*$1*" | grep -Ev "%|$filter"`
+    vim -p `git ls-files "*$1*" | grep -Ev "$filter"`
 }
