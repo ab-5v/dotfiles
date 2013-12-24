@@ -80,7 +80,7 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " Strip all trailing whitespace from a file, using ,w
-nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " highlight conflict markers
 match ErrorMsg '[<=>]\\{7}.*$'
