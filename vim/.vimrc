@@ -139,8 +139,8 @@ augroup myvimrchooks
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
-if exists("+showtabline")
-     function MyTabLine()
+if exists("+showtabline") && !exists("*TabLineNumbers")
+     function TabLineNumbers()
          let s = ''
          let t = tabpagenr()
          let i = 1
@@ -165,5 +165,5 @@ if exists("+showtabline")
          return s
      endfunction
      set stal=2
-     set tabline=%!MyTabLine()
+     set tabline=%!TabLineNumbers()
 endif
