@@ -8,6 +8,8 @@ fi
 login=$1
 home=/home/$login
 
+locale-gen en_US.UTF-8
+
 adduser $login
 usermod -a -G sudo $login
 id $login
