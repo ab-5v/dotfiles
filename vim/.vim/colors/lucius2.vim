@@ -17,7 +17,7 @@ hi Normal           ctermfg=253             ctermbg=234
 
 " == Comments ==
 hi Comment          guifg=#606060                                   gui=none
-hi Comment          ctermfg=235                                     cterm=none
+hi Comment          ctermfg=236                                     cterm=none
 
 
 " == Constants ==
@@ -266,7 +266,7 @@ hi SignColumn       guifg=#9fafaf           guibg=#181818           gui=none
 hi SignColumn       ctermfg=145             ctermbg=233             cterm=none
 " line numbers
 hi LineNr           guifg=#818698           guibg=#363946
-hi LineNr           ctermfg=232             ctermbg=bg
+hi LineNr           ctermfg=236             ctermbg=bg
 " the 'more' prompt when output takes more than one line
 hi MoreMsg          guifg=#2e8b57                                   gui=none
 hi MoreMsg          ctermfg=29                                      cterm=none
