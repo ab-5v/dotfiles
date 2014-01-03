@@ -104,7 +104,6 @@ call vundle#rc()
 Bundle 'git@github.com:gmarik/vundle.git'
 
 
-Bundle 'git@github.com:othree/html5.vim.git'
 Bundle 'git@github.com:hail2u/vim-css3-syntax.git'
 Bundle 'git@github.com:Shougo/neosnippet.git'
 
