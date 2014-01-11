@@ -140,6 +140,11 @@ autocmd FileType stylus setl softtabstop=2 tabstop=2 shiftwidth=2
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
 
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+        \| exe "normal! g'\"" | endif
+endif
+
 augroup myvimrchooks
     au!
     autocmd bufwritepost .vimrc source ~/.vimrc
