@@ -7,3 +7,8 @@ SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen-ssh-agent-sock"
 if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a -z "$STY" ]; then
     ln -nfs $SSH_AUTH_SOCK $SCREEN_SSH_AUTH_SOCK
 fi
+
+TMUX_SSH_AUTH_SOCK="$HOME/.ssh/tmux-ssh-agent-sock"
+if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a -z "$TMUX" ]; then
+    ln -nfs $SSH_AUTH_SOCK $TMUX_SSH_AUTH_SOCK
+fi
