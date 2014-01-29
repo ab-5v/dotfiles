@@ -3,6 +3,7 @@ all: bash vim
 bash:
 	ln -nfs ~/.dotfiles/bashrc ~/.bashrc
 	ln -nfs ~/.dotfiles/screenrc ~/.screenrc
+	ln -nfs ~/.dotfiles/.tmux.conf ~/.tmux.conf
 	@echo '. ~/.bash_profile'
 
 vim:
