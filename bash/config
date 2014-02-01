@@ -23,10 +23,16 @@ vcprompt ()
     if [ -n "$b" ]; then
         local branch=${b##refs/heads/};
 
+        if [ "$(git status -suno)" ]; then
+            local m="*"
+        fi
+
         if [ "$branch" = "master" ]; then
-            printf "%s " "m";
+            printf "%s " "m$m";
+        elif [ "$branch" = "trunk" ]; then
+            printf "%s " "t$m";
         else
-            printf "%s " $branch;
+            printf "%s " "$branch$m";
         fi
     fi
 }
