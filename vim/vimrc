@@ -1,5 +1,9 @@
 set nocompatible
 
+
+set ignorecase                  " ignore case of searches
+set gdefault                    " add the g flag to search/replace by default
+set ttyfast                     " optimize for fast terminal connections
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
 set tabstop=4                   " a tab is four spaces
@@ -13,6 +17,7 @@ set number                      " always show line numbers
 set showmatch                   " set show matching parenthesis
 set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
 set scrolloff=4                 " keep 4 lines off the edges of the screen when scrolling
+set sidescrolloff=15            " the minimal number of screen columns to keep to the left and to the right of the cursor
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
@@ -45,7 +50,7 @@ set showtabline=2               " always show tabline
 
 set synmaxcol=500               " Syntax coloring lines that are too long just slows down the world
 
-set statusline=%f\ %m\ %r%=%c\ %l\ [%p%%]\ %L   " statusline format
+set statusline=%f\ %m\ %y\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
 
 " disable arrows
 noremap <Up> 4<C-Y>
@@ -122,13 +127,12 @@ autocmd FileType stylus setl softtabstop=2 tabstop=2 shiftwidth=2
 " speed up opening large files
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > 1024*1024 | set eventignore+=FileType | else | set eventignore-=FileType | endif
 
-if has("autocmd")
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-        \| exe "normal! g'\"" | endif
-endif
+" save position in the file
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-augroup myvimrchooks
-    au!
+augroup vimrc
+    autocmd!
+    autocmd bufwritepost vimrc source ~/.vimrc
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
