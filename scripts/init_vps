@@ -1,30 +1,28 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 login"
+if [ "$#" -lt 2 ]; then
+  echo "Usage: $0 login password"
   exit 1
 fi
 
 login=$1
+passw=$(perl -e 'print crypt($ARGV[0], "password")' $2)
 home=/home/$login
+keys=authorized_keys
 
 locale-gen en_US.UTF-8
 
-adduser $login
-usermod -a -G sudo $login
-id $login
-
-echo -n "Enter public key: "
-read ssh_key
+useradd --user-group --groups sudo --create-home --password $passw $login
+chage -d 0 $login
 
 mkdir $home/.ssh
-echo $ssh_key >> $home/.ssh/authorized_keys 
+cat $keys >> $home/.ssh/authorized_keys
 
 chmod 700 $home/.ssh
 chmod 600 $home/.ssh/*
 
-chown -R artjock $home/.ssh
-chgrp -R artjock $home/.ssh
+chown -R $login $home/.ssh
+chgrp -R $login $home/.ssh
 
 sed -i 's|^\(AcceptEnv LANG LC_*\)|#\1|' /etc/ssh/sshd_config
 sed -i 's|^#\(PasswordAuthentication\) \(yes\)|\1 no|' /etc/ssh/sshd_config
@@ -46,9 +44,12 @@ iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 iptables -A INPUT -j DROP
 
 apt-get -qq update
-apt-get install make git software-properties-common iptables-persistent
+apt-get -qq install make git software-properties-common iptables-persistent
 
-add-apt-repository ppa:chris-lea/node.js
+add-apt-repository -y ppa:chris-lea/node.js
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
 apt-get -qq update
-apt-get install nodejs
+apt-get -qq install nodejs
 
