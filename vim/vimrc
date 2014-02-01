@@ -44,7 +44,8 @@ set noerrorbells                " don't beep
 set showcmd                     " show (partial) command in the last line of the screen and visual selection info
 set nomodeline                  " disable mode lines (security measure)
 
-set timeoutlen=100              " remove delay for O after Esc
+" remove delay for O after Esc
+:set timeout timeoutlen=1000 ttimeoutlen=100
 
 set tabpagemax=50               " allow to open more than 10 tabs
 
