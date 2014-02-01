@@ -12,7 +12,7 @@ keys=authorized_keys
 
 locale-gen en_US.UTF-8
 
-useradd --user-group --groups sudo --create-home --password $passw $login
+useradd --user-group --groups sudo --create-home --password $passw --shell /bin/bash $login
 chage -d 0 $login
 
 mkdir $home/.ssh
