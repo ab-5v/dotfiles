@@ -308,6 +308,10 @@ hi htmlTag              ctermfg=240       cterm=none
 
 " JavaScript
 
+hi Noise                  ctermfg=240       cterm=none
+hi jsBrackets             ctermfg=245       cterm=none
+hi jsBraces               ctermfg=245       cterm=none
+hi jsFuncBraces           ctermfg=245       cterm=none
 hi jsCvsTag               ctermfg=9         cterm=none
 hi jsDocTags              ctermfg=240         cterm=none
 hi jsDocSeeTag            ctermfg=240         cterm=none
@@ -335,7 +339,7 @@ hi jsUndefined            ctermfg=109         cterm=none
 hi jsBoolean              ctermfg=109         cterm=none
 hi jsNumber               ctermfg=109         cterm=none
 hi jsFloat                ctermfg=109         cterm=none
-hi jsOperator             ctermfg=109         cterm=none
+hi jsOperator             ctermfg=245         cterm=none
 hi jsGlobalObjects        ctermfg=109         cterm=none
 hi jsExceptions           ctermfg=109         cterm=none
 
