@@ -94,25 +94,7 @@ nmap <space> za
 
 syntax on
 
-filetype off                   " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'git@github.com:gmarik/vundle.git'
-
-
-Bundle 'git@github.com:hail2u/vim-css3-syntax.git'
-Bundle 'git@github.com:Shougo/neosnippet.git'
-
-Bundle 'git@github.com:wavded/vim-stylus.git'
-Bundle 'git@github.com:maksimr/vim-yate.git'
-Bundle 'git@github.com:artjock/vim-javascript.git'
-Bundle 'git@github.com:artjock/vim-tmpl.git'
-
-filetype plugin indent on
+source ~/.vim/include/vundle
 
 if (&t_Co > 16)
     colorscheme lucius2
@@ -126,15 +108,6 @@ if &term =~ '256color'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
-
-let html_no_rendering=1
-let g:neosnippet#snippets_directory='~/.vim/snippets'
-let g:neosnippet#disable_runtime_snippets = {
-\   '_' : 1,
-\ }
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 
 " For all text files set 'textwidth' to 78 characters.

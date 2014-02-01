@@ -1,7 +1,18 @@
-all: install
+all: $(HOME)/.vim $(HOME)/.vim/include/vundle
 
-install:
-	if test -d ~/.vim; then rm -rf ~/.vim; fi
-	cp -rf .vim ~/.vim
-	cp .vimrc ~/.vimrc
+$(HOME)/.vim/include/vundle: $(CURDIR)/.vim/include/vundle
+	mkdir -p $(HOME)/.vim/include
+	cp $< $@
+	cp -r $(CURDIR)/.vim/bundle $(HOME)/.vim/bundle
 	vim +BundleInstall +qall
+
+$(HOME)/.vim:
+	mkdir $@
+	ln -nfs $(CURDIR)/.vim/colors $@/colors
+	ln -nfs $(CURDIR)/.vim/snippets $@/snippets
+	ln -nfs $(CURDIR)/vimrc $(HOME)/.vimrc
+
+clean:
+	rm -rf $(HOME)/.vim*
+
+.PHONY: all clean
