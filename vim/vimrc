@@ -1,7 +1,9 @@
 set nocompatible
 
 
+set shortmess=atI               " this option helps to avoid all the hit-enter prompts
 set ignorecase                  " ignore case of searches
+set smartcase                   " don't ignore case when use capitals
 set gdefault                    " add the g flag to search/replace by default
 set ttyfast                     " optimize for fast terminal connections
 set showmode                    " always show what mode we're currently editing in
@@ -53,8 +55,8 @@ set synmaxcol=500               " Syntax coloring lines that are too long just s
 set statusline=%f\ %m\ %y\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
 
 " disable arrows
-noremap <Up> 4<C-Y>
-noremap <Down> 4<C-E>
+noremap <Up> <C-Y><C-Y><C-Y><C-Y>
+noremap <Down> <C-E><C-E><C-E><C-E>
 noremap <Left> z4h
 noremap <Right> z4l
 
