@@ -1,14 +1,13 @@
+# vi: ft=sh
+
 export LANG="en_US.UTF-8"
 export PATH=$HOME/.bin:$HOME/node_modules/.bin:/usr/local/sbin:$PATH
 export EDITOR=vim
 export PLATFORM=`uname`
 
-SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen-ssh-agent-sock"
-if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a -z "$STY" ]; then
-    ln -nfs $SSH_AUTH_SOCK $SCREEN_SSH_AUTH_SOCK
-fi
-
-TMUX_SSH_AUTH_SOCK="$HOME/.ssh/tmux-ssh-agent-sock"
-if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a -z "$TMUX" ]; then
-    ln -nfs $SSH_AUTH_SOCK $TMUX_SSH_AUTH_SOCK
+# Predictable SSH authentication socket location.
+SOCK="$HOME/.ssh/ssh-agent-sock"
+if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$SOCK" ] ; then
+    ln -nfs $SSH_AUTH_SOCK $SOCK
+    export SSH_AUTH_SOCK=$SOCK
 fi
