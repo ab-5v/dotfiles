@@ -16,6 +16,7 @@ Bundle 'git@github.com:wavded/vim-stylus.git'
 Bundle 'git@github.com:maksimr/vim-yate.git'
 Bundle 'git@github.com:pangloss/vim-javascript.git'
 Bundle 'git@github.com:artjock/vim-tmpl.git'
+Bundle 'git@github.com:ciaranm/securemodelines.git'
 
 filetype plugin indent on
 
