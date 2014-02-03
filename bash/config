@@ -1,3 +1,5 @@
+# vi: ft=sh
+
 function __clist(){
     for line in {0..7}; do for col in {0..31}; do code=$(( $col * 8 + $line )); printf $'\e[38;05;%dm %03d' $code $code ;done; echo ;done
 }

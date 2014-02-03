@@ -1,7 +1,5 @@
 set nocompatible
 
-
-set shortmess=atI               " this option helps to avoid all the hit-enter prompts
 set ignorecase                  " ignore case of searches
 set smartcase                   " don't ignore case when use capitals
 set gdefault                    " add the g flag to search/replace by default
