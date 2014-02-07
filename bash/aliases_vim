@@ -1,3 +1,4 @@
+# vi: ft=sh
 # Vim
 alias v='vim -p'
 alias vs='sudo vim -p'
@@ -10,7 +11,13 @@ alias vg='vim -p `git ls-files -m`'
 
 # open files found by git grep
 function vgr(){
-    vim -p "+:silent /$1" `git grep --name-only $*`
+    local found=`git grep --name-only $*`;
+
+    if [ -n "$found" ]; then
+        vim -p "+:silent /$*" $found;
+    else
+        echo "Can not find '$*'";
+    fi
 }
 
 # open files changed by commit
