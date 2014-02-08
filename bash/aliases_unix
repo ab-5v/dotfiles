@@ -1,3 +1,4 @@
+# vi: ft=sh
 # Unix
 if [[ $PLATFORM == 'Linux' ]]; then
 # --group-directories-first
@@ -15,6 +16,14 @@ alias ss='cd ..; cd ..'
 alias sss='cd ..; cd ..; cd ..'
 
 alias m='make'
+
+function p() {
+    if [ -d "$HOME/Projects" ]; then
+        cd "$HOME/Projects"
+    elif [ -d "$HOME/projects" ]; then
+        cd "$HOME/projects"
+    fi
+}
 
 function serve() {
     local port=${1:-8080}
