@@ -56,10 +56,21 @@ set statusline=%f\ %m\ %y\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
 " disable arrows
 noremap <Up> <C-Y><C-Y><C-Y><C-Y>
 noremap <Down> <C-E><C-E><C-E><C-E>
-noremap <Left> z4h
-noremap <Right> z4l
+noremap <Left> zhzhzhzh
+noremap <Right> zlzlzlzl
 
 let mapleader=","
+
+" search selected pattern
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
 
 " Toggle paste mode
 nmap <leader>p :set invpaste<CR>
