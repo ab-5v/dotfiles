@@ -14,7 +14,7 @@ function vgr(){
     local found=`git grep --name-only $*`;
 
     if [ -n "$found" ]; then
-        vim -p "+:silent /$*" $found;
+        vim -p "+:silent /$1" $found;
     else
         echo "Can not find '$*'";
     fi
