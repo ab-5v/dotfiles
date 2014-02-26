@@ -1,3 +1,5 @@
+" vi: ft=vim
+
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -17,6 +19,7 @@ Bundle 'git@github.com:maksimr/vim-yate.git'
 Bundle 'git@github.com:pangloss/vim-javascript.git'
 Bundle 'git@github.com:artjock/vim-tmpl.git'
 Bundle 'git@github.com:ciaranm/securemodelines.git'
+Bundle 'git@github.com:editorconfig/editorconfig-vim'
 
 filetype plugin indent on
 
