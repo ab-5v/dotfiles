@@ -1,3 +1,4 @@
+# vi: ft=sh
 
 # Git
 alias g='git status --short --branch'
@@ -24,4 +25,16 @@ alias gp='git push'
 # Commit pending changes and quote all args as message
 function gg() {
     git commit -avm "$*"
+}
+
+function gf() {
+    git ls-files "*$1*"
+}
+
+function gbf() {
+    local filter="jpg$|png$|gif$|db$";
+
+    local branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||'`}
+
+    git log --name-only --format='%%' master..$branch | grep -Ev "%|$filter" | sort | uniq
 }
