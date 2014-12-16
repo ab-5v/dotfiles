@@ -27,6 +27,10 @@ function gg() {
     git commit -avm "$*"
 }
 
+function gcm() {
+    git commit -m "$*"
+}
+
 function gf() {
     git ls-files "*$1*"
 }
