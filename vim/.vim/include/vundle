@@ -21,6 +21,9 @@ Bundle 'git@github.com:artjock/vim-tmpl.git'
 Bundle 'git@github.com:ciaranm/securemodelines.git'
 Bundle 'git@github.com:editorconfig/editorconfig-vim.git'
 
+Bundle 'git@github.com:godlygeek/tabular.git'
+Bundle 'git@github.com:rodjek/vim-puppet.git'
+
 filetype plugin indent on
 
 let html_no_rendering=1
