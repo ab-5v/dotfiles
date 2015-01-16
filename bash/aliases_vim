@@ -44,7 +44,7 @@ function vgb(){
 
     local branch=${1:-`git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||'`}
 
-    vim -p `git log --name-only --format='%%' master..$branch | grep -Ev "%|$filter" | sort | uniq`
+    vim -p `git log --name-only --format='%%' origin/master..$branch | grep -Ev "%|$filter" | sort | uniq`
 }
 
 function vgf(){
