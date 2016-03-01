@@ -4,7 +4,7 @@ $(HOME)/.vim/include/vundle: $(CURDIR)/.vim/include/vundle
 	mkdir -p $(HOME)/.vim/include
 	cp $< $@
 	cp -r $(CURDIR)/.vim/bundle $(HOME)/.vim/bundle
-	vim +BundleInstall +qall
+	vim +PluginInstall +qall
 
 $(HOME)/.vim:
 	mkdir $@

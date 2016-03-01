@@ -2,29 +2,30 @@
 
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
-" required! 
-Bundle 'git@github.com:gmarik/vundle.git'
+" required!
+Plugin 'VundleVim/Vundle.vim'
 
 
-Bundle 'git@github.com:hail2u/vim-css3-syntax.git'
-Bundle 'git@github.com:othree/html5.vim.git'
-Bundle 'git@github.com:Shougo/neosnippet.git'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'othree/html5.vim'
+Plugin 'Shougo/neosnippet'
 
-Bundle 'git@github.com:wavded/vim-stylus.git'
-Bundle 'git@github.com:maksimr/vim-yate.git'
-Bundle 'git@github.com:pangloss/vim-javascript.git'
-Bundle 'git@github.com:artjock/vim-tmpl.git'
-Bundle 'git@github.com:ciaranm/securemodelines.git'
-Bundle 'git@github.com:editorconfig/editorconfig-vim.git'
+Plugin 'wavded/vim-stylus'
+Plugin 'maksimr/vim-yate'
+Plugin 'pangloss/vim-javascript'
+Plugin 'artjock/vim-tmpl'
+Plugin 'ciaranm/securemodelines'
+Plugin 'editorconfig/editorconfig-vim'
 
-Bundle 'git@github.com:godlygeek/tabular.git'
-Bundle 'git@github.com:rodjek/vim-puppet.git'
-Bundle 'fatih/vim-go'
+Plugin 'godlygeek/tabular'
+Plugin 'rodjek/vim-puppet'
+Plugin 'fatih/vim-go'
 
+call vundle#end()
 filetype plugin indent on
 
 let html_no_rendering=1
