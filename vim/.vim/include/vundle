@@ -23,6 +23,7 @@ Bundle 'git@github.com:editorconfig/editorconfig-vim.git'
 
 Bundle 'git@github.com:godlygeek/tabular.git'
 Bundle 'git@github.com:rodjek/vim-puppet.git'
+Plugin 'fatih/vim-go'
 
 filetype plugin indent on
 
