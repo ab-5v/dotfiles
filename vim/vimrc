@@ -41,6 +41,7 @@ set visualbell                  " don't beep
 set noerrorbells                " don't beep
 set showcmd                     " show (partial) command in the last line of the screen and visual selection info
 set nomodeline                  " disable mode lines (security measure)
+set backspace=2                 " make backspace work like most other apps
 
 " remove delay for O after Esc
 :set timeout timeoutlen=1000 ttimeoutlen=100
