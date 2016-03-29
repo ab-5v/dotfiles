@@ -5,6 +5,15 @@ export PATH=$HOME/.bin:$HOME/node_modules/.bin:/usr/local/sbin:$PATH
 export EDITOR=vim
 export PLATFORM=`uname`
 
+if [[ $PLATFORM == 'Linux' ]]; then
+    export PROJECTSPATH="$HOME/projects"
+else
+    export PROJECTSPATH="$HOME/Projects"
+fi
+
+export GOROOT=$PROJECTSPATH/go
+export PATH=$PATH:$GOROOT/bin
+
 # Predictable SSH authentication socket location.
 SOCK="$HOME/.ssh/ssh-agent-sock"
 if [ -d $HOME/.ssh -a -n "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$SOCK" ] ; then

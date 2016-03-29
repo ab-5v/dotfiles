@@ -17,13 +17,7 @@ alias sss='cd ..; cd ..; cd ..'
 
 alias m='make'
 
-function p() {
-    if [ -d "$HOME/Projects" ]; then
-        cd "$HOME/Projects"
-    elif [ -d "$HOME/projects" ]; then
-        cd "$HOME/projects"
-    fi
-}
+alias p="cd $PROJECTSPATH"
 
 function serve() {
     local port=${1:-8080}
