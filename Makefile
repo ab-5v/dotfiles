@@ -1,5 +1,7 @@
 all: bash vim
 
+git: ~/.gitconfig
+
 bash:
 	ln -nfs ~/.dotfiles/bashrc ~/.bashrc
 	ln -nfs ~/.dotfiles/screenrc ~/.screenrc
@@ -10,4 +12,8 @@ vim:
 	git submodule update --init
 	make -C vim/
 
-.PHONY: bash vim all
+~/.gitconfig: gitconfig
+	cp $< $@
+
+
+.PHONY: bash vim all git
