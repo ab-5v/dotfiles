@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# dotfiles
+cat $DIR/bashrc | sed 's|__DIR__|'"$DIR"'|' > $HOME/.bashrc
+ln -nfs $DIR/screenrc $HOME/.screenrc
+ln -nfs $DIR/tmux.conf $HOME/.tmux.conf
+
+# vim
+VIM_DEST="$HOME/.vim"
+
+git submodule update --init
+rm -rf $VIM_DEST && mkdir $VIM_DEST
+
+ln -nfs $DIR/vim/colors $VIM_DEST/colors
+ln -nfs $DIR/vim/snippets $VIM_DEST/snippets
+ln -nfs $DIR/vimrc $HOME/.vimrc
+
+mkdir $VIM_DEST/include
+cp $DIR/vim/include/vundle $VIM_DEST/include/vundle
+cp -r $DIR/vim/bundle $VIM_DEST/bundle
+vim +PluginInstall +qall
