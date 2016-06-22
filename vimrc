@@ -202,3 +202,6 @@ endfunction
 
 " For programming languages using a semi colon at the end of statement.
 autocmd FileType * nmap <silent> ,, :call <SID>ToggleTrailingComma()<CR>
+
+nnoremap <leader>y :call system('nc -U ~/.clipper.sock', @0)<CR>
+vnoremap <leader>y y<Esc>:call system('nc -U ~/.clipper.sock', @0)<CR>
