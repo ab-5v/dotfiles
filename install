@@ -20,7 +20,7 @@ ln -nfs $DIR/vimrc $HOME/.vimrc
 mkdir $VIM_DEST/include
 cp $DIR/vim/include/vundle $VIM_DEST/include/vundle
 cp -r $DIR/vim/bundle $VIM_DEST/bundle
-#vim +PluginInstall +qall
+vim +PluginInstall +qall
 
 if [[ $PLATFORM == 'Darwin' ]]; then
     plist_name=com.wincent.clipper.plist
