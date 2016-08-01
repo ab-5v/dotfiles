@@ -5,3 +5,5 @@
   email = artjock@gmail.com
 [push]
   default = simple
+[rebase]
+	instructionFormat = %s (%an)
