@@ -17,6 +17,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'artjock/vim-tmpl'
 Plugin 'ciaranm/securemodelines'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'majutsushi/tagbar'
 
 Plugin 'rodjek/vim-puppet'
 Plugin 'fatih/vim-go'

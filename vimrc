@@ -50,7 +50,10 @@ set showtabline=2               " always show tabline
 
 set synmaxcol=500               " Syntax coloring lines that are too long just slows down the world
 
-set statusline=%f\ %m\ %y\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
+set statusline=
+set statusline+=%f
+set statusline+=\ %{tagbar#currenttag('%s','')}
+set statusline+=\ %m\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
 
 " disable arrows
 noremap <Up> <C-Y><C-Y><C-Y><C-Y>
