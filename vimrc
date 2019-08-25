@@ -52,7 +52,6 @@ set synmaxcol=500               " Syntax coloring lines that are too long just s
 
 set statusline=
 set statusline+=%f
-set statusline+=\ %{tagbar#currenttag('%s','')}
 set statusline+=\ %m\ %r%=%l\ %c\ [%p%%]\ %L   " statusline format
 
 " disable arrows
