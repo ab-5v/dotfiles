@@ -42,4 +42,4 @@ vcprompt ()
 
 # Update the command prompt to be <user>:<current_directory>(git_branch) >
 # Note that the git branch is given a special color
-PS1="$(__bc 0)$(__c 237)$HOSTNAME $(__c 35)\$(vcprompt)$(__c 74)\W$(__c 253) "
+PS1="$(__c 237)$HOSTNAME $(__c 35)\$(vcprompt)$(__c 74)\W$(__c 253) "
