@@ -3,7 +3,7 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
-cat $DIR/bashrc | sed 's|__DIR__|'"$DIR"'|' > $HOME/.bashrc
+cat $DIR/bashrc | sed 's|__DIR__|'"$DIR"'|' > $HOME/.bash_profile
 ln -nfs $DIR/screenrc $HOME/.screenrc
 ln -nfs $DIR/tmux.conf $HOME/.tmux.conf
 
@@ -21,15 +21,3 @@ mkdir $VIM_DEST/include
 cp $DIR/vim/include/vundle $VIM_DEST/include/vundle
 cp -r $DIR/vim/bundle $VIM_DEST/bundle
 vim +PluginInstall +qall
-
-if [[ $PLATFORM == 'Darwin' ]]; then
-    plist_name=com.wincent.clipper.plist
-    plist_dest=$HOME/Library/LaunchAgents/$plist_name
-
-    cat $DIR/plist/$plist_name | sed 's|__BINARY__|'"$DIR"/bin/clipper'|' > $plist_dest
-    ln -nfs $DIR/clipper.json $HOME/.clipper.json
-
-    launchctl unload $plist_dest
-    launchctl load $plist_dest
-
-fi
