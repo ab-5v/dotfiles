@@ -13,6 +13,9 @@ if [ ! -f ~/.bash_profile ]; then
     cp .bash_profile $HOME/.bash_profile
 fi
 
+. bash/env
+mkdir -p $PROJECTSPATH
+
 # vim
 VIM_DEST="$HOME/.vim"
 
