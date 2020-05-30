@@ -1,0 +1,2 @@
+HOSTNAME=λ
+source ~/.bashrc

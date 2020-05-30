@@ -5,9 +5,13 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
-cat $DIR/bashrc | sed 's|__DIR__|'"$DIR"'|' > $HOME/.bash_profile
+cat $DIR/bashrc | sed 's|__DIR__|'"$DIR"'|' > $HOME/.bashrc
 ln -nfs $DIR/screenrc $HOME/.screenrc
 ln -nfs $DIR/tmux.conf $HOME/.tmux.conf
+
+if [ ! -f ~/.bash_profile ]; then
+    cp .bash_profile $HOME/.bash_profile
+fi
 
 # vim
 VIM_DEST="$HOME/.vim"
