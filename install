@@ -17,10 +17,10 @@ ln -nfs $DIR/vim/colors $VIM_DEST/colors
 ln -nfs $DIR/vim/snippets $VIM_DEST/snippets
 ln -nfs $DIR/vimrc $HOME/.vimrc
 
-#mkdir $VIM_DEST/include
-#cp $DIR/vim/include/vundle $VIM_DEST/include/vundle
-#cp -r $DIR/vim/bundle $VIM_DEST/bundle
-#vim +PluginInstall +qall
+mkdir $VIM_DEST/include
+cp $DIR/vim/include/vundle $VIM_DEST/include/vundle
+cp -r $DIR/vim/bundle $VIM_DEST/bundle
+vim +PluginInstall +qall
 
 if [ -z "$(git config --global --get user.email)" ]; then
     echo "Configure git:"

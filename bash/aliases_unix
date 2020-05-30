@@ -23,5 +23,3 @@ function serve() {
     local port=${1:-8080}
     python -m SimpleHTTPServer $port 2>/dev/null ; echo ""
 }
-
-alias clip="nc -U ~/.clipper.sock"

@@ -25,7 +25,7 @@ vcprompt ()
     if [ -n "$b" ]; then
         local branch=${b##refs/heads/};
 
-        # Still not fust enough
+        # Still not fast enough
         #if [ "$(git status -suno)" ]; then
         #    local m="*"
         #fi
