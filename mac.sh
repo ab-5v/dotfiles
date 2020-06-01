@@ -15,6 +15,12 @@ defaults write NSGlobalDomain KeyRepeat -int 2
 # System Preferences > Keyboard >
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
+
+# System Preferences > Sound > Alert volume
+defaults write NSGlobalDomain com.apple.sound.beep.volume -float 0;
+# System Preferences > Sound > Play user interface sound effects
+defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0;
+
 # System Preferences > Trackpad > Tap to click
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool false
 
