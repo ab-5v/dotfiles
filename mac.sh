@@ -10,6 +10,11 @@ defaults write com.apple.dock autohide -bool true
 # System Preferences > Mission Controll > Automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
+# System Preferences > Date and time > Show date and day of the week
+defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM  HH:mm"
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+
 # System Preferences > Keyboard >
 defaults write NSGlobalDomain KeyRepeat -int 2
 # System Preferences > Keyboard >
