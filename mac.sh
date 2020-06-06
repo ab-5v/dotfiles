@@ -144,6 +144,11 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
 	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
 
+defaults write com.apple.controlstrip MiniCustomized -array \
+    "com.apple.system.brightness" \
+    "com.apple.system.volume" \
+    "com.apple.system.mute"
+
 # Terminal: Disable the annoying line marks
 defaults write com.apple.Terminal ShowLineMarks -int 0
 
@@ -205,6 +210,7 @@ for app in "Activity Monitor" \
 	"Calendar" \
 	"cfprefsd" \
 	"Contacts" \
+	"ControlStrip" \
 	"Dock" \
 	"Finder" \
 	"Google Chrome Canary" \
