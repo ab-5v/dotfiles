@@ -27,7 +27,11 @@ defaults write NSGlobalDomain com.apple.sound.beep.volume -float 0;
 defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0;
 
 # System Preferences > Trackpad > Tap to click
-defaults write com.apple.AppleMultitouchTrackpad Clicking -bool false
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+# System Preferences > Trackpad > Look up & data detectors
+defaults write com.apple.AppleMultitouchTrackpad ActuateDetents -bool false
+# System Preferences > Trackpad > Force Click and haptic feedback
+defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool true
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
