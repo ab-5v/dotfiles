@@ -217,8 +217,6 @@ for app in "Activity Monitor" \
 	"ControlStrip" \
 	"Dock" \
 	"Finder" \
-	"Google Chrome Canary" \
-	"Google Chrome" \
 	"Mail" \
 	"Messages" \
 	"Opera" \
