@@ -21,6 +21,9 @@ defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 
+# System Preferences > Accessibility > Double-click speed
+defaults write NSGlobalDomain com.apple.mouse.doubleClickThreshold -float 0.2;
+
 # System Preferences > Sound > Alert volume
 defaults write NSGlobalDomain com.apple.sound.beep.volume -float 0;
 # System Preferences > Sound > Play user interface sound effects
